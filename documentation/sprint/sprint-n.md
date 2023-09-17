@@ -1,15 +1,15 @@
-# Sprint n
+# Sprint 1
 
 
-|Date|4 September 2023|
+|Date|15 September 2023|
 | :- | :- |
-|Created by|Rahmatullah Arrizal|
-|Participant|Rahmatullah Arrizal, Fulan1, Fulan2, Fulanah|
+|Created by|Hali Putri Aisyah|
+|Participant|Hali Putri Aisyah, Nawang Ilmi Adzani, Zahran Hanif F|
 ## Sprint Planning
 ### Goals:
-- Sprint goal 1
-- Sprint goal 2
-- …
+- Melengkapi dokumentasi
+- Melengkapi kebutuhan pembangunan aplikasi
+- Membuat Lo-Fi Aplikasi
 ### Breakdown Task:
 #### Commitment: x SP
 - Fulan1: x SP
