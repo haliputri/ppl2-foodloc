@@ -11,17 +11,17 @@
 - Melengkapi kebutuhan pembangunan aplikasi
 - Membuat Lo-Fi Aplikasi
 ### Breakdown Task:
-#### Commitment: x SP
-- Hali Putri Aisyah: x SP
+#### Commitment: 3 SP
+- Hali Putri Aisyah: 1 SP
   - [1] Membuat Dokumentasi
-- Nawang Ilmi Adzani: x SP
-  - [1] Membuat Lo-Fi x SP
-- Zahran Hanif F : x SP
-  - [1] Mencari API Public x SP
+- Nawang Ilmi Adzani: 1 SP
+  - [1] Membuat Lo-Fi
+- Zahran Hanif F : 1 SP
+  - [1] Mencari API Public
 
-#### Delivered:	 x SP
+#### Delivered:	 X SP
 ### During Sprint
-2023-09-04:
+2023-09-18:
 
 1. Feedback
 1. Blocker
