@@ -6,6 +6,7 @@ Foodloc merupakan aplikasi rekomendasi makanan yang berada di daerah Jatinangor 
 ## Anggota Kelompok
 - Hali Putri Aisyah  140810200006
 - Nawang Ilmi Adzani  140810200014
+- Indah Sutriyati 140810200040
 - Zahran Hanif F  140810200062
 
 
