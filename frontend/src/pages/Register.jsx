@@ -1,14 +1,13 @@
-import React from "react";
-import "./App.css";
-import Navigation from "./components/Navigation";
-import FooterResto from "./components/FooterResto";
-import bg from "./assets/bg-2.png";
+import React from 'react'
+import bg from "../assets/bg-2.png";
 ("use client");
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
+import Navigation from "../components/Navigation";
+import FooterResto from "../components/FooterResto";
 
-function Login() {
+const Register = () => {
   return (
-    <>
+    <div>
       <Navigation />
       <div
         style={{
@@ -47,8 +46,8 @@ function Login() {
         </div>
       </div>
       <FooterResto />
-    </>
-  );
+    </div>
+  )
 }
 
-export default Login;
+export default Register
