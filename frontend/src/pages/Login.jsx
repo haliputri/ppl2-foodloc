@@ -13,8 +13,7 @@ const Login = () => {
       <div
         style={{
           backgroundImage: `url(${bg})`,
-          height: "682px",
-          width: "1440px",
+          height: "682px"
         }}
       >
         <div className="pt-40 pl-24">
