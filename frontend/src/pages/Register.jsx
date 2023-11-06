@@ -1,5 +1,6 @@
 import React from 'react'
-import bg from "../assets/bg-2.png";
+import bg from "../assets/background-2.png";
+import vector from "../assets/bg.png";
 ("use client");
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Navigation from "../components/Navigation";
@@ -13,9 +14,18 @@ const Register = () => {
         style={{
           backgroundImage: `url(${bg})`,
           height: "682px",
-          width: "1440px",
         }}
       >
+      <img
+        src={vector} 
+        style={{
+          position: "absolute",
+          top: "70px",
+          left: "250px",
+          width: "1440px",
+          "z-index": "-1"
+        }}
+      />
         <div className="pt-40 pl-24">
         <Card style={{ width: "30%" }}>  
           <form className="flex flex-col gap-4">
