@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BackButton from '../components/BackButton'
 import Spinner from '../components/Spinner'
 import axios from 'axios'
-import { useNavigate, useParams, useEffect } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const EditResto = () => {
   const [name, setName] = useState('');
@@ -15,21 +15,22 @@ const EditResto = () => {
   const navigate = useNavigate();
   const {id} = useParams();
   useEffect(() => {
-    setLoading(true);
-    axios.get(`http://localhost:8080/restaurants${id}`)
+    axios.get(`http://localhost:8080/restaurants/${id}`)
     .then((response) => {
       setName(response.data.name);
-      setAddress(response.data.address);
-      setCity(response.data.city);
-      setPhoneNumber(response.data.phone_number);
-      setSocialMedia(response.data.social_media);
-      setRating(response.data.rating);
+      setAddress(response.data.address)
+      setCity(response.data.city)
+      setSocialMedia(response.data.social_media)
+      setPhoneNumber(response.data.phone_number)
+      setRating(response.data.rating)
+      setLoading(false);
     })
     .catch((error) => {
-      setLoading('An error happened, please check console.');
+      setLoading(false);
+      alert('An error happened. Please check console.');
       console.log(error);
-    });
-  }, [])
+    })
+  }, []);
   const handleEditResto = () => {
     const data = {
       name,
@@ -41,7 +42,7 @@ const EditResto = () => {
     };
     setLoading(true);
     axios
-     .put(`http://localhost:8080/restaurants${id}`, data)
+     .put(`http://localhost:8080/restaurants/${id}`, data)
      .then(() => {
       setLoading(false);
       navigate('/admin');

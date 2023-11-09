@@ -12,7 +12,7 @@ const ShowResto = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8080/restaurants${id}`)
+      .get(`http://localhost:8080/restaurants/${id}`)
       .then((response) => {
         setResto(response.data.data);
         setLoading(false);
@@ -33,6 +33,26 @@ const ShowResto = () => {
           <div className="my-4">
             <span className="text-xl mr-4 text-gray-500">Id</span>
             <span>{restaurant._id}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Nama</span>
+            <span>{restaurant.name}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Address</span>
+            <span>{restaurant.address}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">City</span>
+            <span>{restaurant.city}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Phone Number</span>
+            <span>{restaurant.phone_number}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Social Media</span>
+            <span>{restaurant.social_media}</span>
           </div>
         </div>
       )
