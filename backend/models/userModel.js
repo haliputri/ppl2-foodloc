@@ -2,15 +2,17 @@ import mongoose from "mongoose";
 
 // Skema (Schema) untuk model UserModel
 const userSchema = new mongoose.Schema({
-//   user_id: {
-//     type: String, // Tipe data untuk user_id (sesuaikan dengan kebutuhan Anda)
-//     required: true,
-//     unique: true,
-//   },
+  // user_id: {
+  //   type: Number,
+  //   unique: true,
+  // },
   username: {
     type: String,
     required: true,
     unique: true,
+  },
+  name: {
+    type: String,
   },
   email: {
     type: String,
@@ -20,6 +22,19 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  address: {
+    type: String,
+  },
+  gender: {
+    type: String, // Assuming gender can be a string (e.g., "male", "female")
+    enum: ["Pria", "Wanita"], // Optional: Use enum to restrict values
+  },
+  birthdate: {
+    type: Date, // Assuming birthdate is a date
+  },
+  profileImage: {
+    type: String,
   },
 }, 
 {

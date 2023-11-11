@@ -79,13 +79,13 @@ const ListResto = () => {
                   </td>
                   <td className="border border-slate-700 rounded-md text-center">
                     <div className="flex justify-center gap-x-4">
-                      <Link to={`${restaurant._id}`}>
+                      <Link to={`${restaurant.resto_id}`}>
                         <BsInfoCircle className="text-2xl text-green-800" />
                       </Link>
-                      <Link to={`edit/${restaurant._id}`}>
+                      <Link to={`edit/${restaurant.resto_id}`}>
                         <AiOutlineEdit className="text-2xl text-green-800" />
                       </Link>
-                      <Link to={`delete/${restaurant._id}`}>
+                      <Link to={`delete/${restaurant.resto_id}`}>
                         <MdOutlineDelete className="text-2xl text-red-800" />
                       </Link>
                     </div>
