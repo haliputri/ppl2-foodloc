@@ -7,10 +7,10 @@ import cors from "cors";
 
 const app = express();
 
-app.get('/', (request, response) => {
-    console.log(request)
-    return response.status(234).send(`Welcome`)
-});
+const scopes = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]
 
 app.use(cors());
 // Middleware for Parsing Resquest Body
@@ -24,9 +24,9 @@ app.use('/restaurants', restaurantsRoute);
 
 mongoose
     .connect(mongoDBURL)
-    .then(()=>{
+    .then(() => {
         console.log('App Connected');
     })
-    .catch((error)=>{
+    .catch((error) => {
         console.log(error);
     })
