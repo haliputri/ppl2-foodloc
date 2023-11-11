@@ -8,7 +8,7 @@ import RestaurantPage from './pages/RestaurantDetail'
 
 import ShowResto from './admin/ShowResto'
 import CreateResto from './admin/CreateResto'
-import EditResto from './admin/EditResto'
+// import EditResto from './admin/EditResto'
 import DeleteResto from './admin/DeleteResto'
 import ListResto from './admin/ListResto'
 
@@ -24,7 +24,7 @@ const App = () => {
       
       <Route path='/admin/' element={<ListResto/>} />
       <Route path='/admin/:id' element={<ShowResto/>} />
-      <Route path='/admin/edit/:id' element={<EditResto/>} />
+      {/* <Route path='/admin/edit/:id' element={<EditResto/>} /> */}
       <Route path='/admin/add' element={<CreateResto/>} />
       <Route path='/admin/delete/:id' element={<DeleteResto/>} />
     </Routes>
