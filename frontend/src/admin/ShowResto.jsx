@@ -7,12 +7,12 @@ import Spinner from "../components/Spinner";
 const ShowResto = () => {
   const [restaurant, setResto] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { id } = useParams();
+  const { resto_id } = useParams();
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8080/restaurants${id}`)
+      .get(`http://localhost:8080/restaurants/${resto_id}`)
       .then((response) => {
         setResto(response.data.data);
         setLoading(false);
@@ -32,7 +32,27 @@ const ShowResto = () => {
         <div className="flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4">
           <div className="my-4">
             <span className="text-xl mr-4 text-gray-500">Id</span>
-            <span>{restaurant._id}</span>
+            <span>{restaurant.resto_id}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Nama</span>
+            <span>{restaurant.name}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Address</span>
+            <span>{restaurant.address}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">City</span>
+            <span>{restaurant.city}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Phone Number</span>
+            <span>{restaurant.phone_number}</span>
+          </div>
+          <div className="my-4">
+            <span className="text-xl mr-4 text-gray-500">Social Media</span>
+            <span>{restaurant.social_media}</span>
           </div>
         </div>
       )

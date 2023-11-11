@@ -14,6 +14,12 @@ import EditResto from './admin/EditResto'
 import DeleteResto from './admin/DeleteResto'
 import ListResto from './admin/ListResto'
 
+import ShowUser from './admin/user/ShowUser'
+import DetailUser from './admin/user/DetailUser'
+import CreateUser from './admin/user/CreateUser'
+import EditUser from './admin/user/EditUser'
+import DeleteUser from './admin/user/DeleteUser'
+
 const App = () => {
   return (
     <Routes>
@@ -27,10 +33,16 @@ const App = () => {
       <Route path='/editprofile' element={<EditProfile/>} />
       
       <Route path='/admin/' element={<ListResto/>} />
-      <Route path='/admin/:id' element={<ShowResto/>} />
-      <Route path='/admin/edit/:id' element={<EditResto/>} />
+      <Route path='/admin/:resto_id' element={<ShowResto/>} />
+      <Route path='/admin/edit/:resto_id' element={<EditResto/>} />
       <Route path='/admin/add' element={<CreateResto/>} />
-      <Route path='/admin/delete/:id' element={<DeleteResto/>} />
+      <Route path='/admin/delete/:resto_id' element={<DeleteResto/>} />
+
+      <Route path='/user/' element={<ShowUser/>} />
+      <Route path='/user/:id' element={<DetailUser/>} />
+      <Route path='/user/edit/:id' element={<EditUser/>} />
+      <Route path='/user/add' element={<CreateUser/>} />
+      <Route path='/user/delete/:id' element={<DeleteUser/>} />
     </Routes>
   )
 }

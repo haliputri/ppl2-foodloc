@@ -1,7 +1,8 @@
 import express, { request, response } from "express";
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
-import { Restaurant } from "./models/restaurantModel.js";
+// import { Restaurant } from "./models/restaurantModel.js";
+import userRoute from "./routes/userRoute.js";
 import restaurantsRoute from "./routes/restaurantsRoute.js";
 import cors from "cors";
 
@@ -21,6 +22,7 @@ app.listen(PORT, () => {
 });
 
 app.use('/restaurants', restaurantsRoute);
+app.use('/users', userRoute);
 
 mongoose
     .connect(mongoDBURL)
