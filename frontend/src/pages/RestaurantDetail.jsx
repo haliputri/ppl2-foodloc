@@ -10,6 +10,9 @@ import gojek from '../assets/gojek.png';
 import pencil from '../assets/pencil.svg';
 import ava1 from '../assets/ava-1.svg';
 import ava2 from '../assets/ava2.svg';
+import ellipse from '../assets/ellipse.svg';
+import ellipseabu from '../assets/ellipseabu.svg';
+import arrow from '../assets/arrowright-yellow.svg';
 import FooterResto from '../components/FooterResto';
 
 const RestaurantDetail = () => {
@@ -84,15 +87,14 @@ const RestaurantDetail = () => {
         </div>
       </div>
       <div>
-      <div className="flex items-center justify-between mt-44">
+      <div className="flex items-center justify-between mt-44 mb-8">
         <h2 className="mt-20 ml-20 text-orange-FFA90A md:text-3xl lg:text-4xl dark:text-white font-bold font-['Lato']"> Reviews </h2>
         <img 
           src={pencil}
           className="w-8 h-8 mr-20 items-end"
         />
       </div>
-      <div>
-      <div className="ml-20 my-8 justify-start items-start inline-flex">
+      <div className="ml-20 mb-4 justify-start items-start inline-flex">
         <img  src={ava1}
               className="rounded-full"
               />
@@ -111,7 +113,7 @@ const RestaurantDetail = () => {
           </div>
         </div>
         </div>
-        <div className="ml-20 justify-start items-start inline-flex">
+        <div className="ml-20 mb-4 justify-start items-start inline-flex">
         <img  src={ava2}
               className="rounded-full"
               />
@@ -126,11 +128,43 @@ const RestaurantDetail = () => {
           </div>
          <p className="ml-3 text-black text-xl font-['Lato']">
           Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
-          <div className="border border-zinc-300">
+          <div className="border border-zinc-300 w-full">
           </div>
         </div>
         </div>
+        <div className="ml-20 mb-4 justify-start items-start inline-flex">
+        <img  src={ava2}
+              className="rounded-full"
+              />
+        <div className="flex-col justify-start items-start inline-flex">
+          <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">Gerry Lezatos</h5>
+          <div className="flex items-center ml-1.5">
+          <img 
+          src={starabu}
+          className='w-6 h-6'
+          />
+          <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">5</h5>
+          </div>
+         <p className="ml-3 text-black text-xl font-['Lato']">
+          Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
+          <div className="border border-zinc-300 w-full">
+          </div>
+        </div>
+        </div>
+        <div className="flex items-center justify-center mt-4">
+          <div className="gap-3 inline-flex">
+            <img src={ellipse} className="w-4 h-4 rounded-full" />
+            <img src={ellipseabu} className="w-4 h-4 rounded-full" />
+            <img src={ellipseabu} className="w-4 h-4 rounded-full" />
+            <img src={arrow}/>
+          </div>
+        </div>
       </div>
+      <div>
+      <h2 className="mt-20 ml-20 text-orange-FFA90A md:text-3xl lg:text-4xl dark:text-white font-bold font-['Lato']"> Locations </h2>
+      </div>
+      <div className='mt-56'>
+      <FooterResto/>
       </div>
     </div>
   );
