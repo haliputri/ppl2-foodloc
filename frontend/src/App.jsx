@@ -10,7 +10,7 @@ import EditProfile from './pages/EditProfile'
 
 import ShowResto from './admin/ShowResto'
 import CreateResto from './admin/CreateResto'
-import EditResto from './admin/EditResto'
+// import EditResto from './admin/EditResto'
 import DeleteResto from './admin/DeleteResto'
 import ListResto from './admin/ListResto'
 
