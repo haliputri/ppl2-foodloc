@@ -7,6 +7,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Navigation from "../components/Navigation";
 import FooterResto from "../components/FooterResto";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -78,6 +81,7 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   />
               </div>
+<<<<<<< HEAD
               <div className="flex items-center gap-2">
                 <Checkbox id="remember" />
                 <Label htmlFor="remember">Remember me</Label>
@@ -94,6 +98,28 @@ const Login = () => {
               </p>
             </form>
           </Card>
+=======
+              <TextInput id="password1" required type="password" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox id="remember" />
+              <Label htmlFor="remember">Remember me</Label>
+            </div>
+            <Button type="submit">Submit</Button>
+            <GoogleOAuthProvider clientId="39039937550-ragrh883e53mqgucmkcb5j67cn14ssar.apps.googleusercontent.com">...
+              <GoogleLogin
+                onSuccess={credentialResponse => {
+                  const decoded = jwtDecode(credentialResponse.credential);
+                  console.log(decoded);
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+        />
+            </GoogleOAuthProvider>
+          </form>
+        </Card>
+>>>>>>> master
         </div>
       </div>
       <FooterResto />
