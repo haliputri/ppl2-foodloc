@@ -36,7 +36,39 @@ router.post('/', async(request, response) => {
     }
 });
 
+router.post('/login', (request, response) => {
+    const {email, password} = request.body;
+    userModel.findOne({email: email})
+    .then( user => {
+        if(user) {
+            if(user.password == password){
+                response.json({message : "Success", data:user, id:user._id})
+            } else {
+                response.json("The password is incorrect")
+            }
+        } else {
+            response.json("No record existed")
+        }
+    })
+})
 
+router.get('/login/:id', async(request, response) => {
+    try {
+        const { id } = request.params;
+        const user = await userModel.findById(id);
+
+        if (!user) {
+            return response.status(404).json({ message: 'User not found' });
+        }
+
+        return response.status(200).json({
+            data: user
+        });
+    } catch (error) {
+        console.log(error.message);
+        response.status(500).send({ message: error.message });
+    }
+})
 // Route for Get All User from database
 router.get('/', async(request, response) => {
     try{

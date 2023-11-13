@@ -37,6 +37,11 @@ const EditUser = () => {
     })
   }, []);
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(file);
+  };
+
   const handleUpdatedUser = () => {
     const data = {
       username,
@@ -131,11 +136,11 @@ const EditUser = () => {
         </div>
         <div className='my-4'>
           <label className='text-xl mr-4 text-gray-500'>Profile Image</label>
-          {/* <input type="text" 
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
+          <input type="file" 
+          value={profileImage}
+          onChange={handleFileChange}
           className='border-2 border-gray-500 px-4 py-2 w-full'
-          /> */}
+          />
         </div>
         <button className='p-2 bg-sky-300 m-8' onClick={handleUpdatedUser}>Save</button>
       </div>

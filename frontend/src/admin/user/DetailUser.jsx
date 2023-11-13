@@ -31,7 +31,11 @@ const DetailUser = () => {
         <div className="flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4">
           <div className="my-4">
             <span className="text-xl mr-4 text-gray-500">Profile Image</span>
-            <span>{user.profileImage}</span>
+            {user.profileImage ? (
+                  <img src={user.profileImage} alt="photo-profile" style={{ maxWidth: "100%" }} />
+                ) : (
+                  <span>No profile image available</span>
+                )}
           </div>
           <div className="my-4">
             <span className="text-xl mr-4 text-gray-500">Id</span>
