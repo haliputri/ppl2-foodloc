@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {  useParams } from 'react-router-dom';
 import bg from "../assets/bg-yellow.png";
 import { Button, Card} from "flowbite-react";
 import Navigation2 from '../components/Navigation2';
@@ -6,6 +8,19 @@ import FooterResto from "../components/FooterResto";
 import profilePicture from '../assets/profpic.png';
 
 const Profile = () => {
+  const [user, setUser] = useState([]);
+  const id = useParams();
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/users/login/${id}`)
+    .then((response) => {
+      setUser(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, [])
+
   return (
     <div>
       <Navigation2 />
@@ -31,11 +46,11 @@ const Profile = () => {
                   marginBottom: "20px",
                 }}
               />
-              <p className="text-2xl mb-4" style={{fontWeight: "bold"}}>Kanaya Dewi Purnamasari</p>
+              <p className="text-2xl mb-4" style={{fontWeight: "bold"}}>{user._id}</p>
               <ul className="w-full text-sm font-medium ">
                 <li className="w-full px-4 py-2 grid grid-cols-2 gap-4 hover:bg-gray-100" style={{ }}>
                   <span style={{ fontWeight: "bold", display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>Email</span>
-                  <span style={{ display: "flex", alignItems: "flex-start", justifyContent: "flex-start" }}>email@yahoo.com</span>
+                  <span style={{ display: "flex", alignItems: "flex-start", justifyContent: "flex-start" }}>{user._id}</span>
                 </li>
                 <li className="w-full px-4 py-2 grid grid-cols-2 gap-4 hover:bg-gray-100" style={{ }}>
                   <span style={{ fontWeight: "bold", display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>Alamat</span>
