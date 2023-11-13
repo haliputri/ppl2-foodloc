@@ -5,6 +5,9 @@ import vector from "../assets/bg.png";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Navigation from "../components/Navigation";
 import FooterResto from "../components/FooterResto";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 
 const Login = () => {
@@ -52,6 +55,17 @@ const Login = () => {
               <Label htmlFor="remember">Remember me</Label>
             </div>
             <Button type="submit">Submit</Button>
+            <GoogleOAuthProvider clientId="39039937550-ragrh883e53mqgucmkcb5j67cn14ssar.apps.googleusercontent.com">...
+              <GoogleLogin
+                onSuccess={credentialResponse => {
+                  const decoded = jwtDecode(credentialResponse.credential);
+                  console.log(decoded);
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+        />
+            </GoogleOAuthProvider>
           </form>
         </Card>
         </div>

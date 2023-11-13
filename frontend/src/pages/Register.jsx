@@ -6,6 +6,7 @@ import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Navigation from "../components/Navigation";
 import FooterResto from "../components/FooterResto";
 
+
 const Register = () => {
   return (
     <div>
