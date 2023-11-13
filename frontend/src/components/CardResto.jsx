@@ -24,11 +24,11 @@ const CardResto = () => {
   const firstThreeRestaurants = restaurants.slice(0, 3);
 
   return (
-    <div className="flex mb-16">
+    <div className="flex mb-16 ml-8 ">
       {firstThreeRestaurants.map((restaurant) => (
         <Card
           key={restaurant.resto_id} // Pastikan key unik untuk setiap elemen dalam array
-          className="max-w-sm ml-4 mr-4"
+          className="mr-44"
           href="#"
           imgAlt=""
           imgSrc={food1}
