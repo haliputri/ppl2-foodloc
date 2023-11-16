@@ -8,13 +8,12 @@ import FooterResto from "../components/FooterResto";
 import profilePicture from '../assets/profpic.png';
 
 const Profile = () => {
-  const [user, setUser] = useState([]);
-  const id = useParams();
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/users/login/${id}`)
+    axios.get(`http://localhost:8080/users/login`)
     .then((response) => {
-      setUser(response.data.data);
+      setUser(response.id);
     })
     .catch((error) => {
       console.log(error);
