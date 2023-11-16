@@ -11,10 +11,12 @@ const CreateResto = () => {
   const [phone_number, setPhoneNumber] = useState('');
   const [social_media, setSocialMedia] = useState('');
   const [rating, setRating] = useState('');
+  const [resto_id, setRestoId] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleSaveResto = () => {
     const data = {
+      resto_id,
       name,
       address,
       city,
@@ -42,6 +44,15 @@ const CreateResto = () => {
       <h1 className='text-3xl my-4'>Create Resto</h1>
       {loading ? <Spinner/> : ''}
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[680px] p-4 mx-auto'>
+      <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Resto Id</label>
+          <input 
+          type="text" 
+          value={resto_id}
+          onChange={(e) => setRestoId(e.target.value)}
+          className='border-2 border-gray-500 px-4 py-2 w-full'
+          />
+        </div>
         <div className='my-4'>
           <label className='text-xl mr-4 text-gray-500'>Name</label>
           <input 

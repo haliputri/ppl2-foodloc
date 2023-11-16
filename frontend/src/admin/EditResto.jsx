@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BackButton from '../components/BackButton'
 import Spinner from '../components/Spinner'
 import axios from 'axios'
-import { useNavigate, useParams, useEffect } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const EditResto = () => {
   const [name, setName] = useState('');
@@ -10,26 +10,30 @@ const EditResto = () => {
   const [city, setCity] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
   const [social_media, setSocialMedia] = useState('');
+  // const [resto_id, setRestoId] = useState('');
   const [rating, setRating] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {id} = useParams();
+  const {resto_id} = useParams();
+
   useEffect(() => {
-    setLoading(true);
-    axios.get(`http://localhost:8080/restaurants${id}`)
+    axios.get(`http://localhost:8080/restaurants/${resto_id}`)
     .then((response) => {
       setName(response.data.name);
-      setAddress(response.data.address);
-      setCity(response.data.city);
-      setPhoneNumber(response.data.phone_number);
-      setSocialMedia(response.data.social_media);
-      setRating(response.data.rating);
+      setAddress(response.data.address)
+      setCity(response.data.city)
+      setSocialMedia(response.data.social_media)
+      setPhoneNumber(response.data.phone_number)
+      setRating(response.data.rating)
+      // setRestoId(response.data.setRestoId)
+      setLoading(false);
     })
     .catch((error) => {
-      setLoading('An error happened, please check console.');
+      setLoading(false);
+      alert('An error happened. Please check console.');
       console.log(error);
-    });
-  }, [])
+    })
+  }, []);
   const handleEditResto = () => {
     const data = {
       name,
@@ -38,10 +42,11 @@ const EditResto = () => {
       social_media,
       phone_number,
       rating,
+      // resto_id,
     };
     setLoading(true);
     axios
-     .put(`http://localhost:8080/restaurants${id}`, data)
+     .put(`http://localhost:8080/restaurants/${resto_id}`, data)
      .then(() => {
       setLoading(false);
       navigate('/admin');
@@ -59,6 +64,15 @@ const EditResto = () => {
       <h1 className='text-3xl my-4'>Edit Resto</h1>
       {loading ? <Spinner/> : ''}
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[680px] p-4 mx-auto'>
+      {/* <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Resto ID</label>
+          <input 
+          type="text" 
+          value={resto_id}
+          onChange={(e) => setRestoId(e.target.value)}
+          className='border-2 border-gray-500 px-4 py-2 w-full'
+          />
+        </div> */}
         <div className='my-4'>
           <label className='text-xl mr-4 text-gray-500'>Name</label>
           <input 
@@ -114,4 +128,4 @@ const EditResto = () => {
   )
 }
 
-export default EditResto
+// export default EditResto

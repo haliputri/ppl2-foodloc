@@ -12,9 +12,17 @@ export default {
     //   lg: '976px',
     //   xl: '1440px',
     // },
+    colors: {
+      gray: {
+        'D9D9D9': '#D9D9D9',
+      },
+      orange: {
+        'FFA90A' : '#FFA90A',
+      },
+    },
   },
   plugins: [
     require('flowbite/plugin'),
-  ],
+  ]
 }
 

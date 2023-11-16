@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import Spinner from "../../components/Spinner";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
-import Sidenav from "../components/Sidenav";
+import Sidenav from "../../components/Sidenav";
 
-const ListResto = () => {
-  const [restaurants, setResto] = useState([]);
+const ShowUser = () => {
+  const [users, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/restaurants")
+      .get("http://localhost:8080/users")
       .then((response) => {
-        setResto(response.data.data);
+        setUser(response.data.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -29,7 +29,7 @@ const ListResto = () => {
       <Sidenav />
       <div className="p-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl">Restaurants List</h1>
+          <h1 className="text-3xl">Users List</h1>
           <Link to="add">
             <MdOutlineAddBox className="text-sky-800 text-4xl" />
           </Link>
@@ -41,51 +41,35 @@ const ListResto = () => {
             <thead>
               <tr>
                 <th className="border border-slate-600 rounded-md">No</th>
-                <th className="border border-slate-600 rounded-md">Name</th>
-                <th className="border border-slate-600 rounded-md">Address</th>
-                <th className="border border-slate-600 rounded-md">City</th>
-                <th className="border border-slate-600 rounded-md">
-                  Social Media
-                </th>
-                <th className="border border-slate-600 rounded-md">
-                  Phone Number
-                </th>
-                <th className="border border-slate-600 rounded-md">Rating</th>
+                <th className="border border-slate-600 rounded-md">username</th>
+                <th className="border border-slate-600 rounded-md">email</th>
+                <th className="border border-slate-600 rounded-md">password</th>
               </tr>
             </thead>
             <tbody>
-              {restaurants.map((restaurant, index) => (
-                <tr key={restaurant._id} className="h-8">
+              {users.map((user, index) => (
+                <tr key={user._id} className="h-8">
                   <td className="border border-slate-700 rounded-md text-center">
                     {index + 1}
                   </td>
                   <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.name}
+                    {user.username}
                   </td>
                   <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.address}
+                    {user.email}
                   </td>
                   <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.city}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.social_media}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.phone_number}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.rating}
+                    {user.password}
                   </td>
                   <td className="border border-slate-700 rounded-md text-center">
                     <div className="flex justify-center gap-x-4">
-                      <Link to={`${restaurant.resto_id}`}>
+                      <Link to={`${user._id}`}>
                         <BsInfoCircle className="text-2xl text-green-800" />
                       </Link>
-                      <Link to={`edit/${restaurant.resto_id}`}>
+                      <Link to={`edit/${user._id}`}>
                         <AiOutlineEdit className="text-2xl text-green-800" />
                       </Link>
-                      <Link to={`delete/${restaurant.resto_id}`}>
+                      <Link to={`delete/${user._id}`}>
                         <MdOutlineDelete className="text-2xl text-red-800" />
                       </Link>
                     </div>
@@ -100,4 +84,4 @@ const ListResto = () => {
   );
 };
 
-export default ListResto;
+export default ShowUser;
