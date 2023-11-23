@@ -78,7 +78,7 @@ const Profile = () => {
                   />                
                 </li>
               </ul>
-              <Button className="mt-8 " style={{ backgroundColor: "#FFA90A", color: "white", width: "150px" }}>
+              <Button href="profile" className="mt-8 " style={{ backgroundColor: "#FFA90A", color: "white", width: "150px" }}>
                 Simpan
               </Button>      
             </div>

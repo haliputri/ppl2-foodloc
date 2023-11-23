@@ -8,13 +8,10 @@ import { BsInfoCircle } from 'react-icons/bs'
 import { MdAdd , MdOutlineDelete } from 'react-icons/md'
 import { Checkbox, Table, Button } from 'flowbite-react';
 import { Breadcrumb } from 'flowbite-react';
-import Sidebar from "../components/SidebarAdmin";
 
-const ListResto = () => {
+const ListMenu = () => {
     const [restaurants, setResto] = useState([]);
-    const [loading, setLoading] = useState(false);
-    // const [currentPage, setCurrentPage] = useState(1); 
-    // const itemsPerPage = 10;  
+    const [loading, setLoading] = useState(false); 
     const [currentPage, setCurrentPage] = useState(1);
     const onPageChange = (page) => setCurrentPage(page);
 
@@ -33,31 +30,22 @@ const ListResto = () => {
             })
     }, []);
 
-  // // Pagination Logic
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = restaurants.slice(indexOfFirstItem, indexOfLastItem);
 
-  // // Change page
-  // const handlePageChange = (pageNumber) => {
-  //   setCurrentPage(pageNumber);
-  // };
-
-
-  return ( 
+  return (
     <div className='p-4'>
-      
-      {/* <Sidebar /> */}
       <Breadcrumb aria-label="Solid background breadcrumb example" className="bg-gray-50 px-5 py-3 dark:bg-gray-800">
         <Breadcrumb.Item href="#" >Restaurant List</Breadcrumb.Item>
+        <Breadcrumb.Item href="#" >Detail Restaurant</Breadcrumb.Item>
+        {/* <Breadcrumb.Item href="#" >{restaurant.name}</Breadcrumb.Item> */}
       </Breadcrumb>
+
       <div className='flex justify-between items-center  mb-4 mt-8'>
-        <h1 className='text-3xl'>Restaurant List</h1>
-        <Button  href="admin/addresto" style={{ backgroundColor: "#FFA90A", color: "white"  }} className='border'>
+        <h1 className='text-3xl'>Menu</h1>
+        <Button  href="/addmenu" style={{ backgroundColor: "#FFA90A", color: "white"  }} className='border'>
           <MdAdd  className=' text-4xl' style={{ height:'24' , color:'white' }} /> Tambah Data
-        </Button>
- 
+        </Button> 
       </div>
+
       {loading ? (
         <div className="flex flex-wrap gap-2" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}> 
         <Spinner color="warning" aria-label="Warning Extra large spinner example" size="xl"/> </div>
@@ -66,12 +54,10 @@ const ListResto = () => {
         <Table hoverable>
           <Table.Head>
             <Table.HeadCell>No</Table.HeadCell>
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Address</Table.HeadCell>
-            <Table.HeadCell>City</Table.HeadCell>
-            <Table.HeadCell>Social Media</Table.HeadCell>
-            <Table.HeadCell>Phone Number</Table.HeadCell>
-            <Table.HeadCell>Rating</Table.HeadCell>
+            <Table.HeadCell>Menu</Table.HeadCell>
+            <Table.HeadCell>Variant</Table.HeadCell>
+            <Table.HeadCell>Price</Table.HeadCell>
+            <Table.HeadCell>Stock</Table.HeadCell>
             <Table.HeadCell>
               <span className="sr-only">Edit</span>
             </Table.HeadCell>
@@ -84,15 +70,13 @@ const ListResto = () => {
             <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
               <Table.Cell>1</Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                <a href="/admin/menu/:id">{'Moo Nyoo'}</a>
+                Milkshake Strawberry 
               </Table.Cell>
-              <Table.Cell>Hegarmanah</Table.Cell>
-              <Table.Cell>Jatinangor</Table.Cell>
-              <Table.Cell>@moonyookedaisusu</Table.Cell>
-              <Table.Cell>082345345345</Table.Cell>
-              <Table.Cell>4.7</Table.Cell>
+              <Table.Cell>Large</Table.Cell>
+              <Table.Cell>25000</Table.Cell>
+              <Table.Cell>50</Table.Cell> 
               <Table.Cell>
-                <a href="/admin/editresto/:id" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                <a href="/admin/editmenu/:id" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                   Edit
                 </a>
               </Table.Cell>
@@ -104,20 +88,16 @@ const ListResto = () => {
             </Table.Row>
 
 
-            {/* 
-            {restaurants.map((restaurant, index) => ()
-            <Table.Row key={restaurant._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            {/* <Table.Row key={restaurant._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
               <Table.Cell>{index + 1}</Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                <a href="/admin/detail/:id">{restaurant.name}</a>
+                {restaurant.menu_name} 
               </Table.Cell>
-              <Table.Cell>{restaurant.address}</Table.Cell>
-              <Table.Cell>{restaurant.city}</Table.Cell>
-              <Table.Cell>{restaurant.social_media}</Table.Cell>
-              <Table.Cell>{restaurant.phone_number}</Table.Cell>
-              <Table.Cell>{restaurant.rating}</Table.Cell>
+              <Table.Cell>{restaurant.variant}</Table.Cell>
+              <Table.Cell>{restaurant.price}</Table.Cell>
+              <Table.Cell>{restaurant.stock}</Table.Cell> 
               <Table.Cell>
-                <a href="/admin/edit/:id" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                <a href="/admin/editmenu/:id" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                   Edit
                 </a>
               </Table.Cell>
@@ -129,12 +109,6 @@ const ListResto = () => {
             </Table.Row> */}
           </Table.Body>
         </Table>
-        {/* <Pagination
-        totalItems={restaurants.length}
-        itemsPerPage={itemsPerPage}
-        onChange={handlePageChange}
-        activePage={currentPage}
-        /> */}
 
         <div className="flex overflow-x-auto sm:justify-center">
           <Pagination className="mt-8 mb-8" layout="table" currentPage={currentPage} totalPages={100} onPageChange={onPageChange} showIcons />
@@ -146,4 +120,4 @@ const ListResto = () => {
   );
 };
 
-export default ListResto
+export default ListMenu

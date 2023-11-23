@@ -9,10 +9,14 @@ import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 
 import ShowResto from './admin/ShowResto'
-import CreateResto from './admin/CreateResto'
+import CreateResto from './admin/CreateResto' 
 import EditResto from './admin/EditResto'
 import DeleteResto from './admin/DeleteResto'
 import ListResto from './admin/ListResto'
+
+import ListMenu from './admin/ListMenu'
+import CreateMenu from './admin/CreateMenu' 
+import EditMenu from './admin/EditMenu'
 
 const App = () => {
   return (
@@ -27,10 +31,14 @@ const App = () => {
       <Route path='/editprofile' element={<EditProfile/>} />
       
       <Route path='/admin/' element={<ListResto/>} />
-      <Route path='/admin/:id' element={<ShowResto/>} />
-      <Route path='/admin/edit/:id' element={<EditResto/>} />
-      <Route path='/admin/add' element={<CreateResto/>} />
-      <Route path='/admin/delete/:id' element={<DeleteResto/>} />
+      <Route path='/admin/:id' element={<ShowResto/>} /> 
+      <Route path='/admin/addresto' element={<CreateResto/>} />
+      <Route path='/admin/editresto/:id' element={<EditResto/>} /> 
+      <Route path='/admin/deleteresto/:id' element={<DeleteResto/>} />
+      
+      <Route path='/admin/menu/:id' element={<ListMenu/>} />
+      <Route path='/addmenu' element={<CreateMenu/>} />
+      <Route path='/admin/editmenu/:id' element={<EditMenu/>} />
     </Routes>
   )
 }
