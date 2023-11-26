@@ -31,6 +31,7 @@ const Profile = () => {
                   marginBottom: "20px"
                 }}
               />
+              {/* <input type="file" /> */}
               <p className="text-2xl mb-4" style={{fontWeight: "bold"}}>Kanaya Dewi Purnamasari</p>
               <ul className="w-full text-sm font-medium ">
                 <li className="w-full px-4 py-2 grid grid-cols-2 gap-4 ">
