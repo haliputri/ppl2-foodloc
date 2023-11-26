@@ -7,6 +7,7 @@ import RestaurantDetail from './pages/RestaurantDetail'
 import RestaurantPage from './pages/RestaurantDetail'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
+import Maps from './pages/Maps'
 
 import ShowResto from './admin/ShowResto'
 import CreateResto from './admin/CreateResto'
@@ -20,8 +21,6 @@ import CreateUser from './admin/user/CreateUser'
 import EditUser from './admin/user/EditUser'
 import DeleteUser from './admin/user/DeleteUser'
 
-// import { GoogleOAuthProvider } from '@react-oauth/google';
-// import { GoogleLogin } from '@react-oauth/google';
 
 const App = () => {
   return (
@@ -34,6 +33,7 @@ const App = () => {
       <Route path='/restaurant' element={<RestaurantPage/>} />
       <Route path='/profile/:id' element={<Profile/>} />
       <Route path='/editprofile' element={<EditProfile/>} />
+      <Route path='/maps' element={<Maps/>} />
       
       <Route path='/admin/' element={<ListResto/>} />
       <Route path='/admin/:resto_id' element={<ShowResto/>} />
