@@ -87,6 +87,15 @@ const Login = () => {
                 <Label htmlFor="remember">Remember me</Label>
               </div>
               <Button style={{ backgroundColor: "#FFA90A" }} onClick={handleSubmit}>Sign In</Button>
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                Don’t have an account yet?{" "}
+                <a
+                  href="/register"
+                  class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >
+                  Sign up
+                </a>
+              </p>
             <GoogleOAuthProvider clientId="39039937550-ragrh883e53mqgucmkcb5j67cn14ssar.apps.googleusercontent.com"><span style={{ justifyContent: "center", display:"flex" }}>- atau -</span> 
               <GoogleLogin
                 onSuccess={credentialResponse => {
