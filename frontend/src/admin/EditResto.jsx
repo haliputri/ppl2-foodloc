@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
+import bg from "../assets/bg-yellow.png";
+import { Button, Card} from "flowbite-react";
+import { HiOutlineArrowLeft } from 'react-icons/hi';
+import { useState } from 'react';
+import { Spinner } from "flowbite-react";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import BackButton from '../components/BackButton'
-import Spinner from '../components/Spinner'
-import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const EditResto = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('');                                                                                                                                                                                                                                       
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
@@ -19,12 +25,12 @@ const EditResto = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/restaurants/${resto_id}`)
     .then((response) => {
-      setName(response.data.name);
-      setAddress(response.data.address)
-      setCity(response.data.city)
-      setSocialMedia(response.data.social_media)
-      setPhoneNumber(response.data.phone_number)
-      setRating(response.data.rating)
+      setName(response.data.data.name);
+      setAddress(response.data.data.address)
+      setCity(response.data.data.city)
+      setSocialMedia(response.data.data.social_media)
+      setPhoneNumber(response.data.data.phone_number)
+      setRating(response.data.data.rating)
       // setRestoId(response.data.setRestoId)
       setLoading(false);
     })
@@ -59,73 +65,102 @@ const EditResto = () => {
   }
 
   return (
-    <div className='p-4'>
-      <BackButton />
-      <h1 className='text-3xl my-4'>Edit Resto</h1>
-      {loading ? <Spinner/> : ''}
-      <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[680px] p-4 mx-auto'>
-      {/* <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Resto ID</label>
-          <input 
-          type="text" 
-          value={resto_id}
-          onChange={(e) => setRestoId(e.target.value)}
-          className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div> */}
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Name</label>
-          <input 
-          type="text" 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
+    <div
+      style={{
+        backgroundImage: `url(${bg})`,
+        display: 'flex',
+        flexDirection: 'column', 
+        alignItems: 'center',
+        padding: '20px',
+      }}
+    >
+      
+
+      {loading ? 
+        <div className="flex flex-wrap gap-2" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}> 
+        <Spinner color="warning" aria-label="Warning Extra large spinner example" size="xl"/> </div>
+      : ''}
+   
+      <Card className='mt-8 mb-20' style={{ width: '100%', maxWidth: '800px', height: 'auto', textAlign: 'center' }}>
+        <form className='flex flex-col gap-4'>
+        <div className='mt-20 mb-8' style={{ display: 'flex', alignItems: 'center', marginTop: '20px',width: '100%', maxWidth: '800px', height: 'auto', textAlign: 'center' }}>
+          <Button color="warning" href="/admin" outline className='text-white bg-yellow border border-transparent enabled:hover:bg-yellow-400 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900'>
+            <HiOutlineArrowLeft className="ml-2 h-5 w-5" />
+          </Button>
+          <h1 className='text-2xl sm:text-3xl md:text-4xl ' style={{ marginLeft: '20px' }}>Edit Restaurant</h1>       
         </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Address</label>
-          <input type="text" 
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>City</label>
-          <input type="text" 
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Sosmed</label>
-          <input type="text" 
-          value={social_media}
-          onChange={(e) => setSocialMedia(e.target.value)}
-          className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Telp</label>
-          <input type="number" 
-          value={phone_number}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Rating</label>
-          <input type="number" 
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <button className='p-2 bg-sky-300 m-8' onClick={handleEditResto}>Save</button>
-      </div>
+        <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <input 
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " />
+            <label htmlFor="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Restaurant Name</label>
+          </div>
+          <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <input 
+            type="text"
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " />
+            <label htmlFor="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Address</label>
+          </div>
+          <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <input 
+            type="text"
+            id="city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " />
+            <label htmlFor="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">City</label>
+          </div>
+          <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <input 
+            type="text"
+            id="social_media"
+            value={social_media}
+            onChange={(e) => setSocialMedia(e.target.value)}
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " />
+            <label htmlFor="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Social Media</label>
+          </div>
+          <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <input 
+            type="number" 
+            id="phone_number"
+            value={phone_number}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " />
+            <label htmlFor="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Phone Number</label>
+          </div>
+          <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <input 
+            type="number" 
+            id="rating"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " />
+            <label htmlFor="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Rating</label>
+          </div>
+          <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Button 
+              className="mt-8 w-full" 
+              style={{ backgroundColor: "#FFA90A", color: "white", height: '48px' }}
+              onClick={handleEditResto}>
+              Simpan
+            </Button> 
+          </div>
+        </form>
+      </Card>
     </div>
-  )
-}
+  );
+};
 
 export default EditResto

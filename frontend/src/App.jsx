@@ -10,10 +10,14 @@ import EditProfile from './pages/EditProfile'
 import Maps from './pages/Maps'
 
 import ShowResto from './admin/ShowResto'
-import CreateResto from './admin/CreateResto'
+import CreateResto from './admin/CreateResto' 
 import EditResto from './admin/EditResto'
 import DeleteResto from './admin/DeleteResto'
 import ListResto from './admin/ListResto'
+
+import ListMenu from './admin/ListMenu'
+import CreateMenu from './admin/CreateMenu' 
+import EditMenu from './admin/EditMenu'
 
 import ShowUser from './admin/user/ShowUser'
 import DetailUser from './admin/user/DetailUser'
@@ -39,13 +43,22 @@ const App = () => {
       <Route path='/admin/:resto_id' element={<ShowResto/>} />
       <Route path='/admin/edit/:resto_id' element={<EditResto/>} />
       <Route path='/admin/add' element={<CreateResto/>} />
-      <Route path='/admin/delete/:resto_id' element={<DeleteResto/>} />
+      <Route path='/resto/delete/:resto_id' element={<DeleteResto/>} />
 
       <Route path='/user/' element={<ShowUser/>} />
       <Route path='/user/:id' element={<DetailUser/>} />
       <Route path='/user/edit/:id' element={<EditUser/>} />
       <Route path='/user/add' element={<CreateUser/>} />
       <Route path='/user/delete/:id' element={<DeleteUser/>} />
+      
+      {/* <Route path='/admin/:id' element={<ShowResto/>} />  */}
+      {/* <Route path='/admin/addresto' element={<CreateResto/>} /> */}
+      {/* <Route path='/admin/editresto/:id' element={<EditResto/>} />  */}
+      <Route path='/admin/deleteresto/:id' element={<DeleteResto/>} />
+      
+      <Route path='/admin/menu/:id' element={<ListMenu/>} />
+      <Route path='/addmenu' element={<CreateMenu/>} />
+      <Route path='/admin/editmenu/:id' element={<EditMenu/>} />
     </Routes>
   )
 }

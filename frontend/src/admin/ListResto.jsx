@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import { Spinner } from "flowbite-react";
+import { Pagination } from "flowbite-react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
-import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
-import Sidenav from "../components/Sidenav";
+import { MdAdd, MdOutlineDelete } from "react-icons/md";
+import { Checkbox, Table, Button } from "flowbite-react";
+import { Breadcrumb } from "flowbite-react";
+import Sidebar from "../components/SidebarAdmin";
 
 const ListResto = () => {
   const [restaurants, setResto] = useState([]);
   const [loading, setLoading] = useState(false);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = (page) => setCurrentPage(page);
 
   useEffect(() => {
     setLoading(true);
@@ -24,78 +31,151 @@ const ListResto = () => {
         setLoading(false);
       });
   }, []);
+
+  // // Pagination Logic
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = restaurants.slice(indexOfFirstItem, indexOfLastItem);
+
+  // // Change page
+  // const handlePageChange = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  // };
+
   return (
-    <div className="flex">
-      <Sidenav />
-      <div className="p-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl">Restaurants List</h1>
-          <Link to="add">
-            <MdOutlineAddBox className="text-sky-800 text-4xl" />
-          </Link>
-        </div>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <table className="w-full border-separate border-spacing-2">
-            <thead>
-              <tr>
-                <th className="border border-slate-600 rounded-md">No</th>
-                <th className="border border-slate-600 rounded-md">Name</th>
-                <th className="border border-slate-600 rounded-md">Address</th>
-                <th className="border border-slate-600 rounded-md">City</th>
-                <th className="border border-slate-600 rounded-md">
-                  Social Media
-                </th>
-                <th className="border border-slate-600 rounded-md">
-                  Phone Number
-                </th>
-                <th className="border border-slate-600 rounded-md">Rating</th>
-              </tr>
-            </thead>
-            <tbody>
-              {restaurants.map((restaurant, index) => (
-                <tr key={restaurant._id} className="h-8">
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {index + 1}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.name}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.address}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.city}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.social_media}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.phone_number}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    {restaurant.rating}
-                  </td>
-                  <td className="border border-slate-700 rounded-md text-center">
-                    <div className="flex justify-center gap-x-4">
-                      <Link to={`${restaurant.resto_id}`}>
-                        <BsInfoCircle className="text-2xl text-green-800" />
-                      </Link>
-                      <Link to={`edit/${restaurant.resto_id}`}>
-                        <AiOutlineEdit className="text-2xl text-green-800" />
-                      </Link>
-                      <Link to={`delete/${restaurant.resto_id}`}>
-                        <MdOutlineDelete className="text-2xl text-red-800" />
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+    <div className="p-4">
+      {/* <Sidebar /> */}
+      <Breadcrumb
+        aria-label="Solid background breadcrumb example"
+        className="bg-gray-50 px-5 py-3 dark:bg-gray-800"
+      >
+        <Breadcrumb.Item href="#">Restaurant List</Breadcrumb.Item>
+      </Breadcrumb>
+      <div className="flex justify-between items-center  mb-4 mt-8">
+        <h1 className="text-3xl">Restaurant List</h1>
+        <Button
+          href="admin/add"
+          style={{ backgroundColor: "#FFA90A", color: "white" }}
+          className="border"
+        >
+          <MdAdd
+            className=" text-4xl"
+            style={{ height: "24", color: "white" }}
+          />{" "}
+          Tambah Data
+        </Button>
       </div>
+      {loading ? (
+        <div
+          className="flex flex-wrap gap-2"
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: "9999",
+          }}
+        >
+          <Spinner
+            color="warning"
+            aria-label="Warning Extra large spinner example"
+            size="xl"
+          />{" "}
+        </div>
+      ) : (
+        <React.Fragment>
+          <Table hoverable>
+            <Table.Head>
+              <Table.HeadCell>No</Table.HeadCell>
+              <Table.HeadCell>Name</Table.HeadCell>
+              <Table.HeadCell>Address</Table.HeadCell>
+              <Table.HeadCell>City</Table.HeadCell>
+              <Table.HeadCell>Social Media</Table.HeadCell>
+              <Table.HeadCell>Phone Number</Table.HeadCell>
+              <Table.HeadCell>Rating</Table.HeadCell>
+              <Table.HeadCell>
+                <span className="sr-only">Edit</span>
+              </Table.HeadCell>
+              <Table.HeadCell>
+                <span className="sr-only">Delete</span>
+              </Table.HeadCell>
+            </Table.Head>
+
+            <Table.Body className="divide-y">
+              {restaurants.map((restaurant, index) => (
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell>{index + 1}</Table.Cell>
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    <Link to={`${restaurant.resto_id}`}>{restaurant.name}</Link>
+                  </Table.Cell>
+                  <Table.Cell>{restaurant.address}</Table.Cell>
+                  <Table.Cell>{restaurant.city}</Table.Cell>
+                  <Table.Cell>{restaurant.social_media}</Table.Cell>
+                  <Table.Cell>{restaurant.phone_number}</Table.Cell>
+                  <Table.Cell>{restaurant.rating}</Table.Cell>
+                  <Table.Cell>
+                    <Link
+                      to={`edit/${restaurant.resto_id}`}
+                      className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                    >
+                      Edit
+                    </Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <a
+                      href="#"
+                      className="font-medium text-red-600 hover:underline dark:text-cyan-500"
+                    >
+                      Delete
+                    </a>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+
+              {/* 
+            {restaurants.map((restaurant, index) => ()
+            <Table.Row key={restaurant._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Cell>{index + 1}</Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <a href="/admin/detail/:id">{restaurant.name}</a>
+              </Table.Cell>
+              <Table.Cell>{restaurant.address}</Table.Cell>
+              <Table.Cell>{restaurant.city}</Table.Cell>
+              <Table.Cell>{restaurant.social_media}</Table.Cell>
+              <Table.Cell>{restaurant.phone_number}</Table.Cell>
+              <Table.Cell>{restaurant.rating}</Table.Cell>
+              <Table.Cell>
+                <a href="/admin/edit/:id" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                  Edit
+                </a>
+              </Table.Cell>
+              <Table.Cell>
+                <a href="#" className="font-medium text-red-600 hover:underline dark:text-cyan-500">
+                  Delete
+                </a>
+              </Table.Cell>
+            </Table.Row> */}
+            </Table.Body>
+          </Table>
+          {/* <Pagination
+        totalItems={restaurants.length}
+        itemsPerPage={itemsPerPage}
+        onChange={handlePageChange}
+        activePage={currentPage}
+        /> */}
+
+          <div className="flex overflow-x-auto sm:justify-center">
+            <Pagination
+              className="mt-8 mb-8"
+              layout="table"
+              currentPage={currentPage}
+              totalPages={100}
+              onPageChange={onPageChange}
+              showIcons
+            />
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 };
