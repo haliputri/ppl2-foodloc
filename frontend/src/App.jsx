@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import RestaurantDetail from './pages/RestaurantDetail'
-import RestaurantPage from './pages/RestaurantDetail'
+import RestaurantPage from './pages/RestaurantPage'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 import Maps from './pages/Maps'
@@ -32,8 +32,8 @@ const App = () => {
       <Route path='/' element={<HomePage/>} />
       <Route path='/login' element={<Login/>} />
       <Route path='/register' element={<Register/>} />
-      <Route path='/restaurantdetail' element={<RestaurantDetail/>} />
-      {/* <Route path='/restaurant/:id' element={<RestaurantDetail/>} /> */}
+      {/* <Route path='/restaurantdetail' element={<RestaurantDetail/>} /> */}
+      <Route path='/restaurant/:resto_id' element={<RestaurantDetail/>} />
       <Route path='/restaurant' element={<RestaurantPage/>} />
       <Route path='/profile/:id' element={<Profile/>} />
       <Route path='/editprofile' element={<EditProfile/>} />
