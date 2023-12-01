@@ -148,8 +148,4 @@ const EditUser = () => {
   )
 } 
 
-<<<<<<< HEAD
 export default EditUser
-=======
-export default EditUser
->>>>>>> c133ba8e920b17dad474e460353e69f8e6a9e3c0

@@ -37,8 +37,4 @@ const DeleteUser = () => {
   )
 }
 
-<<<<<<< HEAD
 export default DeleteUser
-=======
-export default DeleteUser
->>>>>>> c133ba8e920b17dad474e460353e69f8e6a9e3c0
