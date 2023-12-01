@@ -7,8 +7,8 @@ import Logo from "../assets/Logo.svg";
 const Navigation = () => {
   return (
     <Navbar fluid style={{ backgroundColor: "#FFA90A" }}>
-      <Navbar.Brand href="https://flowbite-react.com">
-        <img src={Logo} className="p-1 pl-12 mr-6 h-4 sm:h-9" alt="" />
+      <Navbar.Brand href="/">
+        <img src={Logo} className="p-1 pl-12 mr-6 h-4 sm:h-9" alt=""/>
       </Navbar.Brand>
       <div className="flex md:order-2">
         <Link to="/login">

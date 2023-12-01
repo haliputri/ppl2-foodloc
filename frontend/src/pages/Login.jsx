@@ -7,9 +7,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Navigation from "../components/Navigation";
 import FooterResto from "../components/FooterResto";
-// import { GoogleOAuthProvider } from '@react-oauth/google';
-// import { GoogleLogin } from '@react-oauth/google';
-// import { jwtDecode } from "jwt-decode";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
+
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -21,11 +22,11 @@ const Login = () => {
       email,
       password,
     };
-    axios.post('http://localhost:8080/users/login', data)
+    axios.post('http://localhost:8080/users/login/find', data)
     .then(result => {
       console.log(result)
       if(result.data.message === "Success"){
-        navigate(`/profile/${result.data.id}`)
+        navigate(`/profile/${result.data.username}`)
       }
     })
     .catch( error => console.log (error))
@@ -40,23 +41,23 @@ const Login = () => {
           height: "682px",
         }}
       >
-        <img
-          src={vector}
-          style={{
-            position: "absolute",
-            top: "70px",
-            left: "250px",
-            width: "1440px",
-            "z-index": "-1",
-          }}
-        />
+      <img
+        src={vector} 
+        style={{
+          position: "absolute",
+          top: "70px",
+          left: "250px",
+          width: "1440px",
+          "z-index": "-1"
+        }}
+      />
         <div className="pt-40 pl-24">
-          <Card style={{ width: "30%" }}>
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        <Card style={{ width: "30%" }}>  
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Login
             </h1>
-            <form className="flex flex-col gap-4">
-              <div>
+          <form className="flex flex-col gap-4">
+          <div>
                 <div className="mb-2 block">
                   <Label value="Your email" />
                 </div>
@@ -85,19 +86,8 @@ const Login = () => {
                 <Checkbox id="remember" />
                 <Label htmlFor="remember">Remember me</Label>
               </div>
-              <Button style={{ backgroundColor: "#FFA90A" }} onClick={handleSubmit}>Submit</Button>
-              <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
-                <a
-                  href="/register"
-                  class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Sign up
-                </a>
-              </p>
-            </form>
-          </Card>
-            {/* <GoogleOAuthProvider clientId="39039937550-ragrh883e53mqgucmkcb5j67cn14ssar.apps.googleusercontent.com">...
+              <Button style={{ backgroundColor: "#FFA90A" }} onClick={handleSubmit}>Sign In</Button>
+            <GoogleOAuthProvider clientId="39039937550-ragrh883e53mqgucmkcb5j67cn14ssar.apps.googleusercontent.com"><span style={{ justifyContent: "center", display:"flex" }}>- atau -</span> 
               <GoogleLogin
                 onSuccess={credentialResponse => {
                   const decoded = jwtDecode(credentialResponse.credential);
@@ -106,13 +96,24 @@ const Login = () => {
                 onError={() => {
                   console.log('Login Failed');
                 }}
-              />
-            </GoogleOAuthProvider> */}
+        />
+            </GoogleOAuthProvider>
+          </form>
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                Don’t have an account yet?{" "}
+                <a
+                  href="/register"
+                  class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >
+                  Sign up
+                </a>
+              </p>
+        </Card>
         </div>
       </div>
       <FooterResto />
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
