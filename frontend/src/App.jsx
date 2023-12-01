@@ -35,8 +35,8 @@ const App = () => {
       {/* <Route path='/restaurantdetail' element={<RestaurantDetail/>} /> */}
       <Route path='/restaurant/:resto_id' element={<RestaurantDetail/>} />
       <Route path='/restaurant' element={<RestaurantPage/>} />
-      <Route path='/profile/:id' element={<Profile/>} />
-      <Route path='/editprofile' element={<EditProfile/>} />
+      <Route path='/profile/find/:username' element={<Profile/>} />
+      <Route path='/profile/find/edit/:username' element={<EditProfile/>} />
       <Route path='/maps' element={<Maps/>} />
       
       <Route path='/admin/' element={<ListResto/>} />
@@ -54,11 +54,10 @@ const App = () => {
       {/* <Route path='/admin/:id' element={<ShowResto/>} />  */}
       {/* <Route path='/admin/addresto' element={<CreateResto/>} /> */}
       {/* <Route path='/admin/editresto/:id' element={<EditResto/>} />  */}
-      <Route path='/admin/deleteresto/:id' element={<DeleteResto/>} />
-      
-      <Route path='/admin/menu/:id' element={<ListMenu/>} />
-      <Route path='/addmenu' element={<CreateMenu/>} />
-      <Route path='/admin/editmenu/:id' element={<EditMenu/>} />
+      {/* <Route path='/admin/deleteresto/:id' element={<DeleteResto/>} /> */}
+      {/* <Route path='/admin/menu/:id' element={<ListMenu/>} /> */}
+      {/* <Route path='/addmenu' element={<CreateMenu/>} /> */}
+      {/* <Route path='/admin/editmenu/:id' element={<EditMenu/>} /> */}
     </Routes>
   )
 }

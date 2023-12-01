@@ -66,7 +66,7 @@ router.post('/regist', async (request, response) => {
     }
 });
 
-router.post('/login', (request, response) => {
+router.post('/login/find', (request, response) => {
     const { email, password } = request.body;
 
     userModel.findOne({ email: email })
@@ -112,6 +112,114 @@ router.get('/login/:id', async (request, response) => {
     } catch (error) {
         console.log(error.message);
         response.status(500).send({ message: error.message });
+    }
+});
+
+router.get('/login/find/:username', async (req, res) => {
+    try {
+        const { username } = req.params;
+    
+        // Find user by username
+        const user = await userModel.findOne({ username });
+    
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+    
+        res.status(200).json({ data: user });
+      } catch (error) {
+        console.error('Error finding user by username:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+});
+
+router.get('/login/find/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ObjectId format' });
+      }
+  
+      // Find user by ID
+      const user = await userModel.findById(id);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.status(200).json({ data: user });
+    } catch (error) {
+      console.error('Error finding user by ID:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
+  router.put('/edit/:username', async (request, response) => {
+    const { username } = request.params;
+  
+    try {
+      // Find the user by username
+      const user = await userModel.findOne({ username });
+  
+      if (!user) {
+        return response.status(404).json({ message: 'User not found' });
+      }
+  
+      // Update user properties based on the request body
+      user.username = request.body.username || user.username;
+      user.email = request.body.email || user.email;
+      user.password = request.body.password || user.password;
+      user.name = request.body.name || user.name;
+      user.address = request.body.address || user.address;
+      user.gender = request.body.gender || user.gender;
+      user.birthdate = request.body.birthdate || user.birthdate;
+  
+      // Update profileImage if a file is uploaded
+    //   if (request.file) {
+    //     user.profileImage = request.file.buffer; // Assuming you want to store the file content in the database
+    //   }
+  
+      // Save the updated user to the database
+      const updatedUser = await user.save();
+  
+      // Return the updated user as the response
+      response.status(200).json(updatedUser);
+    } catch (error) {
+      console.error(error.message);
+      response.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+
+router.put('/edit/:id', async (request, response) => {
+    const { id } = request.params;
+
+    try {
+      // Find the user by username
+      const result = await userModel.findByIdAndUpdate(id, request.body);
+  
+      if (!user) {
+        return response.status(404).json({ message: 'User not found' });
+      }
+  
+      // Update user properties based on the request body
+      user.username = request.body.username || user.username;
+      user.email = request.body.email || user.email;
+      user.password = request.body.password || user.password;
+      user.name = request.body.name || user.name;
+      user.address = request.body.address || user.address;
+      user.gender = request.body.gender || user.gender;
+      user.birthdate = request.body.birthdate || user.birthdate;
+      user.profileImage = request.body.profileImage || user.profileImage;
+  
+      // Save the updated user to the database
+      const updatedUser = await user.save();
+  
+      // Return the updated user as the response
+      response.status(200).json(updatedUser);
+    } catch (error) {
+      console.error(error.message);
+      response.status(500).json({ message: 'Internal Server Error' });
     }
 });
 

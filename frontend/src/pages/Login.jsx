@@ -22,11 +22,11 @@ const Login = () => {
       email,
       password,
     };
-    axios.post('http://localhost:8080/users/login', data)
+    axios.post('http://localhost:8080/users/login/find', data)
     .then(result => {
       console.log(result)
       if(result.data.message === "Success"){
-        navigate(`/profile/${result.data.id}`)
+        navigate(`/profile/${result.data.username}`)
       }
     })
     .catch( error => console.log (error))
