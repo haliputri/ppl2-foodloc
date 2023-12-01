@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const restaurantSchema = mongoose.Schema(
     {
+        resto_id:{
+            type:String,
+            required: true,
+            unique: true,
+        },
         name:{
             type:String,
             required: true,

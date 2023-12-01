@@ -16,26 +16,30 @@ const EditResto = () => {
   const [city, setCity] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
   const [social_media, setSocialMedia] = useState('');
+  // const [resto_id, setRestoId] = useState('');
   const [rating, setRating] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {id} = useParams();
+  const {resto_id} = useParams();
+
   useEffect(() => {
-    setLoading(true);
-    axios.get(`http://localhost:8080/restaurants${id}`)
+    axios.get(`http://localhost:8080/restaurants/${resto_id}`)
     .then((response) => {
-      setName(response.data.name);
-      setAddress(response.data.address);
-      setCity(response.data.city);
-      setPhoneNumber(response.data.phone_number);
-      setSocialMedia(response.data.social_media);
-      setRating(response.data.rating);
+      setName(response.data.data.name);
+      setAddress(response.data.data.address)
+      setCity(response.data.data.city)
+      setSocialMedia(response.data.data.social_media)
+      setPhoneNumber(response.data.data.phone_number)
+      setRating(response.data.data.rating)
+      // setRestoId(response.data.setRestoId)
+      setLoading(false);
     })
     .catch((error) => {
-      setLoading('An error happened, please check console.');
+      setLoading(false);
+      alert('An error happened. Please check console.');
       console.log(error);
-    });
-  }, [])
+    })
+  }, []);
   const handleEditResto = () => {
     const data = {
       name,
@@ -44,10 +48,11 @@ const EditResto = () => {
       social_media,
       phone_number,
       rating,
+      // resto_id,
     };
     setLoading(true);
     axios
-     .put(`http://localhost:8080/restaurants${id}`, data)
+     .put(`http://localhost:8080/restaurants/${resto_id}`, data)
      .then(() => {
       setLoading(false);
       navigate('/admin');
@@ -69,8 +74,6 @@ const EditResto = () => {
         padding: '20px',
       }}
     >
-      
-
       {loading ? 
         <div className="flex flex-wrap gap-2" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}> 
         <Spinner color="warning" aria-label="Warning Extra large spinner example" size="xl"/> </div>
@@ -78,11 +81,11 @@ const EditResto = () => {
    
       <Card className='mt-8 mb-20' style={{ width: '100%', maxWidth: '800px', height: 'auto', textAlign: 'center' }}>
         <form className='flex flex-col gap-4'>
-        <div className='mt-20 mb-8' style={{ display: 'flex', alignItems: 'center', marginTop: '20px',width: '100%', maxWidth: '800px', height: 'auto', textAlign: 'center' }}>
-          <Button color="warning" href="/admin" outline className='text-white bg-yellow border border-transparent enabled:hover:bg-yellow-400 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900'>
+        <div className='mb-8' style={{display: 'flex', alignItems: 'center',width: '100%', maxWidth: '800px', height: 'auto', textAlign: 'center' }}>
+          <Button color="warning" href="/admin" outline className=' text-white bg-yellow border border-transparent enabled:hover:bg-yellow-400 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900'>
             <HiOutlineArrowLeft className="ml-2 h-5 w-5" />
           </Button>
-          <h1 className='text-2xl sm:text-3xl md:text-4xl ' style={{ marginLeft: '20px' }}>Edit Restaurant</h1>       
+          <h1 className='sm:text-3xl md:text-4xl ' style={{ fontSize: "20px", fontWeight: "bold" }}>Edit Restaurant</h1>       
         </div>
         <div className="relative" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <input 
