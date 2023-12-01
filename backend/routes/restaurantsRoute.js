@@ -140,7 +140,7 @@ router.delete( '/:resto_id', async(request, response) => {
     try{
         const { resto_id } = request.params;
 
-        const result = await Restaurant.findOne({ resto_id });
+        const result = await Restaurant.findOneAndDelete({ resto_id });
 
         if(!result){
             return response.status(404).json({message: 'Restaurant not found'});

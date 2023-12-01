@@ -9,6 +9,7 @@ const DeleteResto = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { resto_id } = useParams();
+  
   const handleDeleteResto = () => {
     setLoading(true);
     axios.delete(`http://localhost:8080/restaurants/${resto_id}`)

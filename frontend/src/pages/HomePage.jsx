@@ -48,6 +48,7 @@ const HomePage = () => {
         </div> */}
         <div className="flex flex-col items-center">
         <Button
+          href="restaurant"
           className="mr-12 text-2xl font-semibold font-Lato"
           style={{
             backgroundColor: "white",
