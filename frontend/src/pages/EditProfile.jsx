@@ -239,6 +239,8 @@ const EditProfile = () => {
                       id="jk1"
                       name="jeniskelamin"
                       className="w-full p-2 py-3 text-sm border rounded-lg"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
                       style={{
                         display: "flex",
                         alignItems: "flex-start",
