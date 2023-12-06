@@ -21,15 +21,6 @@ const Login = () => {
       email,
       password,
     };
-    axios.post('http://localhost:8080/users/login/find', data)
-    .then(result => {
-      console.log(result)
-      if(result.data.message === "Success"){
-        navigate(`/profile/find/${result.data.data.username}`)
-      }
-    })
-    .catch( error => console.log (error))
-  }
     axios
       .post("http://localhost:8080/users/login/find", data)
       .then((result) => {
@@ -131,6 +122,6 @@ const Login = () => {
       <FooterResto />
     </div>
   );
-;
+};
 
 export default Login;
