@@ -17,14 +17,12 @@ const Profile = () => {
     axios
       .get(`http://localhost:8080/users/login/find/${username}`)
       .then((response) => {
-        setUser(response.data.data);
+        const userData = response.data.data;
+        setUser(userData);
 
-        const originalDate = response.data.data.birthdate;
-        // Check if the originalDate is a valid ISO string
-        const formattedDate = format(new Date(originalDate), "yyyy-MM-dd");
+        const originalDate = userData.birthdate;
+        const formattedDate = new Date(originalDate).toLocaleDateString();
         setBirthDate(formattedDate);
-
-        setUser(response.data.data);
       })
       .catch((error) => {
         console.log(error);
