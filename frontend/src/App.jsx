@@ -15,11 +15,11 @@ import EditResto from './admin/EditResto'
 import DeleteResto from './admin/DeleteResto'
 import ListResto from './admin/ListResto'
 
-import ListMenu from './admin/ListMenu'
-import CreateMenu from './admin/CreateMenu' 
-import EditMenu from './admin/EditMenu'
+// import ListMenu from './admin/ListMenu'
+// import CreateMenu from './admin/CreateMenu' 
+// import EditMenu from './admin/EditMenu'
 
-import ShowUser from './admin/user/ShowUser'
+import ListUser from './admin/user/ListUser'
 import DetailUser from './admin/user/DetailUser'
 import CreateUser from './admin/user/CreateUser'
 import EditUser from './admin/user/EditUser'
@@ -45,7 +45,7 @@ const App = () => {
       <Route path='/admin/add' element={<CreateResto/>} />
       <Route path='/resto/delete/:resto_id' element={<DeleteResto/>} />
 
-      <Route path='/user/' element={<ShowUser/>} />
+      <Route path='/user/' element={<ListUser/>} />
       <Route path='/user/:id' element={<DetailUser/>} />
       <Route path='/user/edit/:id' element={<EditUser/>} />
       <Route path='/user/add' element={<CreateUser/>} />
