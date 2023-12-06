@@ -6,9 +6,10 @@ import { Pagination } from "flowbite-react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdAdd, MdOutlineDelete } from "react-icons/md";
-import { Checkbox, Table, Button } from "flowbite-react";
+import { Checkbox, Table, Button, Modal } from "flowbite-react";
 import { Breadcrumb } from "flowbite-react";
-import Sidenav from "../components/Sidenav";
+import Sidenav from "../components/Sidenav"; 
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 const ListResto = () => {
   const [restaurants, setResto] = useState([]);
@@ -17,6 +18,7 @@ const ListResto = () => {
   // const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -45,7 +47,7 @@ const ListResto = () => {
   return (
     <div className="p-4 flex">
       <Sidenav />
-      <div className="mx-4">
+      <div className="mx-4 w-full">
         <Breadcrumb
           aria-label="Solid background breadcrumb example"
           className="bg-gray-50 px-5 py-3 dark:bg-gray-800"
@@ -124,12 +126,31 @@ const ListResto = () => {
                       </Link>
                     </Table.Cell>
                     <Table.Cell>
-                      <a
-                        href="#"
+                      <a 
                         className="font-medium text-red-600 hover:underline dark:text-cyan-500"
+                        onClick={() => setOpenModal(true)}
                       >
                         Delete
-                      </a>
+                      </a> 
+                      <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+                        <Modal.Header />
+                        <Modal.Body>
+                          <div className="text-center">
+                            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                              Are you sure you want to delete this product?
+                            </h3>
+                            <div className="flex justify-center gap-4">
+                              <Button color="failure" onClick={() => setOpenModal(false)}>
+                                {"Yes, I'm sure"}
+                              </Button>
+                              <Button color="gray" onClick={() => setOpenModal(false)}>
+                                No, cancel
+                              </Button>
+                            </div>
+                          </div>
+                        </Modal.Body>
+                      </Modal>
                     </Table.Cell>
                   </Table.Row>
                 ))}

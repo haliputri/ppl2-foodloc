@@ -26,7 +26,7 @@ const Login = () => {
     .then(result => {
       console.log(result)
       if(result.data.message === "Success"){
-        navigate(`/profile/${result.data.username}`)
+        navigate(`/profile/find/${result.data.data.username}`)
       }
     })
     .catch( error => console.log (error))
