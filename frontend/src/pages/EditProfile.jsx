@@ -405,11 +405,12 @@ const EditProfile = () => {
                         justifyContent: "flex-start",
                         width: "300px",
                       }}
-                      value={password}
+                      value=""
                       onChange={(e) => setPassword(e.target.value)}
                       id="alamat1"
-                      placeholder="Masukkan alamat kamu"
+                      placeholder="*****"
                       type="password"
+                      readOnly
                     />
                   </li>
                   <li className="py-4">
