@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Card, Checkbox, Footer, Label, TextInput, Textarea, Modal, Pagination } from 'flowbite-react';
+import { Button, Modal } from 'flowbite-react';
+import { Link } from "react-router-dom";
 import Navigation from '../components/Navigation';
 import logo from '../assets/kfc.png';
 import star from '../assets/star.svg';
@@ -68,9 +69,8 @@ const RestaurantDetail = () => {
       stars.push(
         <FaStar
           key={i}
-          className={`cursor-pointer text-2xl ml-2 ${
-            isHovered ? (i < rating ? "text-yellow-300" : "text-gray-300") : ""
-          }`}
+          className={`cursor-pointer text-2xl ml-2 ${isHovered ? (i < rating ? "text-yellow-300" : "text-gray-300") : ""
+            }`}
           onMouseEnter={() => handleStarHover(i)}
           onClick={() => handleStarClick(i)}
         />
@@ -96,9 +96,15 @@ const RestaurantDetail = () => {
     <div>
       <Navigation />
       <div>
-        <h2 className="m-20 text-gray-D9D9D9 md:text-3xl lg:text-4xl dark:text-white font-bold font-['Lato']">
-          Restaurants / <span className="text-orange-FFA90A"> KFC </span>
-        </h2>
+        <div className='m-20 flex items-center'>
+        <Link to="/restaurant" className="flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+       fill="none" stroke="#D9D9D9" strokeWidth="4" strokeLinecap="round" 
+      strokeLinejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg></Link>
+      <span className="ml-2 text-gray-D9D9D9 md:text-3xl lg:text-4xl dark:text-white font-bold font-['Lato']">Restaurants /
+       <span className="text-orange-FFA90A"> KFC </span>
+       </span>
+       </div>
         <div className="container mx-auto flex">
           <div className="w-1/3">
             <img
@@ -205,7 +211,6 @@ const RestaurantDetail = () => {
                 </Button>
               </div>
             </Modal.Footer>
-
           </Modal>
           <div className="w-1/3 flex flex-col items-end">
             <img
@@ -249,30 +254,31 @@ const RestaurantDetail = () => {
             >
               Submit Review
             </Button>
-              <div className="flex items-center">
-      </div>
+            <div className="flex items-center">
+            </div>
           </div>
         )}
-        <div className="ml-20 mb-4 justify-start items-start inline-flex">
-          <img src={ava1}
-            className="rounded-full"
-          />
-          <div className="flex-col justify-start items-start inline-flex">
-            <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">R. Rowan</h5>
-            <div className="flex items-center ml-1.5">
-              <img
-                src={starabu}
-                className='w-6 h-6'
-              />
-              <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">4.6</h5>
-            </div>
-            <p className="ml-3 text-black text-xl font-['Lato']">
-              Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
-            <div className="border border-zinc-300 w-full">
+        <div className="mx-20 mb-4">
+          <div className='my-3 justify-start items-start inline-flex'>
+            <img src={ava1}
+              className="rounded-full"
+            />
+            <div className="flex-col justify-start items-start inline-flex">
+              <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">R. Rowan</h5>
+              <div className="flex items-center ml-1.5">
+                <img
+                  src={starabu}
+                  className='w-6 h-6'
+                />
+                <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">4.6</h5>
+              </div>
+              <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
+                Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
+              <div className="border border-zinc-300 w-full">
+              </div>
             </div>
           </div>
-        </div>
-        <div className="ml-20 mb-4 justify-start items-start inline-flex">
+        <div className="my-3 justify-start items-start inline-flex">
           <img src={ava2}
             className="rounded-full"
           />
@@ -285,13 +291,13 @@ const RestaurantDetail = () => {
               />
               <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">5</h5>
             </div>
-            <p className="ml-3 text-black text-xl font-['Lato']">
+            <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
               Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
             <div className="border border-zinc-300 w-full">
             </div>
           </div>
         </div>
-        <div className="ml-20 mb-4 justify-start items-start inline-flex">
+        <div className="my-3 justify-start items-start inline-flex">
           <img src={ava2}
             className="rounded-full"
           />
@@ -304,11 +310,12 @@ const RestaurantDetail = () => {
               />
               <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">5</h5>
             </div>
-            <p className="ml-3 text-black text-xl font-['Lato']">
+            <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
               Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
             <div className="border border-zinc-300 w-full">
             </div>
           </div>
+        </div>
         </div>
         <div className="flex items-center justify-center mt-4">
           <div className="gap-3 inline-flex">

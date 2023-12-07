@@ -5,7 +5,7 @@ import Navigation from "../components/Navigation";
 import HeroLanding from "../components/HeroLanding";
 import FooterResto from "../components/FooterResto";
 import CardResto from "../components/CardResto";
-import { Button, Tooltip } from "flowbite-react";
+import { Button} from "flowbite-react";
 import food1 from "../assets/food-1.png";
 import { Link } from "react-router-dom";
 import star from '../assets/star.svg';
@@ -13,6 +13,77 @@ import star from '../assets/star.svg';
 const RestaurantPage = () => {
   const [restaurants, setResto] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [button1Clicked, setButton1Clicked] = useState(false);
+  const [button2Clicked, setButton2Clicked] = useState(false);
+  const [button3Clicked, setButton3Clicked] = useState(false);
+  const [button4Clicked, setButton4Clicked] = useState(false);
+  const [minValue, setMinValue] = useState('');
+  const [maxValue, setMaxValue] = useState('');
+  const [button5Clicked, setButton5Clicked] = useState(false);
+  const [button6Clicked, setButton6Clicked] = useState(false);
+  const [button7Clicked, setButton7Clicked] = useState(false);
+  const [button8Clicked, setButton8Clicked] = useState(false);
+  const [button9Clicked, setButton9Clicked] = useState(false);
+
+  const handleClickRating = (buttonNumber) => {
+    setButton5Clicked(false);
+    setButton6Clicked(false);
+    setButton7Clicked(false);
+    setButton8Clicked(false);
+    setButton9Clicked(false);
+
+    switch (buttonNumber) {
+      case 1:
+        setButton5Clicked(true);
+        break;
+        case 2:
+        setButton6Clicked(true);
+        break;
+        case 3:
+        setButton7Clicked(true);
+        break;
+        case 4:
+        setButton8Clicked(true);
+        break;
+        case 5:
+        setButton9Clicked(true);
+        break;
+    }
+  }
+
+  const handleClickPrice = (buttonNumber) => {
+    // Reset the state of all buttons
+    setButton1Clicked(false);
+    setButton2Clicked(false);
+    setButton3Clicked(false);
+    setButton4Clicked(false);
+
+    // Set the state of the clicked button
+    switch (buttonNumber) {
+      case 1:
+        setButton1Clicked(true);
+        setMinValue('0');
+        setMaxValue('30000');
+        break;
+      case 2:
+        setButton2Clicked(true);
+        setMinValue('30000');
+        setMaxValue('70000');
+        break;
+      case 3:
+        setButton3Clicked(true);
+        setMinValue('70000');
+        setMaxValue('150000');
+        break;
+      case 4:
+        setButton4Clicked(true);
+        setMinValue('150000');
+        setMaxValue('');
+        break;
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     axios
@@ -43,13 +114,6 @@ const RestaurantPage = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleItemClick = (item) => {
-    // Do something when an item is clicked
-    console.log(`Item clicked: ${item}`);
-    // Optionally, close the dropdown
-    setDropdownVisible(false);
-  };
-
   const handleCheckboxChange = (item) => {
     const updatedSelection = [...selectedItems];
     const index = updatedSelection.indexOf(item);
@@ -57,15 +121,10 @@ const RestaurantPage = () => {
     if (index === -1) {
       updatedSelection.push(item);
     } else {
-      // Item already in the list, remove it
       updatedSelection.splice(index, 1);
     }
 
     setSelectedItems(updatedSelection);
-  };
-
-  const handlePriceRangeChange = (value) => {
-    setPriceRange(value);
   };
 
   return (
@@ -128,6 +187,7 @@ const RestaurantPage = () => {
                           <input
                             type="text"
                             placeholder="Min"
+                            value={minValue}
                             style={{
                               width: '45%',
                               borderRadius: '5px',
@@ -138,6 +198,7 @@ const RestaurantPage = () => {
                           <input
                             type="text"
                             placeholder="Max"
+                            value={maxValue}
                             style={{
                               width: '45%',
                               borderRadius: '5px',
@@ -147,40 +208,38 @@ const RestaurantPage = () => {
                         </div>
                         <div className='flex my-2 justify-between'>
                           <Button
-                            style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                          onClick={() => handleClickPrice(1)}
+                          style={{
+                            backgroundColor: button1Clicked ? '#FFA90A' : '#fee6b9',
+                            color: button1Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
-                              marginRight: '3px',
-                              transition: 'background-color 0.3s',
-                              ':hover': {
-                                backgroundColor: '#FFA90A',
-                                color: 'white'
-                              }
+                              marginRight: '3px'
                             }}
                           >
                             0 - 30K
                           </Button>
                           <Button
-                            style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                             onClick={() => handleClickPrice(2)}
+                             style={{
+                               backgroundColor: button2Clicked ? '#FFA90A' : '#fee6b9',
+                               color: button2Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
                               marginLeft: '3px'
                             }}
                           >
-                            30k - 70k
+                            30K - 70K
                           </Button>
                         </div>
                         <div className='flex my-2 justify-between'>
                           <Button
-                            style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                              onClick={() => handleClickPrice(3)}
+                              style={{
+                                backgroundColor: button3Clicked ? '#FFA90A' : '#fee6b9',
+                                color: button3Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -190,9 +249,10 @@ const RestaurantPage = () => {
                             70K -150K
                           </Button>
                           <Button
-                            style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                              onClick={() => handleClickPrice(4)}
+                              style={{
+                                backgroundColor: button4Clicked ? '#FFA90A' : '#fee6b9',
+                                color: button4Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -209,9 +269,10 @@ const RestaurantPage = () => {
                       <div className="mx-4">
                         <div className='flex my-2 justify-between'>
                           <Button
+                            onClick={() => handleClickRating(1)}
                             style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                              backgroundColor: button5Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button5Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -224,7 +285,7 @@ const RestaurantPage = () => {
                               width="18"
                               height="18"
                               viewBox="0 0 24 24"
-                              fill="orange"
+                              fill={button5Clicked ? "white" : "orange"}
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
@@ -232,9 +293,10 @@ const RestaurantPage = () => {
                             </svg>
                           </Button>
                           <Button
+                            onClick={() => handleClickRating(2)}
                             style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                              backgroundColor: button6Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button6Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -247,7 +309,7 @@ const RestaurantPage = () => {
                               width="18"
                               height="18"
                               viewBox="0 0 24 24"
-                              fill="orange"
+                              fill={button6Clicked ? "white" : "orange"}
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
@@ -257,8 +319,10 @@ const RestaurantPage = () => {
                         </div>
                         <div className='flex my-2 justify-between'>
                           <Button
+                            onClick={() => handleClickRating(3)}
                             style={{
-                              backgroundColor: "#fee6b9",
+                              backgroundColor: button7Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button7Clicked ? 'white' : 'gray',
                               color: "gray",
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
@@ -272,7 +336,7 @@ const RestaurantPage = () => {
                               width="18"
                               height="18"
                               viewBox="0 0 24 24"
-                              fill="orange"
+                              fill={button7Clicked ? "white" : "orange"}
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
@@ -280,9 +344,10 @@ const RestaurantPage = () => {
                             </svg>
                           </Button>
                           <Button
+                            onClick={() => handleClickRating(4)}
                             style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                              backgroundColor: button8Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button8Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -295,7 +360,7 @@ const RestaurantPage = () => {
                               width="18"
                               height="18"
                               viewBox="0 0 24 24"
-                              fill="orange"
+                              fill= {button8Clicked ? "white" : "orange"}
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
@@ -305,9 +370,10 @@ const RestaurantPage = () => {
                         </div>
                         <div className='flex my-2 justify-between'>
                           <Button
+                            onClick={() => handleClickRating(5)}
                             style={{
-                              backgroundColor: "#fee6b9",
-                              color: "gray",
+                              backgroundColor: button9Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button9Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -320,7 +386,7 @@ const RestaurantPage = () => {
                               width="18"
                               height="18"
                               viewBox="0 0 24 24"
-                              fill="orange"
+                              fill={button9Clicked ? "white" : "orange"}
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
