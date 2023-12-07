@@ -15,15 +15,18 @@ import EditResto from './admin/EditResto'
 import DeleteResto from './admin/DeleteResto'
 import ListResto from './admin/ListResto'
 
-import ListMenu from './admin/ListMenu'
-import CreateMenu from './admin/CreateMenu' 
-import EditMenu from './admin/EditMenu'
+// import ListMenu from './admin/ListMenu'
+// import CreateMenu from './admin/CreateMenu' 
+// import EditMenu from './admin/EditMenu'
 
-import ShowUser from './admin/user/ShowUser'
+import ListUser from './admin/user/ListUser'
 import DetailUser from './admin/user/DetailUser'
 import CreateUser from './admin/user/CreateUser'
 import EditUser from './admin/user/EditUser'
 import DeleteUser from './admin/user/DeleteUser'
+
+import UserRestaurant from './pages/user/UserRestaurant'
+import UserHome from './pages/user/UserHome'
 
 
 const App = () => {
@@ -45,12 +48,14 @@ const App = () => {
       <Route path='/admin/add' element={<CreateResto/>} />
       <Route path='/resto/delete/:resto_id' element={<DeleteResto/>} />
 
-      <Route path='/user/' element={<ShowUser/>} />
+      <Route path='/user/' element={<ListUser/>} />
       <Route path='/user/:id' element={<DetailUser/>} />
       <Route path='/user/edit/:id' element={<EditUser/>} />
       <Route path='/user/add' element={<CreateUser/>} />
       <Route path='/user/delete/:id' element={<DeleteUser/>} />
       
+      <Route path='/:username/restaurant' element={<UserRestaurant/>} />
+      <Route path='/home/:username' element={<UserHome/>} />
       {/* <Route path='/admin/:id' element={<ShowResto/>} />  */}
       {/* <Route path='/admin/addresto' element={<CreateResto/>} /> */}
       {/* <Route path='/admin/editresto/:id' element={<EditResto/>} />  */}

@@ -1,14 +1,14 @@
-import { React, useEffect } from "react";
+import React from "react";
 import bg from "../../assets/bg-yellow.png";
 import { Button, Card } from "flowbite-react";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import { useState } from "react";
 import { Spinner } from "flowbite-react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
-const EditUser = () => {
+const CreateUser = () => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -19,35 +19,22 @@ const EditUser = () => {
   const [profileImage, setProfileImage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
 
-  useEffect(() => {
-    axios.get(`http://localhost:8080/users/${id}`)
-    .then((response) => {
-      const userData = response.data.data;
-      setUsername(userData.username);
-      setName(userData.name);
-      setEmail(userData.email);
-      setPassword(userData.password);
-      setAddress(userData.address);
-      setGender(userData.gender);
-      setBirthDate(userData.birthdate);
-      setProfileImage(userData.profileImage);
-      setLoading(false)
-    })
-    .catch((error) => {
-      setLoading(false);
-      alert('An error happened. Please check console.');
-      console.log(error);
-    })
-  }, []);
+  const fileInputRef = useState('');
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setProfileImage(file);
+  const handleFileSelect = () => {
+      // Trigger click on the hidden file input
+      fileInputRef.current.click();
   };
 
-  const handleUpdatedUser = () => {
+  const handleFileChange = (event) => {
+      // Handle the selected file here
+      const selectedFile = event.target.files[0];
+      console.log('Selected File:', selectedFile.name);
+      // You can perform additional actions with the selected file
+  }; 
+
+  const handleSaveUser = () => {
     const data = {
       username,
       name,
@@ -59,7 +46,7 @@ const EditUser = () => {
       profileImage,
     }; 
     setLoading(true);
-    axios.put(`http://localhost:8080/users/${id}`, data)
+    axios.post('http://localhost:8080/users', data)
     .then(() => {
       setLoading(false);
       navigate('/user');
@@ -70,6 +57,7 @@ const EditUser = () => {
       console.log(error);
      })
   }
+  
 
   return (
     <div
@@ -129,7 +117,7 @@ const EditUser = () => {
               className="text-2xl sm:text-3xl md:text-4xl "
               style={{ marginLeft: "20px" }}
             >
-              Edit User
+              Create User
             </h1>
           </div>
           <div> 
@@ -141,12 +129,12 @@ const EditUser = () => {
                       src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
                       alt="..."
                       className="group-hover:opacity-80 transition-opacity duration-300 cursor-pointer "
-                      // onClick={handleFileSelect}
+                      onClick={handleFileSelect}
                   />
 
                   <div
                       className="hidden group-hover:flex absolute inset-0 items-center justify-center bg-black bg-opacity-50 text-white"
-                      // onClick={handleFileSelect}
+                      onClick={handleFileSelect}
                   >
                       <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -168,9 +156,9 @@ const EditUser = () => {
               {/* Hidden file input */}
               <input
                   type="file"
-                  // ref={fileInputRef}
+                  ref={fileInputRef}
                   style={{ display: 'none' }}
-                  // onChange={handleFileChange}
+                  onChange={handleFileChange}
               />
           </div> 
         </form> 
@@ -190,8 +178,8 @@ const EditUser = () => {
               <input
                 type="text"
                 id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
               />
@@ -199,7 +187,7 @@ const EditUser = () => {
                 htmlFor="floating_outlined"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
               >
-                Nama Lengkap
+                User ID
               </label>
               </div>
               <div
@@ -212,9 +200,9 @@ const EditUser = () => {
               >
                 <input
                   type="text"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                 />
@@ -222,7 +210,7 @@ const EditUser = () => {
                   htmlFor="floating_outlined"
                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                 >
-                  Username
+                  User Name
                 </label>
               </div>
               <div
@@ -257,13 +245,12 @@ const EditUser = () => {
                 }}
               >
                 <input
-                  type="password"
+                  type="text"
                   id="password"
-                  value=""
-                  readOnly
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder="********"
+                  placeholder=" "
                 />
                 <label
                   htmlFor="floating_outlined"
@@ -355,7 +342,7 @@ const EditUser = () => {
               color="warning" 
               outline  
               style={{ backgroundColor: "white", color: "#FFA90A", height: '48px' }}
-              onClick={handleUpdatedUser}
+              onClick={handleSaveUser}
             >
               Simpan
             </Button>
@@ -364,6 +351,6 @@ const EditUser = () => {
       </div>
     </div> 
   )
-} 
+}
 
-export default EditUser
+export default CreateUser
