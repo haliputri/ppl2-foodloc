@@ -323,7 +323,6 @@ const RestaurantPage = () => {
                             style={{
                               backgroundColor: button7Clicked ? '#FFA90A' : '#fee6b9',
                               color: button7Clicked ? 'white' : 'gray',
-                              color: "gray",
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
