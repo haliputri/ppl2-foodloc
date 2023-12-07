@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Card, Checkbox, Footer, Label, TextInput, Textarea, Modal, Pagination } from 'flowbite-react';
+import { Button, Modal } from 'flowbite-react';
+import { Link } from "react-router-dom";
 import Navigation from '../components/Navigation';
 import logo from '../assets/kfc.png';
 import star from '../assets/star.svg';
@@ -15,12 +16,15 @@ import ellipseabu from '../assets/ellipseabu.svg';
 import arrow from '../assets/arrowright-yellow.svg';
 import FooterResto from '../components/FooterResto';
 import menu from '../assets/menu.png';
+import { FaStar } from 'react-icons/fa';
 import { useState } from 'react';
 
 const RestaurantDetail = () => {
   const [isShown, setIsShown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const imagesPerPage = 1;
   const imageList = [menu, menu, menu];
 
@@ -46,13 +50,61 @@ const RestaurantDetail = () => {
     setIsShown(current => !current);
   };
 
+
+  const handleStarHover = (index) => {
+    if (!isHovered) {
+      setRating(index + 1);
+    }
+  };
+
+  const handleStarClick = (index) => {
+    setIsHovered(true);
+    setRating(index + 1);
+  };
+
+  const renderStars = () => {
+    const stars = [];
+
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <FaStar
+          key={i}
+          className={`cursor-pointer text-2xl ml-2 ${isHovered ? (i < rating ? "text-yellow-300" : "text-gray-300") : ""
+            }`}
+          onMouseEnter={() => handleStarHover(i)}
+          onClick={() => handleStarClick(i)}
+        />
+      );
+    }
+
+    return (
+      <div className="flex items-center">
+        <span className="mr-2 text-xl font='[Lato]'">Rating:</span>
+        <span className="mr-2 text-xl  font-['Lato'] text-yellow-300">{rating}</span>
+        {stars}
+      </div>
+    );
+  };
+
+
+  const handleSubmitReview = () => {
+    // Perform the action when the Submit Review button is clicked
+    console.log("Submit Review", rating);
+  };
+
   return (
     <div>
       <Navigation />
       <div>
-        <h2 className="m-20 text-gray-D9D9D9 md:text-3xl lg:text-4xl dark:text-white font-bold font-['Lato']">
-          Restaurants / <span className="text-orange-FFA90A"> KFC </span>
-        </h2>
+        <div className='m-20 flex items-center'>
+        <Link to="/restaurant" className="flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+       fill="none" stroke="#D9D9D9" strokeWidth="4" strokeLinecap="round" 
+      strokeLinejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg></Link>
+      <span className="ml-2 text-gray-D9D9D9 md:text-3xl lg:text-4xl dark:text-white font-bold font-['Lato']">Restaurants /
+       <span className="text-orange-FFA90A"> KFC </span>
+       </span>
+       </div>
         <div className="container mx-auto flex">
           <div className="w-1/3">
             <img
@@ -159,7 +211,6 @@ const RestaurantDetail = () => {
                 </Button>
               </div>
             </Modal.Footer>
-
           </Modal>
           <div className="w-1/3 flex flex-col items-end">
             <img
@@ -193,39 +244,41 @@ const RestaurantDetail = () => {
               className="inset-0 w-full mx-4 mb-4 text-gray-900 bg-white border border-yellow-300 font-['Lato'] rounded-lg" rows={7}
             >
             </textarea>
-            <Button
-              className="absolute mb-6 bottom-4 right-4 rounded-md"
+            <div className="flex space-x-2 absolute mb-6 bottom-4 left-10">{renderStars()}</div>
+            <Button onClick={handleClick}
+              className="absolute mb-6 bottom-4 right-6 rounded-md"
               style={{
                 backgroundColor: "#FFA90A",
                 borderRadius: "50px"
               }}
-              onClick={() => {
-              }}
             >
               Submit Review
             </Button>
+            <div className="flex items-center">
+            </div>
           </div>
         )}
-        <div className="ml-20 mb-4 justify-start items-start inline-flex">
-          <img src={ava1}
-            className="rounded-full"
-          />
-          <div className="flex-col justify-start items-start inline-flex">
-            <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">R. Rowan</h5>
-            <div className="flex items-center ml-1.5">
-              <img
-                src={starabu}
-                className='w-6 h-6'
-              />
-              <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">4.6</h5>
-            </div>
-            <p className="ml-3 text-black text-xl font-['Lato']">
-              Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
-            <div className="border border-zinc-300 w-full">
+        <div className="mx-20 mb-4">
+          <div className='my-3 justify-start items-start inline-flex'>
+            <img src={ava1}
+              className="rounded-full"
+            />
+            <div className="flex-col justify-start items-start inline-flex">
+              <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">R. Rowan</h5>
+              <div className="flex items-center ml-1.5">
+                <img
+                  src={starabu}
+                  className='w-6 h-6'
+                />
+                <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">4.6</h5>
+              </div>
+              <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
+                Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
+              <div className="border border-zinc-300 w-full">
+              </div>
             </div>
           </div>
-        </div>
-        <div className="ml-20 mb-4 justify-start items-start inline-flex">
+        <div className="my-3 justify-start items-start inline-flex">
           <img src={ava2}
             className="rounded-full"
           />
@@ -238,13 +291,13 @@ const RestaurantDetail = () => {
               />
               <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">5</h5>
             </div>
-            <p className="ml-3 text-black text-xl font-['Lato']">
+            <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
               Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
             <div className="border border-zinc-300 w-full">
             </div>
           </div>
         </div>
-        <div className="ml-20 mb-4 justify-start items-start inline-flex">
+        <div className="my-3 justify-start items-start inline-flex">
           <img src={ava2}
             className="rounded-full"
           />
@@ -257,11 +310,12 @@ const RestaurantDetail = () => {
               />
               <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">5</h5>
             </div>
-            <p className="ml-3 text-black text-xl font-['Lato']">
+            <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
               Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.</p>
             <div className="border border-zinc-300 w-full">
             </div>
           </div>
+        </div>
         </div>
         <div className="flex items-center justify-center mt-4">
           <div className="gap-3 inline-flex">
