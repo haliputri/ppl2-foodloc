@@ -15,12 +15,15 @@ import ellipseabu from '../assets/ellipseabu.svg';
 import arrow from '../assets/arrowright-yellow.svg';
 import FooterResto from '../components/FooterResto';
 import menu from '../assets/menu.png';
+import { FaStar } from 'react-icons/fa';
 import { useState } from 'react';
 
 const RestaurantDetail = () => {
   const [isShown, setIsShown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const imagesPerPage = 1;
   const imageList = [menu, menu, menu];
 
@@ -44,6 +47,49 @@ const RestaurantDetail = () => {
 
   const handleClick = event => {
     setIsShown(current => !current);
+  };
+
+
+  const handleStarHover = (index) => {
+    if (!isHovered) {
+      setRating(index + 1);
+    }
+  };
+
+  const handleStarClick = (index) => {
+    setIsHovered(true);
+    setRating(index + 1);
+  };
+
+  const renderStars = () => {
+    const stars = [];
+
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <FaStar
+          key={i}
+          className={`cursor-pointer text-2xl ml-2 ${
+            isHovered ? (i < rating ? "text-yellow-300" : "text-gray-300") : ""
+          }`}
+          onMouseEnter={() => handleStarHover(i)}
+          onClick={() => handleStarClick(i)}
+        />
+      );
+    }
+
+    return (
+      <div className="flex items-center">
+        <span className="mr-2 text-xl font='[Lato]'">Rating:</span>
+        <span className="mr-2 text-xl  font-['Lato'] text-yellow-300">{rating}</span>
+        {stars}
+      </div>
+    );
+  };
+
+
+  const handleSubmitReview = () => {
+    // Perform the action when the Submit Review button is clicked
+    console.log("Submit Review", rating);
   };
 
   return (
@@ -193,17 +239,18 @@ const RestaurantDetail = () => {
               className="inset-0 w-full mx-4 mb-4 text-gray-900 bg-white border border-yellow-300 font-['Lato'] rounded-lg" rows={7}
             >
             </textarea>
-            <Button
-              className="absolute mb-6 bottom-4 right-4 rounded-md"
+            <div className="flex space-x-2 absolute mb-6 bottom-4 left-10">{renderStars()}</div>
+            <Button onClick={handleClick}
+              className="absolute mb-6 bottom-4 right-6 rounded-md"
               style={{
                 backgroundColor: "#FFA90A",
                 borderRadius: "50px"
               }}
-              onClick={() => {
-              }}
             >
               Submit Review
             </Button>
+              <div className="flex items-center">
+      </div>
           </div>
         )}
         <div className="ml-20 mb-4 justify-start items-start inline-flex">

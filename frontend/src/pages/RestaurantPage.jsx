@@ -8,10 +8,7 @@ import CardResto from "../components/CardResto";
 import { Button } from "flowbite-react";
 import food1 from "../assets/food-1.png";
 import { Link } from "react-router-dom";
-import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from 'react-icons/hi';
 import dropdown from '../assets/dropdown.svg';
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 
 const RestaurantPage = () => {
   const [restaurants, setResto] = useState([]);
@@ -92,7 +89,7 @@ const RestaurantPage = () => {
                     </svg>
                   </Button>
                   {dropdownVisible && (
-                    <div className="origin-top-right absolute left-0 mt-2   rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" style={{ width: "256px" }} >
+                    <div className="origin-top-right absolute center-0 mt-2   rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" style={{ width: "256px" }} >
                       <div className="py-1">
                         <h6 class="mx-4 text-sm font-medium text-yellow-400">
                           Tipe
@@ -127,31 +124,158 @@ const RestaurantPage = () => {
                         <h6 class="mt-4 mx-4 mb-2 text-sm font-medium text-yellow-400">
                           Harga
                         </h6>
-                        <div className="flex items-center mt-1 mx-4">
-                          <div className="flex justify-between w-full">
-                            <span>{priceRange[0]}</span>
-                            <Slider
-                              range
-                              min={0}
-                              max={500.000}
-                              value={priceRange}
-                              onChange={handlePriceRangeChange}
-                              className="mx-4"
-                            />
-                            <span>{priceRange[1]}</span>
+                        <div className="my-2 mx-4">
+                          <div className="flex justify-between w-full items-center">
+                            <input 
+                            type="text"
+                            placeholder="Min"
+                            style={{
+                              width:'45%',
+                              borderRadius: '5px',
+                              borderColor: "#FFA90A",
+                            }}
+                            ></input>
+                             <hr style={{ height: '2px', width: '12px', margin: '0', border: '1.5px solid orange' }} />
+                            <input 
+                            type="text"
+                            placeholder="Max"
+                            style={{
+                              width:'45%',
+                              borderRadius: '5px',
+                              borderColor: "#FFA90A",
+                            }}
+                            ></input>
                           </div>
+                          <div className='flex my-2 justify-between'>
+                          <Button
+                          style={{
+                            backgroundColor: "#fee6b9",
+                            color: "black",
+                            fontFamily: 'Lato',
+                            fontWeight: 'bold',
+                            width:'50%',
+                            marginRight:'2px'
+                          }}
+                          >
+                            0 - 30K
+                          </Button>
+                          <Button
+                          style={{
+                            backgroundColor: "#fee6b9",
+                            color: "black",
+                            fontFamily: 'Lato',
+                            fontWeight: 'bold',
+                            width:'50%',
+                            marginLeft:'2px'
+                          }}
+                          >
+                            30k - 70k
+                          </Button>
+                          </div>
+                          <div className='flex my-2 justify-between'>
+                          <Button
+                          style={{
+                            backgroundColor: "#fee6b9",
+                            color: "black",
+                            fontFamily: 'Lato',
+                            fontWeight: 'bold',
+                            width:'50%',
+                            marginRight:'2px'
+                          }}
+                          >
+                            70K -150K
+                          </Button>
+                          <Button
+                          style={{
+                            backgroundColor: "#fee6b9",
+                            color: "black",
+                            fontFamily: 'Lato',
+                            fontWeight: 'bold',
+                            width:'50%',
+                            marginLeft:'2px'
+                          }}
+                          >
+                            150K+
+                          </Button>
+                          </div>
+                        </div>
+                        <h6 class="mt-4 mx-4 mb-2 text-sm font-medium text-yellow-400">
+                          Rating
+                        </h6>
+                        <div className="mx-4">
+                        <div className='flex my-2 justify-between'>
+                          <Button
+                          style={{
+                            backgroundColor: "#fee6b9",
+                            color: "black",
+                            fontFamily: 'Lato',
+                            fontWeight: 'bold',
+                            width:'50%',
+                            marginLeft:'2px'
+                          }}
+                          >
+                            1
+                          </Button>
+                          <Button
+                          style={{
+                            backgroundColor: "rgba(255, 169, 10, 0.8)",
+                            color: "white",
+                            fontFamily: 'Lato',
+                            width:'50%',
+                            marginLeft:'2px'
+                          }}
+                          >
+                            150k+
+                          </Button>
+                          </div>
+                          <div className='flex my-2 justify-between'>
+                          <Button
+                          style={{
+                            backgroundColor: "rgba(255, 169, 10, 0.8)",
+                            color: "white",
+                            fontFamily: 'Lato',
+                            width:'50%',
+                            marginRight:'2px'
+                          }}
+                          >
+                            70k -150k
+                          </Button>
+                          <Button
+                          style={{
+                            backgroundColor: "rgba(255, 169, 10, 0.8)",
+                            color: "white",
+                            fontFamily: 'Lato',
+                            width:'50%',
+                            marginLeft:'2px'
+                          }}
+                          >
+                            150k+
+                          </Button>
+                          </div>
+                          <div className='flex my-2 justify-between'>
+                          <Button
+                          style={{
+                            backgroundColor: "rgba(255, 169, 10, 0.8)",
+                            color: "white",
+                            fontFamily: 'Lato',
+                            width:'50%',
+                            marginRight:'2px'
+                          }}
+                          >
+                            70k -150k
+                          </Button>
+                        </div>
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
                 <div className="relative w-full">
-                  <input type="search" style={{ height: "48px" }} id="search-dropdown" class=" text-sm border border-yellow-300" placeholder="Search Restaurants..." required />
+                  <input type="search" style={{ height: "48px" }} id="search-dropdown" class=" text-sm border border-yellow-300" placeholder="Search Restaurants..." />
                   <button type="submit" class="absolute top-0 p-2 text-sm font-medium h-full text-white bg-orange-400 rounded-e-lg">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
-                    <span class="sr-only">Search</span>
                   </button>
                 </div>
             </form>
