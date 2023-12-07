@@ -1,31 +1,31 @@
-("use client");
+'use client';
 import React from 'react'
+import Foodloc from "../assets/FoodLoc.png";
 import { Sidebar } from 'flowbite-react';
-import { HiUser, HiViewBoards } from 'react-icons/hi';
-import { Avatar } from 'flowbite-react';
+import { HiArrowSmLeft, HiUser, HiViewBoards } from 'react-icons/hi';
 
-const SidebarAdmin = () => {
-   return ( 
-    <Sidebar aria-label="Sidebar with logo branding example">
-      <Avatar img="/images/people/profile-picture-5.jpg" rounded>
-      <div className="space-y-1 font-medium dark:text-white">
-        <div>Jese Leos</div>
-        <div className="text-sm text-gray-500 dark:text-gray-400">Administrator</div>
-      </div>
-      </Avatar> 
-
+const Sidenav = () => {
+  return (
+    <Sidebar aria-label="Default sidebar example">
       <Sidebar.Items>
-        <Sidebar.ItemGroup> 
-          <Sidebar.Item href="/admin" icon={HiViewBoards}>
-            Kanban
-          </Sidebar.Item> 
-          <Sidebar.Item href="#" icon={HiUser}>
+        <Sidebar.ItemGroup>
+          <Sidebar.Item href="/">
+            <img src={ Foodloc } alt="" />
+          </Sidebar.Item>
+          <Sidebar.Item href="/admin" icon={HiViewBoards} >
+            Restaurants
+          </Sidebar.Item>
+          <Sidebar.Item href="/user" icon={HiUser}>
             Users
           </Sidebar.Item> 
         </Sidebar.ItemGroup>
       </Sidebar.Items>
+      <Sidebar.ItemGroup> 
+          <Sidebar.Item href="/login" icon={HiArrowSmLeft}> 
+            Sign Out
+          </Sidebar.Item>  
+        </Sidebar.ItemGroup>
     </Sidebar>
-  )
+  );
 }
-
-export default SidebarAdmin;
+export default Sidenav;

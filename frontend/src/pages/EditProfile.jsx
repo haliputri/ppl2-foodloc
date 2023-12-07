@@ -120,15 +120,23 @@ const EditProfile = () => {
                 onClick={handleFileSelect}
               />
               <div
-                      className="hidden group-hover:flex absolute inset-0 items-center justify-center bg-black bg-opacity-50 text-white"
+                      className="  group-hover:flex absolute inset-0 items-center justify-center bg-black bg-opacity-50 text-white"
                       onClick={handleFileSelect}
-                  >
-                      <svg
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "50%", 
+                        alignItems: "center",
+                        textAlign: "center",
+                        alignContent: "center",
+                      }}
+                  >Ganti Foto
+                      {/* <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="h-10 w-10"
+                          stroke="currentColor" 
+                          
                       >
                           <path
                               strokeLinecap="round"
@@ -136,7 +144,7 @@ const EditProfile = () => {
                               strokeWidth="2"
                               d="M9 5l7 7-7 7"
                           />
-                      </svg>
+                      </svg> */}
                   </div>
                   {/* Hidden file input */}
               <input

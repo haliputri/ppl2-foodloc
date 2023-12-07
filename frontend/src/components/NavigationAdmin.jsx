@@ -25,7 +25,7 @@ const Navigation = () => {
           <span className="block truncate text-sm font-medium">name@flowbite.com</span>
         </Dropdown.Header> 
         <Dropdown.Divider />
-        {/* <Dropdown.Item href="/admin/"> Dashboard Admin</Dropdown.Item> */}
+        <Dropdown.Item href="admin"> Dashboard Admin</Dropdown.Item>
         <Dropdown.Item> Sign out</Dropdown.Item>
       </Dropdown>
     </Navbar>
