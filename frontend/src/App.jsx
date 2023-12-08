@@ -36,17 +36,17 @@ const App = () => {
       <Route path='/login' element={<Login/>} />
       <Route path='/register' element={<Register/>} />
       {/* <Route path='/restaurantdetail' element={<RestaurantDetail/>} /> */}
-      <Route path='/restaurant/:resto_id' element={<RestaurantDetail/>} />
+      <Route path='/restaurant/:id' element={<RestaurantDetail/>} />
       <Route path='/restaurant' element={<RestaurantPage/>} />
       <Route path='/profile/find/:username' element={<Profile/>} />
       <Route path='/profile/find/edit/:username' element={<EditProfile/>} />
       <Route path='/maps' element={<Maps/>} />
       
       <Route path='/admin/' element={<ListResto/>} />
-      <Route path='/admin/:resto_id' element={<ShowResto/>} />
-      <Route path='/admin/edit/:resto_id' element={<EditResto/>} />
+      <Route path='/admin/:id' element={<ShowResto/>} />
+      <Route path='/admin/edit/:id' element={<EditResto/>} />
       <Route path='/admin/add' element={<CreateResto/>} />
-      <Route path='/resto/delete/:resto_id' element={<DeleteResto/>} />
+      <Route path='/resto/delete/:id' element={<DeleteResto/>} />
 
       <Route path='/user/' element={<ListUser/>} />
       <Route path='/user/:id' element={<DetailUser/>} />

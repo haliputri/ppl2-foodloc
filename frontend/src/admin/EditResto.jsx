@@ -20,7 +20,7 @@ const EditResto = () => {
   const [rating, setRating] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {resto_id} = useParams();
+  const {id} = useParams();
 
   const fileInputRef = useState('');
 
@@ -37,7 +37,7 @@ const EditResto = () => {
     };
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/restaurants/${resto_id}`)
+    axios.get(`http://localhost:8080/restaurants/${id}`)
     .then((response) => {
       setName(response.data.data.name);
       setAddress(response.data.data.address)
