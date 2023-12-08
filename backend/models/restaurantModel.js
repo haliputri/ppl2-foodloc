@@ -2,39 +2,55 @@ import mongoose from "mongoose";
 
 const restaurantSchema = mongoose.Schema(
     {
-        resto_id:{
-            type:String,
+        resto_id: {
+            type: String,
             required: true,
             unique: true,
         },
-        name:{
-            type:String,
+        name: {
+            type: String,
             required: true,
         },
-        address:{
-            type:String,
+        address: {
+            type: String,
             required: true,
         },
         city: {
-            type:String,
+            type: String,
             required: true,
         },
         phone_number: {
-            type:String,
+            type: String,
             required: true,
         },
         social_media: {
-            type:String,
+            type: String,
             required: true,
         },
         rating: {
-            type:Number,
-            required:true,
-        }
-    }, 
+            type: Number,
+            required: true,
+        },
+        category: {
+            type: String,
+            enum: ["Restaurant", "Cafe", "UMKM"]
+        },
+        review: {
+            type: String
+        },
+        working_hours: {
+            type: String
+        },
+        logo: {
+            type: String, // Assuming you store the URL or path to the logo image
+        },
+        menu: {
+            type: String, // Assuming you store the URL or path to the menu image
+        },
+    },
     {
         timestamps: true,
     }
 );
 
-export const Restaurant = mongoose.model('Rest',restaurantSchema);
+export const Restaurant = mongoose.model('Rest', restaurantSchema);
