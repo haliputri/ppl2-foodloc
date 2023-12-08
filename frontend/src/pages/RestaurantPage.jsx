@@ -5,7 +5,7 @@ import Navigation from "../components/Navigation";
 import HeroLanding from "../components/HeroLanding";
 import FooterResto from "../components/FooterResto";
 import CardResto from "../components/CardResto";
-import { Button} from "flowbite-react";
+import { Button } from "flowbite-react";
 import food1 from "../assets/food-1.png";
 import { Link } from "react-router-dom";
 import star from '../assets/star.svg';
@@ -36,16 +36,16 @@ const RestaurantPage = () => {
       case 1:
         setButton5Clicked(true);
         break;
-        case 2:
+      case 2:
         setButton6Clicked(true);
         break;
-        case 3:
+      case 3:
         setButton7Clicked(true);
         break;
-        case 4:
+      case 4:
         setButton8Clicked(true);
         break;
-        case 5:
+      case 5:
         setButton9Clicked(true);
         break;
     }
@@ -208,10 +208,10 @@ const RestaurantPage = () => {
                         </div>
                         <div className='flex my-2 justify-between'>
                           <Button
-                          onClick={() => handleClickPrice(1)}
-                          style={{
-                            backgroundColor: button1Clicked ? '#FFA90A' : '#fee6b9',
-                            color: button1Clicked ? 'white' : 'gray',
+                            onClick={() => handleClickPrice(1)}
+                            style={{
+                              backgroundColor: button1Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button1Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -221,10 +221,10 @@ const RestaurantPage = () => {
                             0 - 30K
                           </Button>
                           <Button
-                             onClick={() => handleClickPrice(2)}
-                             style={{
-                               backgroundColor: button2Clicked ? '#FFA90A' : '#fee6b9',
-                               color: button2Clicked ? 'white' : 'gray',
+                            onClick={() => handleClickPrice(2)}
+                            style={{
+                              backgroundColor: button2Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button2Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -236,10 +236,10 @@ const RestaurantPage = () => {
                         </div>
                         <div className='flex my-2 justify-between'>
                           <Button
-                              onClick={() => handleClickPrice(3)}
-                              style={{
-                                backgroundColor: button3Clicked ? '#FFA90A' : '#fee6b9',
-                                color: button3Clicked ? 'white' : 'gray',
+                            onClick={() => handleClickPrice(3)}
+                            style={{
+                              backgroundColor: button3Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button3Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -249,10 +249,10 @@ const RestaurantPage = () => {
                             70K -150K
                           </Button>
                           <Button
-                              onClick={() => handleClickPrice(4)}
-                              style={{
-                                backgroundColor: button4Clicked ? '#FFA90A' : '#fee6b9',
-                                color: button4Clicked ? 'white' : 'gray',
+                            onClick={() => handleClickPrice(4)}
+                            style={{
+                              backgroundColor: button4Clicked ? '#FFA90A' : '#fee6b9',
+                              color: button4Clicked ? 'white' : 'gray',
                               fontFamily: 'Lato',
                               fontWeight: 'bold',
                               width: '50%',
@@ -359,7 +359,7 @@ const RestaurantPage = () => {
                               width="18"
                               height="18"
                               viewBox="0 0 24 24"
-                              fill= {button8Clicked ? "white" : "orange"}
+                              fill={button8Clicked ? "white" : "orange"}
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
