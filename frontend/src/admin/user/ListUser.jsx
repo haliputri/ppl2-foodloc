@@ -9,6 +9,7 @@ import { MdAdd, MdOutlineDelete } from "react-icons/md";
 import { Checkbox, Table, Button, Modal } from "flowbite-react";
 import { Breadcrumb } from "flowbite-react";
 import Sidenav from "../../components/Sidenav"; 
+import NavigationAdmin from "../../components/NavigationAdmin"; 
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 const ListUser = () => {
@@ -32,6 +33,8 @@ const ListUser = () => {
       });
   }, []);
   return (
+    <div>
+      <NavigationAdmin /> 
     <div className="p-4 flex">
       <Sidenav />
       <div className="mx-4 w-full">
@@ -151,6 +154,7 @@ const ListUser = () => {
           </React.Fragment>
         )}
       </div>
+    </div>
     </div>
   );
 };

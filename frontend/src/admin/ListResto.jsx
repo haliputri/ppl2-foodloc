@@ -9,6 +9,7 @@ import { MdAdd, MdOutlineDelete } from "react-icons/md";
 import { Checkbox, Table, Button, Modal } from "flowbite-react";
 import { Breadcrumb } from "flowbite-react";
 import Sidenav from "../components/Sidenav"; 
+import NavigationAdmin from "../components/NavigationAdmin"; 
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 const ListResto = () => {
@@ -45,7 +46,9 @@ const ListResto = () => {
   // };
 
   return (
-    <div className="p-4 flex">
+    <div>
+      <NavigationAdmin /> 
+    <div className="p-4 flex"> 
       <Sidenav />
       <div className="mx-4 w-full">
         <Breadcrumb
@@ -89,7 +92,7 @@ const ListResto = () => {
             <Table hoverable>
               <Table.Head>
                 <Table.HeadCell>No</Table.HeadCell>
-                <Table.HeadCell>Name</Table.HeadCell>
+                <Table.HeadCell style={{ width: '100%', maxWidth: '20px'  }}>Name</Table.HeadCell>
                 <Table.HeadCell>Address</Table.HeadCell>
                 <Table.HeadCell>City</Table.HeadCell>
                 <Table.HeadCell>Social Media</Table.HeadCell>
@@ -107,7 +110,7 @@ const ListResto = () => {
                 {restaurants.map((restaurant, index) => (
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell>{index + 1}</Table.Cell>
-                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    <Table.Cell className="  font-medium text-gray-900 dark:text-white"  style={{ width: '100%', maxWidth: '20px'  }}>
                       <Link to={`${restaurant.resto_id}`}>
                         {restaurant.name}
                       </Link>
@@ -200,6 +203,7 @@ const ListResto = () => {
           </React.Fragment>
         )}
       </div>
+    </div>
     </div>
   );
 };
