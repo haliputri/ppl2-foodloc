@@ -32,7 +32,7 @@ const EditProfile = () => {
         setAddress(userData.address);
         setGender(userData.gender);
         setBirthDate(userData.birthdate);
-        setProfileImage(userData.profileImage);
+        // setProfileImage(userData.profileImage);
         setLoading(false);
       })
       .catch((error) => {
@@ -42,9 +42,19 @@ const EditProfile = () => {
       });
   }, []);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setProfileImage(file);
+  const fileInputRef = useState('');
+
+  const handleFileSelect = () => {
+      // Trigger click on the hidden file input
+      fileInputRef.current.click();
+  };
+
+  // const [ setProfileImage] = useState(null);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    console.log('Selected File:', selectedFile.name);
+    setProfileImage(selectedFile);
   };
 
   const handleUpdatedUser = () => {
@@ -96,8 +106,9 @@ const EditProfile = () => {
                 alignItems: "center",
               }}
             >
+              <div className="relative">
               <img
-                src={profilePicture}
+                src={profileImage ? URL.createObjectURL(profileImage) : profilePicture}
                 alt="Profile Picture"
                 style={{
                   width: "150px",
@@ -105,7 +116,36 @@ const EditProfile = () => {
                   borderRadius: "50%",
                   marginBottom: "20px",
                 }}
+                className="group-hover:opacity-80 transition-opacity duration-300 cursor-pointer"
+                onClick={handleFileSelect}
               />
+              <div
+                      className="hidden group-hover:flex absolute inset-0 items-center justify-center bg-black bg-opacity-50 text-white"
+                      onClick={handleFileSelect}
+                  >
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          className="h-10 w-10"
+                      >
+                          <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M9 5l7 7-7 7"
+                          />
+                      </svg>
+                  </div>
+                  {/* Hidden file input */}
+              <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  onChange={handleFileChange}
+              />
+              </div>
               {/* <input type="file" /> */}
               <span
                 className="pb-1 block"
@@ -365,11 +405,12 @@ const EditProfile = () => {
                         justifyContent: "flex-start",
                         width: "300px",
                       }}
-                      value={password}
+                      value=""
                       onChange={(e) => setPassword(e.target.value)}
                       id="alamat1"
-                      placeholder="Masukkan alamat kamu"
+                      placeholder="*****"
                       type="password"
+                      readOnly
                     />
                   </li>
                   <li className="py-4">

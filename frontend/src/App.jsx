@@ -25,6 +25,9 @@ import CreateUser from './admin/user/CreateUser'
 import EditUser from './admin/user/EditUser'
 import DeleteUser from './admin/user/DeleteUser'
 
+import UserRestaurant from './pages/user/UserRestaurant'
+import UserHome from './pages/user/UserHome'
+
 
 const App = () => {
   return (
@@ -51,6 +54,8 @@ const App = () => {
       <Route path='/user/add' element={<CreateUser/>} />
       <Route path='/user/delete/:id' element={<DeleteUser/>} />
       
+      <Route path='/:username/restaurant' element={<UserRestaurant/>} />
+      <Route path='/home/:username' element={<UserHome/>} />
       {/* <Route path='/admin/:id' element={<ShowResto/>} />  */}
       {/* <Route path='/admin/addresto' element={<CreateResto/>} /> */}
       {/* <Route path='/admin/editresto/:id' element={<EditResto/>} />  */}

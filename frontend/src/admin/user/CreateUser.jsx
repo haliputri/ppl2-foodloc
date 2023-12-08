@@ -20,19 +20,19 @@ const CreateUser = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fileInputRef = useState('');
+  // const fileInputRef = useState('');
 
-  const handleFileSelect = () => {
-      // Trigger click on the hidden file input
-      fileInputRef.current.click();
-  };
+  // const handleFileSelect = () => {
+  //     // Trigger click on the hidden file input
+  //     fileInputRef.current.click();
+  // };
 
-  const handleFileChange = (event) => {
-      // Handle the selected file here
-      const selectedFile = event.target.files[0];
-      console.log('Selected File:', selectedFile.name);
-      // You can perform additional actions with the selected file
-  }; 
+  // const handleFileChange = (event) => {
+  //     // Handle the selected file here
+  //     const selectedFile = event.target.files[0];
+  //     console.log('Selected File:', selectedFile.name);
+  //     // You can perform additional actions with the selected file
+  // }; 
 
   const handleSaveUser = () => {
     const data = {
@@ -129,12 +129,12 @@ const CreateUser = () => {
                       src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
                       alt="..."
                       className="group-hover:opacity-80 transition-opacity duration-300 cursor-pointer "
-                      onClick={handleFileSelect}
+                      // onClick={handleFileSelect}
                   />
 
                   <div
                       className="hidden group-hover:flex absolute inset-0 items-center justify-center bg-black bg-opacity-50 text-white"
-                      onClick={handleFileSelect}
+                      // onClick={handleFileSelect}
                   >
                       <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -156,9 +156,9 @@ const CreateUser = () => {
               {/* Hidden file input */}
               <input
                   type="file"
-                  ref={fileInputRef}
+                  // ref={fileInputRef}
                   style={{ display: 'none' }}
-                  onChange={handleFileChange}
+                  // onChange={handleFileChange}
               />
           </div> 
         </form> 
@@ -178,8 +178,8 @@ const CreateUser = () => {
               <input
                 type="text"
                 id="name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
               />
@@ -187,7 +187,7 @@ const CreateUser = () => {
                 htmlFor="floating_outlined"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
               >
-                User ID
+                Nama Lengkap
               </label>
               </div>
               <div
@@ -200,9 +200,9 @@ const CreateUser = () => {
               >
                 <input
                   type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                 />
@@ -210,7 +210,7 @@ const CreateUser = () => {
                   htmlFor="floating_outlined"
                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                 >
-                  User Name
+                  Username
                 </label>
               </div>
               <div
@@ -294,20 +294,28 @@ const CreateUser = () => {
                   alignItems: "center",
                 }}
               >
-                <input
-                  type="text"
-                  id="text"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                />
                 <label
                   htmlFor="floating_outlined"
                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                 >
                   Gender
                 </label>
+                <select
+                      id="jk1"
+                      name="jeniskelamin"
+                      className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      
+                    >
+                      <option value="" disabled selected>
+                        Pilih jenis kelamin kamu
+                      </option>
+                      <option value="Pria">Pria</option>
+                      <option value="Wanita">Wanita</option>
+                    </select>
+
+                
               </div>
               <div
                 className="relative" 

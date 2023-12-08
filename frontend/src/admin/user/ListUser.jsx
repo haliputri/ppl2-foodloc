@@ -8,15 +8,19 @@ import { BsInfoCircle } from "react-icons/bs";
 import { MdAdd, MdOutlineDelete } from "react-icons/md";
 import { Checkbox, Table, Button, Modal } from "flowbite-react";
 import { Breadcrumb } from "flowbite-react";
-import Sidenav from "../../components/Sidenav"; 
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import Sidenav from "../../components/Sidenav";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { useNavigate, useParams } from 'react-router-dom'
 
 const ListUser = () => {
   const [users, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const { id } = useParams();
   const onPageChange = (page) => setCurrentPage(page);
-    const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [userIdToDelete, setUserIdToDelete] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -31,6 +35,23 @@ const ListUser = () => {
         setLoading(false);
       });
   }, []);
+
+
+  const handleDeleteUser = () => {
+    setLoading(true);
+    axios
+      .delete(`http://localhost:8080/users/${userIdToDelete}`)
+      .then(() => {
+        setLoading(false);
+        navigate("/user");
+      })
+      .catch((error) => {
+        setLoading(false);
+        alert("An error happened. Please check console");
+        console.log(error);
+      });
+  };
+
   return (
     <div className="p-4 flex">
       <Sidenav />
@@ -56,87 +77,108 @@ const ListUser = () => {
         </div>
         {loading ? (
           <div
-          className="flex flex-wrap gap-2"
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: "9999",
-          }}
-        >
-          <Spinner
-            color="warning"
-            aria-label="Warning Extra large spinner example"
-            size="xl"
-          />{" "}
-        </div>
+            className="flex flex-wrap gap-2"
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: "9999",
+            }}
+          >
+            <Spinner
+              color="warning"
+              aria-label="Warning Extra large spinner example"
+              size="xl"
+            />{" "}
+          </div>
         ) : (
           <React.Fragment>
             <div className="overflow-x-auto">
-            <Table hoverable>
-              <Table.Head>
-                <Table.HeadCell>No</Table.HeadCell>
-                <Table.HeadCell>Username</Table.HeadCell>
-                <Table.HeadCell>Email</Table.HeadCell>
-                <Table.HeadCell>Password</Table.HeadCell> 
-                <Table.HeadCell>
-                  <span className="sr-only">Edit</span>
-                </Table.HeadCell>
-                <Table.HeadCell>
-                  <span className="sr-only">Delete</span>
-                </Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y">
-                {users.map((user, index) => (
-                  <Table.Row key={user._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>{index + 1}</Table.Cell> 
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {user.username}
-                  </Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                  <Table.Cell>{user.password}</Table.Cell> 
-                  <Table.Cell>
-                    <Link
-                      to={` user/edit/${users._id}`}
-                      className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+              <Table hoverable>
+                <Table.Head>
+                  <Table.HeadCell>No</Table.HeadCell>
+                  <Table.HeadCell>Username</Table.HeadCell>
+                  <Table.HeadCell>Email</Table.HeadCell>
+                  <Table.HeadCell>Password</Table.HeadCell>
+                  <Table.HeadCell>
+                    <span className="sr-only">Edit</span>
+                  </Table.HeadCell>
+                  <Table.HeadCell>
+                    <span className="sr-only">Delete</span>
+                  </Table.HeadCell>
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {users.map((user, index) => (
+                    <Table.Row
+                      key={user._id}
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     >
-                      Edit
-                    </Link>
-                  </Table.Cell>
-                  <Table.Cell>
-                      <a 
-                        className="font-medium text-red-600 hover:underline dark:text-cyan-500"
-                        onClick={() => setOpenModal(true)}
-                      >
-                        Delete
-                      </a> 
-                      <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
-                        <Modal.Header />
-                        <Modal.Body>
-                          <div className="text-center">
-                            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                              Are you sure you want to delete this product?
-                            </h3>
-                            <div className="flex justify-center gap-4">
-                              <Button color="failure" onClick={() => setOpenModal(false)}>
-                                {"Yes, I'm sure"}
-                              </Button>
-                              <Button color="gray" onClick={() => setOpenModal(false)}>
-                                No, cancel
-                              </Button>
+                      <Table.Cell>{index + 1}</Table.Cell>
+                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                        <Link to={`${user._id}`}>{user.username}</Link>
+                      </Table.Cell>
+                      <Table.Cell>{user.email}</Table.Cell>
+                      <Table.Cell>{user.password}</Table.Cell>
+                      <Table.Cell>
+                        <Link
+                          to={`edit/${user._id}`}
+                          className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                        >
+                          Edit
+                        </Link>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <a
+                          className="font-medium text-red-600 hover:underline dark:text-cyan-500"
+                          onClick={(response) => {
+                            setUserIdToDelete(user._id);
+                            setOpenModal(true);
+                          }}
+                        >
+                          Delete
+                        </a>
+                        <Modal
+                          show={openModal}
+                          size="md"
+                          onClose={() => setOpenModal(false)}
+                          popup
+                        >
+                          <Modal.Header />
+                          <Modal.Body>
+                            <div className="text-center">
+                              <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                Are you sure you want to delete this product?
+                              </h3>
+                              <div className="flex justify-center gap-4">
+                                <Button
+                                  color="failure"
+                                  onClick={() => 
+                                    {
+                                    handleDeleteUser;
+                                    setOpenModal(false);
+                                    }
+                                  }
+                                >
+                                  {"Yes, I'm sure"}
+                                </Button>
+                                <Button
+                                  color="gray"
+                                  onClick={() => setOpenModal(false)}
+                                >
+                                  No, cancel
+                                </Button>
+                              </div>
                             </div>
-                          </div>
-                        </Modal.Body>
-                      </Modal>
-                  </Table.Cell>
-                </Table.Row>
-              ))} 
-              </Table.Body>
-            </Table> 
+                          </Modal.Body>
+                        </Modal>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
             </div>
-            
 
             <div className="flex overflow-x-auto sm:justify-center">
               <Pagination
@@ -155,4 +197,4 @@ const ListUser = () => {
   );
 };
 
-export default ListUser ;
+export default ListUser;
