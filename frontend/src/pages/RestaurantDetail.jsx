@@ -180,8 +180,8 @@ const RestaurantDetail = () => {
             <span className="text-orange-FFA90A"> KFC </span>
           </span>
         </div>
-        <div className="container mx-auto flex">
-          <div className="w-1/3 left-0 ml-16">
+        <div className="flex relative">
+          <div className="w1/3 left-0 pl-20">
             <img
               src={logo}
               alt="KFC Logo"
@@ -191,7 +191,7 @@ const RestaurantDetail = () => {
               }}
             />
           </div>
-          <div className="w-1/3 flex flex-col mx-8">
+          <div className="w1/3 flex-col">
             <h4 className="text-orange-FFA90A md:text-2xl lg:text-4xl dark:text-white ml-4 font-bold font-['Lato']">
               KFC
             </h4>
@@ -285,7 +285,7 @@ const RestaurantDetail = () => {
               </div>
             </Modal.Footer>
           </Modal>
-          <div className="w-1/3 absolute right-0 flex flex-col items-center">
+          <div className="w1/3 px-20 absolute right-0 top-0 flex flex-col items-center">
             <img
               src={grab}
               className="rounded-full mt-4"
