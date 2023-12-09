@@ -85,26 +85,29 @@ const RestaurantDetail = () => {
       id: 8,
       author: "Gerry Lezatos",
       rating: 5,
-      content: "test",
+      content: "ini 4 des",
+      datetime: "12:04:2023"
     },
     {
       avatar: ava2,
       id: 9,
       author: "Gerry Lezatos",
       rating: 5,
-      content: "test",
+      content: "ini 2 des",
+      datetime: "12:02:2023"
     },
     {
       avatar: ava2,
       id: 10,
       author: "Gerry Lezatos",
       rating: 5,
-      content: "test",
+      content: "ini 1 des",
+      datetime: "12:01:2023"
     }
 
   ];
 
-  const sortedReviews = reviews.sort((a, b) => b.id - a.id);
+  const sortedReviews = reviews.sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
   const [currentPageReview, setCurrentPageReview] = useState(1);
   const reviewsPerPage = 3;
   const indexOfLastReview = currentPageReview * reviewsPerPage;

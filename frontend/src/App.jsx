@@ -26,6 +26,7 @@ import EditUser from './admin/user/EditUser'
 import DeleteUser from './admin/user/DeleteUser'
 
 import UserRestaurant from './pages/user/UserRestaurant'
+import UserRestaurantDetail from './pages/user/UserRestaurantDetail'
 import UserHome from './pages/user/UserHome'
 
 
@@ -55,6 +56,7 @@ const App = () => {
       <Route path='/user/delete/:id' element={<DeleteUser/>} />
       
       <Route path='/:username/restaurant' element={<UserRestaurant/>} />
+      <Route path='/:username/restaurant/:id' element={<UserRestaurantDetail/>} />
       <Route path='/home/:username' element={<UserHome/>} />
       {/* <Route path='/admin/:id' element={<ShowResto/>} />  */}
       {/* <Route path='/admin/addresto' element={<CreateResto/>} /> */}
