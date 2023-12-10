@@ -13,12 +13,12 @@ import { useEffect } from 'react'
 const ShowResto = () => {
   const [restaurant, setResto] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { resto_id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8080/restaurants/${resto_id}`)
+      .get(`http://localhost:8080/restaurants/${id}`)
       .then((response) => {
         setResto(response.data.data);
         setLoading(false);

@@ -3,20 +3,18 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import { Pagination } from "flowbite-react";
-import { AiOutlineEdit } from "react-icons/ai";
-import { BsInfoCircle } from "react-icons/bs";
-import { MdAdd, MdOutlineDelete } from "react-icons/md";
-import { Checkbox, Table, Button, Modal } from "flowbite-react";
+import { MdAdd } from "react-icons/md";
+import { Table, Button, Modal } from "flowbite-react";
 import { Breadcrumb } from "flowbite-react";
 import Sidenav from "../../components/Sidenav";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import NavigationAdmin from "../../components/NavigationAdmin"; 
 
 const ListUser = () => {
   const [users, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { id } = useParams();
   const onPageChange = (page) => setCurrentPage(page);
   const [openModal, setOpenModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
@@ -53,6 +51,8 @@ const ListUser = () => {
   };
 
   return (
+    <div>
+      <NavigationAdmin /> 
     <div className="p-4 flex">
       <Sidenav />
       <div className="mx-4 w-full">
@@ -193,6 +193,7 @@ const ListUser = () => {
           </React.Fragment>
         )}
       </div>
+    </div>
     </div>
   );
 };
