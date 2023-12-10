@@ -32,61 +32,12 @@ const RestaurantDetail = () => {
   const totalPages = Math.ceil(imageList.length / imagesPerPage);
   const reviews = [
     {
-      avatar: ava1,
-      id: 1,
-      author: "R. Rowan",
-      rating: 5,
-      content: "Lorem ipsum dolor sit amet consectetur. Et id urna vitae aliquam facilisis vestibulum ac non. Felis id nunc aliquam tortor nunc. Sit velit fames donec maecenas massa leo eu dui. Malesuada diam enim non feugiat scelerisque eu etiam nulla.",
-    },
-    {
-      avatar: ava2,
-      id: 2,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini yang 5 menit lalu",
-    },
-    {
-      avatar: ava2,
-      id: 3,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini yang 3 menit lalu",
-    },
-    {
-      avatar: ava2,
-      id: 4,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini yang 2 menit lalu",
-    },
-    {
-      avatar: ava2,
-      id: 5,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "test",
-    },
-    {
-      avatar: ava2,
-      id: 6,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "test",
-    },
-    {
-      avatar: ava2,
-      id: 7,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "test",
-    },
-    {
       avatar: ava2,
       id: 8,
       author: "Gerry Lezatos",
       rating: 5,
       content: "ini 4 des",
-      datetime: "12:04:2023"
+      date: "2023-12-04"
     },
     {
       avatar: ava2,
@@ -94,7 +45,7 @@ const RestaurantDetail = () => {
       author: "Gerry Lezatos",
       rating: 5,
       content: "ini 2 des",
-      datetime: "12:02:2023"
+      date: "2023-12-02"
     },
     {
       avatar: ava2,
@@ -102,17 +53,32 @@ const RestaurantDetail = () => {
       author: "Gerry Lezatos",
       rating: 5,
       content: "ini 1 des",
-      datetime: "12:01:2023"
+      date: "2023-12-01"
+    },
+    {
+      avatar: ava2,
+      id: 2,
+      author: "Gerry Lezatos",
+      rating: 5,
+      content: "ini 11 nov",
+      date: "2023-11-11"
+    },
+    {
+      avatar: ava2,
+      id: 16,
+      author: "Gerry Lezatos",
+      rating: 5,
+      content: "ini 3 des",
+      date: "2023-12-03"
     }
-
   ];
-
-  const sortedReviews = reviews.sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+    
+  const sortedReviews = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
   const [currentPageReview, setCurrentPageReview] = useState(1);
   const reviewsPerPage = 3;
   const indexOfLastReview = currentPageReview * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
+  const currentReviews = sortedReviews.slice(indexOfFirstReview, indexOfLastReview);
 
   const paginate = (pageNumber) => {
     setCurrentPageReview(pageNumber);

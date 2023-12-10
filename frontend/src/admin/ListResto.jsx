@@ -11,6 +11,7 @@ import { Breadcrumb } from "flowbite-react";
 import Sidenav from "../components/Sidenav";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import NavigationAdmin from "../components/NavigationAdmin"; 
 
 const ListResto = () => {
   const [restaurants, setResto] = useState([]);
@@ -64,7 +65,9 @@ const ListResto = () => {
   // };
 
   return (
-    <div className="p-4 flex">
+    <div>
+      <NavigationAdmin /> 
+    <div className="p-4 flex"> 
       <Sidenav />
       <div className="mx-4 w-full">
         <Breadcrumb
@@ -108,7 +111,7 @@ const ListResto = () => {
             <Table hoverable>
               <Table.Head>
                 <Table.HeadCell>No</Table.HeadCell>
-                <Table.HeadCell>Name</Table.HeadCell>
+                <Table.HeadCell style={{ width: '100%', maxWidth: '20px'  }}>Name</Table.HeadCell>
                 <Table.HeadCell>Address</Table.HeadCell>
                 <Table.HeadCell>City</Table.HeadCell>
                 <Table.HeadCell>Social Media</Table.HeadCell>
@@ -236,6 +239,7 @@ const ListResto = () => {
           </React.Fragment>
         )}
       </div>
+    </div>
     </div>
   );
 };

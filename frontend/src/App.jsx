@@ -18,6 +18,7 @@ import ListResto from './admin/ListResto'
 // import ListMenu from './admin/ListMenu'
 // import CreateMenu from './admin/CreateMenu' 
 // import EditMenu from './admin/EditMenu'
+import AdminRestaurantDetail from './admin/AdminRestaurantDetail'
 
 import ListUser from './admin/user/ListUser'
 import DetailUser from './admin/user/DetailUser'
@@ -48,6 +49,8 @@ const App = () => {
       <Route path='/admin/edit/:id' element={<EditResto/>} />
       <Route path='/admin/add' element={<CreateResto/>} />
       <Route path='/resto/delete/:id' element={<DeleteResto/>} />
+
+      <Route path='/admin/restaurant/:id' element={<AdminRestaurantDetail/>} />
 
       <Route path='/user/' element={<ListUser/>} />
       <Route path='/user/:id' element={<DetailUser/>} />

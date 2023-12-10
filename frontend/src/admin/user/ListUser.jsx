@@ -9,6 +9,7 @@ import { Breadcrumb } from "flowbite-react";
 import Sidenav from "../../components/Sidenav";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom'
+import NavigationAdmin from "../../components/NavigationAdmin"; 
 
 const ListUser = () => {
   const [users, setUser] = useState([]);
@@ -50,6 +51,8 @@ const ListUser = () => {
   };
 
   return (
+    <div>
+      <NavigationAdmin /> 
     <div className="p-4 flex">
       <Sidenav />
       <div className="mx-4 w-full">
@@ -190,6 +193,7 @@ const ListUser = () => {
           </React.Fragment>
         )}
       </div>
+    </div>
     </div>
   );
 };

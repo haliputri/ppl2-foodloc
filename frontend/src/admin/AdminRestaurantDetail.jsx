@@ -1,47 +1,22 @@
 import React from 'react';
 import { Button, Modal } from 'flowbite-react';
 import { Link, useParams } from "react-router-dom";
-import Navigation2 from "../../components/Navigation2";
-import logo from '../../assets/kfc.png';
-import star from '../../assets/star.svg';
-import starabu from '../../assets/starabu.svg';
-import money from '../../assets/money.svg';
-import grab from '../../assets/grab.png';
-import gojek from '../../assets/gojek.png';
-import ava2 from '../../assets/ava2.svg';
-import FooterResto from '../../components/FooterResto';
-import menu from '../../assets/menu.png';
+import NavigationAdmin from "../components/NavigationAdmin";
+import logo from '../assets/kfc.png';
+import star from '../assets/star.svg';
+import starabu from '../assets/starabu.svg';
+import money from '../assets/money.svg';
+import grab from '../assets/grab.png';
+import gojek from '../assets/gojek.png';
+import ava1 from '../assets/ava-1.svg';
+import ava2 from '../assets/ava2.svg';
+import FooterResto from '../components/FooterResto';
+import menu from '../assets/menu.png';
 import { FaStar } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const UserRestaurantDetail = () => {
-    const [restaurant, setRestaurant] = useState({});
-    const [user, setUser] = useState({});
-    const { username } = useParams();
-    const [loading, setLoading] = useState(false);
-    const {id} = useParams();
-  
-    useEffect(() => {
-      setLoading(true);
-    
-      Promise.all([
-        axios.get(`http://localhost:8080/restaurants/${id}`),
-        axios.get(`http://localhost:8080/users/login/find/${username}`)
-      ])
-        .then(([restaurantResponse, userResponse]) => {
-          const restaurantData = restaurantResponse.data.data;
-          const userData = userResponse.data.data;
-    
-          setRestaurant(restaurantData);
-          setUser(userData);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-        });
-    }, [username, id]);
+const AdminRestaurantDetail = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const [currentPageImage, setcurrentPageImage] = useState(1);
@@ -164,10 +139,10 @@ const UserRestaurantDetail = () => {
 
   return (
     <div>
-      <Navigation2 />
+      <NavigationAdmin />
       <div>
         <div className='m-20 flex items-center'>
-          <Link to={`/${username}/restaurant`} className="flex items-center">
+          <Link to="admin/restaurant" className="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
               fill="none" stroke="#D9D9D9" strokeWidth="4" strokeLinecap="round"
               strokeLinejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg></Link>
@@ -408,4 +383,4 @@ const UserRestaurantDetail = () => {
   );
 };
 
-export default UserRestaurantDetail;
+export default AdminRestaurantDetail;
