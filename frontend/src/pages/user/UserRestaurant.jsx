@@ -4,8 +4,6 @@ import {  Dropdown } from "flowbite-react";
 import FooterResto from "../../components/FooterResto";
 import food1 from "../../assets/food-1.png";
 import { Link } from "react-router-dom";
-import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from 'react-icons/hi';
-import dropdown from '../../assets/dropdown.svg';
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Button, Card } from "flowbite-react";
