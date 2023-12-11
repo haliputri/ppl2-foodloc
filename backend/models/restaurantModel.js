@@ -47,6 +47,12 @@ const restaurantSchema = mongoose.Schema(
         working_hours: {
             type: String
         },
+        latitude: {
+            type: String
+        },
+        logitude: {
+            type: String
+        },
         logo: {
             type: String, // Assuming you store the URL or path to the logo image
         },

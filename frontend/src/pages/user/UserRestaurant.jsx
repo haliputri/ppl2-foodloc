@@ -173,9 +173,9 @@ const UserRestaurant = () => {
             {restaurantChunks.map((chunk, index) => (
               <div key={index} className="flex mb-16 ml-8">
                 {chunk.map((restaurant) => (
-                  <Link to={`${restaurant.resto_id}`} key={restaurant.resto_id}>
+                  <Link to={`${restaurant._id}`} key={restaurant._id}>
                     <Card
-                      key={restaurant.resto_id}
+                      key={restaurant._id}
                       className="mr-24"
                       style={{ width: "250px" }}
                       href="#"
