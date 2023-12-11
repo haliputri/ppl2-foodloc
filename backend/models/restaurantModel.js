@@ -31,6 +31,12 @@ const restaurantSchema = mongoose.Schema(
             type: Number,
             required: true,
         },
+        latitude: {
+            type: String
+        },
+        longitude: {
+            type: String
+        },
         min_price: {
             type: Number
         },
@@ -45,12 +51,6 @@ const restaurantSchema = mongoose.Schema(
             type: String
         },
         working_hours: {
-            type: String
-        },
-        latitude: {
-            type: String
-        },
-        logitude: {
             type: String
         },
         logo: {
