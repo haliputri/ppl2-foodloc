@@ -18,6 +18,7 @@ import ListResto from './admin/ListResto'
 // import ListMenu from './admin/ListMenu'
 // import CreateMenu from './admin/CreateMenu' 
 // import EditMenu from './admin/EditMenu'
+import AdminRestaurantDetail from './admin/AdminRestaurantDetail'
 
 import ListUser from './admin/user/ListUser'
 import DetailUser from './admin/user/DetailUser'
@@ -26,6 +27,7 @@ import EditUser from './admin/user/EditUser'
 import DeleteUser from './admin/user/DeleteUser'
 
 import UserRestaurant from './pages/user/UserRestaurant'
+import UserRestaurantDetail from './pages/user/UserRestaurantDetail'
 import UserHome from './pages/user/UserHome'
 
 
@@ -48,6 +50,8 @@ const App = () => {
       <Route path='/admin/add' element={<CreateResto/>} />
       <Route path='/resto/delete/:id' element={<DeleteResto/>} />
 
+      <Route path='/admin/restaurant/:id' element={<AdminRestaurantDetail/>} />
+
       <Route path='/user/' element={<ListUser/>} />
       <Route path='/user/:id' element={<DetailUser/>} />
       <Route path='/user/edit/:id' element={<EditUser/>} />
@@ -55,6 +59,7 @@ const App = () => {
       <Route path='/user/delete/:id' element={<DeleteUser/>} />
       
       <Route path='/:username/restaurant' element={<UserRestaurant/>} />
+      <Route path='/:username/restaurant/:id' element={<UserRestaurantDetail/>} />
       <Route path='/home/:username' element={<UserHome/>} />
       {/* <Route path='/admin/:id' element={<ShowResto/>} />  */}
       {/* <Route path='/admin/addresto' element={<CreateResto/>} /> */}
