@@ -95,6 +95,10 @@ router.post('/login/find', async (req, res) => {
       if (!user) {
         return res.status(401).json({ message: 'Invalid username or password' });
       }
+
+      if(!user.password){
+        return res.status(200).json({ message: "Success", data: user, id: user._id.toString() });
+      }
   
       const isPasswordValid = await bcrypt.compare(password, user.password);
   
@@ -308,6 +312,66 @@ router.get('/:id', async (request, response) => {
         console.log(error.message);
         response.status(500).send({ message: error.message });
     }
+});
+
+router.post('/regist/google', async (request, response) => {
+  try {
+      if (
+          // !request.body.user_id||
+          !request.body.username ||
+          !request.body.email
+      ) {
+          return response.status(400).send({
+              message: 'Send all required fields: username, email',
+          });
+      }
+
+      const userCur = await userModel.find({username: request.body.username})
+
+      if (userCur){
+          return response.status(200).send({message: "User already created"});
+      }
+
+      const newUser = {
+          // user_id: request.body.user_id,
+          username: request.body.username,
+          email: request.body.email,
+          name: request.body.username,
+      };
+
+      const user = await userModel.create(newUser);
+      return response.status(201).send(user);
+  } catch (error) {
+      console.log(error.message);
+      response.status(500).send({ message: error.message });
+  }
+});
+
+router.post('/regist/facebook', async (request, response) => {
+  try {
+      if (
+          // !request.body.user_id||
+          !request.body.username ||
+          !request.body.email
+      ) {
+          return response.status(400).send({
+              message: 'Send all required fields: username, email',
+          });
+      }
+
+      const newUser = {
+          // user_id: request.body.user_id,
+          username: request.body.username,
+          email: request.body.email,
+          name: request.body.username,
+      };
+
+      const user = await userModel.create(newUser);
+      return response.status(201).send(user);
+  } catch (error) {
+      console.log(error.message);
+      response.status(500).send({ message: error.message });
+  }
 });
 
 // Route for Update a User

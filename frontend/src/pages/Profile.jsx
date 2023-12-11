@@ -51,7 +51,7 @@ const Profile = () => {
               }}
             >
               <img
-                src={profilePicture}
+                src={`https://ui-avatars.com/api/?name=${username}`}
                 alt="Profile Picture"
                 style={{
                   width: "150px",
