@@ -8,7 +8,7 @@ import CardResto from "../components/CardResto";
 import { Button } from "flowbite-react";
 import food1 from "../assets/food-1.png";
 import { Link } from "react-router-dom";
-import star from '../assets/star.svg';
+import star from "../assets/star.svg";
 
 const RestaurantPage = () => {
   const [restaurants, setResto] = useState([]);
@@ -17,14 +17,58 @@ const RestaurantPage = () => {
   const [button2Clicked, setButton2Clicked] = useState(false);
   const [button3Clicked, setButton3Clicked] = useState(false);
   const [button4Clicked, setButton4Clicked] = useState(false);
-  const [minValue, setMinValue] = useState('');
-  const [maxValue, setMaxValue] = useState('');
+  const [minValue, setMinValue] = useState("");
+  const [maxValue, setMaxValue] = useState("");
   const [button5Clicked, setButton5Clicked] = useState(false);
   const [button6Clicked, setButton6Clicked] = useState(false);
   const [button7Clicked, setButton7Clicked] = useState(false);
   const [button8Clicked, setButton8Clicked] = useState(false);
   const [button9Clicked, setButton9Clicked] = useState(false);
 
+  const handleFilter = () => {
+    // Assuming selectedItems represent the selected restaurant types
+    const typeFilter = selectedItems.join(",");
+
+    // Assuming minValue and maxValue represent the selected price range
+    const priceFilter = `${minValue},${maxValue}`;
+
+    // Assuming button5Clicked to button9Clicked represent the selected rating
+    let ratingFilter = "";
+    if (button5Clicked) ratingFilter = "5";
+    else if (button6Clicked) ratingFilter = "4";
+    else if (button7Clicked) ratingFilter = "3";
+    else if (button8Clicked) ratingFilter = "2";
+    else if (button9Clicked) ratingFilter = "1";
+
+    // Make an axios request with the filters
+    axios
+      .get(
+        `http://localhost:8080/restaurants/filter?type=${typeFilter}&minPrice=${priceFilter}&rating=${ratingFilter}`
+      )
+      .then((response) => {
+        setResto(response.data.data);
+
+        // Reload the page to show the filtered results
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Call handleFilter whenever filters change
+  useEffect(() => {
+    handleFilter();
+  }, [
+    selectedItems,
+    minValue,
+    maxValue,
+    button5Clicked,
+    button6Clicked,
+    button7Clicked,
+    button8Clicked,
+    button9Clicked,
+  ]);
   const handleClickRating = (buttonNumber) => {
     setButton5Clicked(false);
     setButton6Clicked(false);
@@ -49,7 +93,29 @@ const RestaurantPage = () => {
         setButton9Clicked(true);
         break;
     }
-  }
+  };
+
+  const handleMinInputChange = (event) => {
+    const min = event.target.value;
+    setMinValue(min);
+  
+    // Deselect price buttons when input is manually changed
+    setButton1Clicked(false);
+    setButton2Clicked(false);
+    setButton3Clicked(false);
+    setButton4Clicked(false);
+  };
+  
+  const handleMaxInputChange = (event) => {
+    const max = event.target.value;
+    setMaxValue(max);
+  
+    // Deselect price buttons when input is manually changed
+    setButton1Clicked(false);
+    setButton2Clicked(false);
+    setButton3Clicked(false);
+    setButton4Clicked(false);
+  };
 
   const handleClickPrice = (buttonNumber) => {
     // Reset the state of all buttons
@@ -62,23 +128,23 @@ const RestaurantPage = () => {
     switch (buttonNumber) {
       case 1:
         setButton1Clicked(true);
-        setMinValue('0');
-        setMaxValue('30000');
+        setMinValue("0");
+        setMaxValue("30000");
         break;
       case 2:
         setButton2Clicked(true);
-        setMinValue('30000');
-        setMaxValue('70000');
+        setMinValue("30000");
+        setMaxValue("70000");
         break;
       case 3:
         setButton3Clicked(true);
-        setMinValue('70000');
-        setMaxValue('150000');
+        setMinValue("70000");
+        setMaxValue("150000");
         break;
       case 4:
         setButton4Clicked(true);
-        setMinValue('150000');
-        setMaxValue('');
+        setMinValue("150000");
+        setMaxValue("");
         break;
       default:
         break;
@@ -141,13 +207,30 @@ const RestaurantPage = () => {
             </h4>
             <form className="flex">
               <div className="relative inline-block text-left">
-                <Button onClick={toggleDropdown} className="items-center py-2.5 px-2.5 font-medium text-center border border-yellow-300 rounded-s-lg hover:bg-gray-200">
-                  <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="orange">
-                    <path stroke="orange" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 4 4 4-4" />
+                <Button
+                  onClick={toggleDropdown}
+                  className="items-center py-2.5 px-2.5 font-medium text-center border border-yellow-300 rounded-s-lg hover:bg-gray-200"
+                >
+                  <svg
+                    class="w-2.5 h-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="orange"
+                  >
+                    <path
+                      stroke="orange"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="m1 1 4 4 4-4"
+                    />
                   </svg>
                 </Button>
                 {dropdownVisible && (
-                  <div className="origin-top-right absolute center-0 mt-2   rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" style={{ width: "256px" }} >
+                  <div
+                    className="origin-top-right absolute center-0 mt-2   rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    style={{ width: "256px" }}
+                  >
                     <div className="py-1">
                       <h6 class="mx-4 text-sm font-medium text-yellow-400">
                         Tipe
@@ -188,34 +271,45 @@ const RestaurantPage = () => {
                             type="text"
                             placeholder="Min"
                             value={minValue}
+                            onChange={handleMinInputChange}
                             style={{
-                              width: '45%',
-                              borderRadius: '5px',
+                              width: "45%",
+                              borderRadius: "5px",
                               borderColor: "#FFA90A",
                             }}
                           ></input>
-                          <hr style={{ height: '2px', width: '12px', margin: '0', border: '1.5px solid orange' }} />
+                          <hr
+                            style={{
+                              height: "2px",
+                              width: "12px",
+                              margin: "0",
+                              border: "1.5px solid orange",
+                            }}
+                          />
                           <input
                             type="text"
                             placeholder="Max"
                             value={maxValue}
+                            onChange={handleMaxInputChange}
                             style={{
-                              width: '45%',
-                              borderRadius: '5px',
+                              width: "45%",
+                              borderRadius: "5px",
                               borderColor: "#FFA90A",
                             }}
                           ></input>
                         </div>
-                        <div className='flex my-2 justify-between'>
+                        <div className="flex my-2 justify-between">
                           <Button
                             onClick={() => handleClickPrice(1)}
                             style={{
-                              backgroundColor: button1Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button1Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginRight: '3px'
+                              backgroundColor: button1Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button1Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginRight: "3px",
                             }}
                           >
                             0 - 30K
@@ -223,27 +317,31 @@ const RestaurantPage = () => {
                           <Button
                             onClick={() => handleClickPrice(2)}
                             style={{
-                              backgroundColor: button2Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button2Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginLeft: '3px'
+                              backgroundColor: button2Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button2Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginLeft: "3px",
                             }}
                           >
                             30K - 70K
                           </Button>
                         </div>
-                        <div className='flex my-2 justify-between'>
+                        <div className="flex my-2 justify-between">
                           <Button
                             onClick={() => handleClickPrice(3)}
                             style={{
-                              backgroundColor: button3Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button3Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginRight: '3px'
+                              backgroundColor: button3Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button3Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginRight: "3px",
                             }}
                           >
                             70K -150K
@@ -251,12 +349,14 @@ const RestaurantPage = () => {
                           <Button
                             onClick={() => handleClickPrice(4)}
                             style={{
-                              backgroundColor: button4Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button4Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginLeft: '3px'
+                              backgroundColor: button4Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button4Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginLeft: "3px",
                             }}
                           >
                             150K+
@@ -267,19 +367,21 @@ const RestaurantPage = () => {
                         Rating
                       </h6>
                       <div className="mx-4">
-                        <div className='flex my-2 justify-between'>
+                        <div className="flex my-2 justify-between">
                           <Button
                             onClick={() => handleClickRating(1)}
                             style={{
-                              backgroundColor: button5Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button5Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginRight: '3px'
+                              backgroundColor: button5Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button5Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginRight: "3px",
                             }}
                           >
-                            <span style={{ marginRight: '1px' }}>1</span>
+                            <span style={{ marginRight: "1px" }}>1</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
@@ -295,15 +397,17 @@ const RestaurantPage = () => {
                           <Button
                             onClick={() => handleClickRating(2)}
                             style={{
-                              backgroundColor: button6Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button6Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginLeft: '3px'
+                              backgroundColor: button6Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button6Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginLeft: "3px",
                             }}
                           >
-                            <span style={{ marginRight: '1px' }}>2</span>
+                            <span style={{ marginRight: "1px" }}>2</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
@@ -317,19 +421,21 @@ const RestaurantPage = () => {
                             </svg>
                           </Button>
                         </div>
-                        <div className='flex my-2 justify-between'>
+                        <div className="flex my-2 justify-between">
                           <Button
                             onClick={() => handleClickRating(3)}
                             style={{
-                              backgroundColor: button7Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button7Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginRight: '3px'
+                              backgroundColor: button7Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button7Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginRight: "3px",
                             }}
                           >
-                            <span style={{ marginRight: '1px' }}>3</span>
+                            <span style={{ marginRight: "1px" }}>3</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
@@ -345,15 +451,17 @@ const RestaurantPage = () => {
                           <Button
                             onClick={() => handleClickRating(4)}
                             style={{
-                              backgroundColor: button8Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button8Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginLeft: '3px'
+                              backgroundColor: button8Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button8Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginLeft: "3px",
                             }}
                           >
-                            <span style={{ marginRight: '1px' }}>4</span>
+                            <span style={{ marginRight: "1px" }}>4</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
@@ -367,19 +475,21 @@ const RestaurantPage = () => {
                             </svg>
                           </Button>
                         </div>
-                        <div className='flex my-2 justify-between'>
+                        <div className="flex my-2 justify-between">
                           <Button
                             onClick={() => handleClickRating(5)}
                             style={{
-                              backgroundColor: button9Clicked ? '#FFA90A' : '#fee6b9',
-                              color: button9Clicked ? 'white' : 'gray',
-                              fontFamily: 'Lato',
-                              fontWeight: 'bold',
-                              width: '50%',
-                              marginRight: '3px'
+                              backgroundColor: button9Clicked
+                                ? "#FFA90A"
+                                : "#fee6b9",
+                              color: button9Clicked ? "white" : "gray",
+                              fontFamily: "Lato",
+                              fontWeight: "bold",
+                              width: "50%",
+                              marginRight: "3px",
                             }}
                           >
-                            <span style={{ marginRight: '1px' }}>5</span>
+                            <span style={{ marginRight: "1px" }}>5</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="18"
@@ -399,10 +509,31 @@ const RestaurantPage = () => {
                 )}
               </div>
               <div className="relative w-full">
-                <input type="search" style={{ height: "48px" }} id="search-dropdown" class=" text-sm border border-yellow-300" placeholder="Search Restaurants..." />
-                <button type="submit" class="absolute top-0 p-2 text-sm font-medium h-full text-white bg-orange-400 rounded-e-lg">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                <input
+                  type="search"
+                  style={{ height: "48px" }}
+                  id="search-dropdown"
+                  class=" text-sm border border-yellow-300"
+                  placeholder="Search Restaurants..."
+                />
+                <button
+                  type="submit"
+                  class="absolute top-0 p-2 text-sm font-medium h-full text-white bg-orange-400 rounded-e-lg"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
                   </svg>
                 </button>
               </div>
