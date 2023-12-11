@@ -95,6 +95,28 @@ const RestaurantPage = () => {
     }
   };
 
+  const handleMinInputChange = (event) => {
+    const min = event.target.value;
+    setMinValue(min);
+  
+    // Deselect price buttons when input is manually changed
+    setButton1Clicked(false);
+    setButton2Clicked(false);
+    setButton3Clicked(false);
+    setButton4Clicked(false);
+  };
+  
+  const handleMaxInputChange = (event) => {
+    const max = event.target.value;
+    setMaxValue(max);
+  
+    // Deselect price buttons when input is manually changed
+    setButton1Clicked(false);
+    setButton2Clicked(false);
+    setButton3Clicked(false);
+    setButton4Clicked(false);
+  };
+
   const handleClickPrice = (buttonNumber) => {
     // Reset the state of all buttons
     setButton1Clicked(false);
@@ -249,6 +271,7 @@ const RestaurantPage = () => {
                             type="text"
                             placeholder="Min"
                             value={minValue}
+                            onChange={handleMinInputChange}
                             style={{
                               width: "45%",
                               borderRadius: "5px",
@@ -267,6 +290,7 @@ const RestaurantPage = () => {
                             type="text"
                             placeholder="Max"
                             value={maxValue}
+                            onChange={handleMaxInputChange}
                             style={{
                               width: "45%",
                               borderRadius: "5px",
