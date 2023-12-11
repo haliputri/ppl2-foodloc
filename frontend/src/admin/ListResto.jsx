@@ -8,9 +8,10 @@ import { BsInfoCircle } from "react-icons/bs";
 import { MdAdd, MdOutlineDelete } from "react-icons/md";
 import { Checkbox, Table, Button, Modal } from "flowbite-react";
 import { Breadcrumb } from "flowbite-react";
-import Sidenav from "../components/Sidenav"; 
+import Sidenav from "../components/Sidenav";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 import NavigationAdmin from "../components/NavigationAdmin"; 
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 const ListResto = () => {
   const [restaurants, setResto] = useState([]);
@@ -20,6 +21,8 @@ const ListResto = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
+  const [restoIdDelete, setRestoIdDelete] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -34,6 +37,22 @@ const ListResto = () => {
         setLoading(false);
       });
   }, []);
+
+  const handleDeleteResto = () => {
+    setLoading(true);
+    axios
+      .delete(`http://localhost:8080/restaurants/${restoIdDelete}`)
+      .then(() => {
+        setLoading(false);
+        navigate("/admin");
+        window.location.reload(); // Reload the page
+      })
+      .catch((error) => {
+        setLoading(false);
+        alert("An error happened. Please check console");
+        console.log(error);
+      });
+  };
 
   // // Pagination Logic
   // const indexOfLastItem = currentPage * itemsPerPage;
@@ -108,10 +127,13 @@ const ListResto = () => {
 
               <Table.Body className="divide-y">
                 {restaurants.map((restaurant, index) => (
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row
+                    key={restaurant._id}
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                  >
                     <Table.Cell>{index + 1}</Table.Cell>
-                    <Table.Cell className="  font-medium text-gray-900 dark:text-white"  style={{ width: '100%', maxWidth: '20px'  }}>
-                      <Link to={`${restaurant.resto_id}`}>
+                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                      <Link to={`${restaurant._id}`}>
                         {restaurant.name}
                       </Link>
                     </Table.Cell>
@@ -122,20 +144,25 @@ const ListResto = () => {
                     <Table.Cell>{restaurant.rating}</Table.Cell>
                     <Table.Cell>
                       <Link
-                        to={`edit/${restaurant.resto_id}`}
+                        to={`edit/${restaurant._id}`}
                         className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                       >
                         Edit
                       </Link>
                     </Table.Cell>
                     <Table.Cell>
-                      <a 
+                      <a
                         className="font-medium text-red-600 hover:underline dark:text-cyan-500"
-                        onClick={() => setOpenModal(true)}
+                        onClick={(response) => {setRestoIdDelete(restaurant._id); setOpenModal(true)}}
                       >
                         Delete
-                      </a> 
-                      <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+                      </a>
+                      <Modal
+                        show={openModal}
+                        size="md"
+                        onClose={() => setOpenModal(false)}
+                        popup
+                      >
                         <Modal.Header />
                         <Modal.Body>
                           <div className="text-center">
@@ -144,10 +171,19 @@ const ListResto = () => {
                               Are you sure you want to delete this product?
                             </h3>
                             <div className="flex justify-center gap-4">
-                              <Button color="failure" onClick={() => setOpenModal(false)}>
+                              <Button
+                                color="failure"
+                                onClick={() => {
+                                  handleDeleteResto();
+                                  setOpenModal(false);
+                                }}
+                              >
                                 {"Yes, I'm sure"}
                               </Button>
-                              <Button color="gray" onClick={() => setOpenModal(false)}>
+                              <Button
+                                color="gray"
+                                onClick={() => setOpenModal(false)}
+                              >
                                 No, cancel
                               </Button>
                             </div>
