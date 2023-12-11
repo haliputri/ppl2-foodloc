@@ -31,6 +31,12 @@ const restaurantSchema = mongoose.Schema(
             type: Number,
             required: true,
         },
+        min_price: {
+            type: Number
+        },
+        max_price: {
+            type: Number
+        },
         category: {
             type: String,
             enum: ["Restaurant", "Cafe", "UMKM"]

@@ -155,4 +155,36 @@ router.delete('/:id', async (req, res) => {
       }
 });
 
+router.get('/filter', async (request, response) => {
+    try {
+      // Extract the filter parameters from the query string
+      const { type, minPrice, maxPrice, rating } = request.query;
+  
+      // Construct a query object based on the provided filters
+      const filterQuery = {};
+  
+      if (type) {
+        filterQuery.category = type;
+      }
+  
+      if (minPrice && maxPrice) {
+        filterQuery.price = { $gte: minPrice, $lte: maxPrice };
+      }
+  
+      if (rating) {
+        filterQuery.rating = rating;
+      }
+  
+      // Fetch restaurants based on the constructed query
+      const restaurants = await Restaurant.find(filterQuery);
+  
+      return response.status(200).json({
+        count: restaurants.length,
+        data: restaurants,
+      });
+    } catch (error) {
+      console.log(error.message);
+      response.status(500).send({ message: error.message });
+    }
+  });
 export default router;
