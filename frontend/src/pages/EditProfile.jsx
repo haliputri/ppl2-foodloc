@@ -12,7 +12,6 @@ const EditProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [birthdate, setBirthDate] = useState("");
@@ -29,7 +28,7 @@ const EditProfile = () => {
         setUsername(userData.username);
         setName(userData.name);
         setEmail(userData.email);
-        setPassword(userData.password ? userData.password : "");
+        setPassword(userData.password);
         setAddress(userData.address);
         setGender(userData.gender);
         setBirthDate(userData.birthdate);
@@ -60,13 +59,13 @@ const EditProfile = () => {
 
   const handleUpdatedUser = () => {
     const originalDate = birthdate;
-    const formattedDate = birthdate ? new Date(originalDate).toISOString().split('T')[0] : "";
+    const formattedDate = new Date(originalDate).toISOString().split('T')[0];
 
     const data = {
       username,
       name,
       email,
-      password: inputPassword == "" ? password : inputPassword,
+      password,
       address,
       gender,
       birthdate:formattedDate,
@@ -109,7 +108,7 @@ const EditProfile = () => {
             >
               <div className="relative">
               <img
-                src={profileImage != "" ? profileImage : `https://ui-avatars.com/api/?name=${name}`}
+                src={profileImage ? URL.createObjectURL(profileImage) : profilePicture}
                 alt="Profile Picture"
                 style={{
                   width: "150px",
@@ -324,7 +323,7 @@ const EditProfile = () => {
                         justifyContent: "flex-start",
                         width: "300px",
                       }}
-                      value={birthdate ? birthdate.split("T")[0] : ""}
+                      value={birthdate}
                       onChange={(e) => setBirthDate(e.target.value)}
                       id="tanggalLahir1"
                       placeholder="Masukkan tanggal lahir kamu"
@@ -394,52 +393,51 @@ const EditProfile = () => {
                     backgroundColor: "#6B7280",
                   }}
                 ></div>
-                { password != "" &&
-                  <ul className="flex w-full text-sm font-medium">
-                    <li className="py-4 pr-8">
-                      <span
-                        className="pb-1 block"
-                        style={{
-                          fontWeight: "bold",
-                          display: "flex",
-                          alignItems: "flex-start",
-                          justifyContent: "flex-start",
-                        }}
-                      >
-                        Password
-                      </span>
-                      <TextInput
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          justifyContent: "flex-start",
-                          width: "300px",
-                        }}
-                        value={inputPassword}
-                        onChange={(e) => setInputPassword(e.target.value)}
-                        id="alamat1"
-                        placeholder="*****"
-                        type="password"
-                      />
-                    </li>
-                    <li className="py-4">
-                      <span className="pb-6 block"></span>
-                      <Button
-                        href="#"
-                        style={{
-                          fontSize: "8px",
-                          fontWeight: "normal",
-                          backgroundColor: "#6B7280",
-                          color: "white",
-                          width: "150px",
-                          height: "42px",
-                        }}
-                      >
-                        Ganti Password
-                      </Button>
-                    </li>
-                  </ul>
-                }
+                <ul className="flex w-full text-sm font-medium">
+                  <li className="py-4 pr-8">
+                    <span
+                      className="pb-1 block"
+                      style={{
+                        fontWeight: "bold",
+                        display: "flex",
+                        alignItems: "flex-start",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      Password
+                    </span>
+                    <TextInput
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        justifyContent: "flex-start",
+                        width: "300px",
+                      }}
+                      value=""
+                      onChange={(e) => setPassword(e.target.value)}
+                      id="alamat1"
+                      placeholder="*****"
+                      type="password"
+                      readOnly
+                    />
+                  </li>
+                  <li className="py-4">
+                    <span className="pb-6 block"></span>
+                    <Button
+                      href="#"
+                      style={{
+                        fontSize: "8px",
+                        fontWeight: "normal",
+                        backgroundColor: "#6B7280",
+                        color: "white",
+                        width: "150px",
+                        height: "42px",
+                      }}
+                    >
+                      Ganti Password
+                    </Button>
+                  </li>
+                </ul>
               </div>
 
               <Button
