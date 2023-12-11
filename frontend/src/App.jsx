@@ -7,6 +7,7 @@ import RestaurantDetail from './pages/RestaurantDetail'
 import RestaurantPage from './pages/RestaurantPage'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
+import Maps from './pages/Maps'
 
 import ShowResto from './admin/ShowResto'
 import CreateResto from './admin/CreateResto' 
@@ -41,6 +42,7 @@ const App = () => {
       <Route path='/restaurant' element={<RestaurantPage/>} />
       <Route path='/profile/find/:username' element={<Profile/>} />
       <Route path='/profile/find/edit/:username' element={<EditProfile/>} />
+      <Route path='/maps' element={<Maps/>} />
       
       <Route path='/admin/' element={<ListResto/>} />
       <Route path='/admin/:id' element={<ShowResto/>} />

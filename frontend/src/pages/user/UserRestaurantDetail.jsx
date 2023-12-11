@@ -34,7 +34,6 @@ const UserRestaurantDetail = () => {
           const userData = userResponse.data.data;
     
           setRestaurant(restaurantData);
-          console.log(restaurant)
           setUser(userData);
           setLoading(false);
         })
@@ -173,23 +172,23 @@ const UserRestaurantDetail = () => {
               fill="none" stroke="#D9D9D9" strokeWidth="4" strokeLinecap="round"
               strokeLinejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg></Link>
           <span className="ml-2 text-gray-D9D9D9 md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']">Restaurants /
-            <span className="text-orange-FFA90A"> {restaurant.name} </span>
+            <span className="text-orange-FFA90A"> KFC </span>
           </span>
         </div>
         <div className="flex relative">
-          <div className="w-1/3 left-0 pl-20">
+          <div className="w1/3 left-0 pl-20">
             <img
-              src={restaurant.logo || logo}
+              src={logo}
               alt="KFC Logo"
               style={{
-                width: '80%',
+                maxWidth: '80%',
                 height: 'auto',
               }}
             />
           </div>
           <div className="w1/3 flex-col">
             <h4 className="text-orange-FFA90A md:text-2xl lg:text-4xl dark:text-white ml-4 font-bold font-['Lato']">
-              {restaurant.name}
+              KFC
             </h4>
             <div className="flex items-center mt-4 ml-4">
               <img
@@ -197,7 +196,7 @@ const UserRestaurantDetail = () => {
                 alt="Star"
                 className="w-6 h-6"
               />
-              <span className="ml-2 text-2xl">{restaurant.rating}</span>
+              <span className="ml-2 text-2xl">4.5</span>
             </div>
             <div className="flex items-center mt-4 ml-4">
               <img
@@ -391,18 +390,16 @@ const UserRestaurantDetail = () => {
       </div>
       <div className='mt-16 mx-20'>
         <h2 className="pb-8 text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']"> Locations </h2>
-        { Object.keys(restaurant).length > 0 && 
-          <div className="Maps flex items-center justify-center ">
-            <iframe
-              src={`https://maps.google.com/maps?q=${restaurant.latitude.replace(",",".")},${restaurant.longitude.replace(",",".")}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-              width="800px"
-              height="300px"
-              style={{ border: "0" }}
-              allowfullscreen=""
-              loading="lazy"
-            ></iframe>
-          </div>
-        }
+        <div className="Maps flex items-center justify-center ">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253492.9684735126!2d107.53117671354208!3d-6.911203057753583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c532e567b41b%3A0xace4df8df0c30c3!2sHeyHo*21%20Eatery!5e0!3m2!1sen!2sid!4v1699849948074!5m2!1sen!2sid"
+            width="800px"
+            height="300px"
+            style={{ border: "0" }}
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
       </div>
       <div className='mt-56'>
         <FooterResto />
