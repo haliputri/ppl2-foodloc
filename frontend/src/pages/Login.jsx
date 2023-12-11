@@ -10,7 +10,6 @@ import FooterResto from "../components/FooterResto";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import Facebook from "./Facebook";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -118,7 +117,6 @@ const Login = () => {
                   }}
                 />
               </GoogleOAuthProvider>
-              <Facebook />
               
 
              
