@@ -410,28 +410,31 @@ const RestaurantPage = () => {
           </div>
           {restaurantChunks.map((chunk, index) => (
             <div key={index} className="flex mb-16 ml-8">
-              {chunk.map((restaurant) => (
-                <Link to={`${restaurant.resto_id}`} key={restaurant.resto_id}>
-                  <Card
-                    key={restaurant.resto_id}
-                    className="mr-24"
-                    style={{ width: "250px" }}
-                    href="#"
-                    imgAlt=""
-                    imgSrc={food1}
-                  >
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      {restaurant.name}
-                    </h5>
-                    <p className="font-normal text-gray-700 dark:text-gray-400">
-                      {restaurant.address}
-                    </p>
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      {restaurant.rating}
-                    </h5>
-                  </Card>
-                </Link>
-              ))}
+              {chunk.map((restaurant) => {
+                console.log(restaurant)
+                return (
+                  <Link to={`${restaurant._id}`} key={restaurant._id}>
+                    <Card
+                      key={restaurant._id}
+                      className="mr-24"
+                      style={{ width: "250px" }}
+                      href={restaurant._id}
+                      imgAlt=""
+                      imgSrc={food1}
+                    >
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.name}
+                      </h5>
+                      <p className="font-normal text-gray-700 dark:text-gray-400">
+                        {restaurant.address}
+                      </p>
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.rating}
+                      </h5>
+                    </Card>
+                  </Link>
+                )
+              })}
             </div>
           ))}
           <div className="flex flex-col items-center"></div>

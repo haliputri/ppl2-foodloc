@@ -60,7 +60,7 @@ const EditProfile = () => {
 
   const handleUpdatedUser = () => {
     const originalDate = birthdate;
-    const formattedDate = new Date(originalDate).toISOString().split('T')[0];
+    const formattedDate = birthdate ? new Date(originalDate).toISOString().split('T')[0] : "";
 
     const data = {
       username,
@@ -109,7 +109,7 @@ const EditProfile = () => {
             >
               <div className="relative">
               <img
-                src={profileImage ? URL.createObjectURL(profileImage) : profilePicture}
+                src={profileImage != "" ? profileImage : `https://ui-avatars.com/api/?name=${name}`}
                 alt="Profile Picture"
                 style={{
                   width: "150px",
@@ -324,7 +324,7 @@ const EditProfile = () => {
                         justifyContent: "flex-start",
                         width: "300px",
                       }}
-                      value={birthdate.split("T")[0]}
+                      value={birthdate ? birthdate.split("T")[0] : ""}
                       onChange={(e) => setBirthDate(e.target.value)}
                       id="tanggalLahir1"
                       placeholder="Masukkan tanggal lahir kamu"
