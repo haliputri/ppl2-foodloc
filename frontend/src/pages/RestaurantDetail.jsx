@@ -144,8 +144,6 @@ const RestaurantDetail = () => {
     }
   }, [days]);
 
-
-
   const contentStyle = {
     display: expanded ? 'block' : 'none',
   };
