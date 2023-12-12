@@ -102,10 +102,26 @@ const UserRestaurantDetail = () => {
     
   const sortedReviews = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
   const [currentPageReview, setCurrentPageReview] = useState(1);
+  const [review, setReview] = useState("")
   const reviewsPerPage = 3;
   const indexOfLastReview = currentPageReview * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
   const currentReviews = sortedReviews.slice(indexOfFirstReview, indexOfLastReview);
+
+  const submitReview = async () => {
+    await axios.post("http://localhost:8080/reviews", {
+      "restaurantName": restaurant.name,
+      "restaurantId": restaurant._id,
+      "rating": rating,
+      "authorName": user.username,
+      "content": review,
+      "image": "",
+      "authorId": user._id
+    })
+    .then(e => {
+      window.location.reload()
+    })
+  }
 
   const paginate = (pageNumber) => {
     setCurrentPageReview(pageNumber);
@@ -309,15 +325,17 @@ const UserRestaurantDetail = () => {
           <div className="mx-16 relative">
             <textarea
               className="inset-0 w-full mb-4 text-gray-900 bg-white border border-yellow-300 font-['Lato'] rounded-lg" rows={7}
+              onChange={e => setReview(e.target.value)}
             >
             </textarea>
             <div className="flex space-x-2 absolute mb-6 bottom-4 left-4">{renderStars()}</div>
-            <Button onClick={handleClick}
+            <Button
               className="absolute mb-6 bottom-4 right-6 rounded-md"
               style={{
                 backgroundColor: "#FFA90A",
                 borderRadius: "50px"
               }}
+              onClick={submitReview}
             >
               Submit Review
             </Button>
