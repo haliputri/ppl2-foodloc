@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "flowbite-react";
 import Logo from "../assets/Logo.svg";
 import ProfileImage from "../assets/profpic.png"; 
 import { Avatar, Dropdown } from 'flowbite-react';
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
 
 const Navigation = () => {
+  const [user, setUser] = useState({});
+  const { username } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/users/login/find/${username}`)
+      .then((response) => {
+        const userData = response.data.data;
+        setUser(userData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <Navbar fluid style={{ backgroundColor: '#FFA90A' }}>
-      <Navbar.Brand href="https://flowbite-react.com">
-        <img src={Logo} className="p-1 pl-12 mr-6 h-4 sm:h-9" alt="" />
-      </Navbar.Brand>
+      <Link to={`/home/${user.username}`}>
+      <img src={Logo} className="p-1 pl-12 mr-6 h-4 sm:h-9" alt="" />
+      </Link>
       
  
       <Navbar.Collapse>
-        <Navbar.Link href="restaurant">Restaurants</Navbar.Link>
+        <Link to={`/${user.username}/restaurant`}>Restaurants</Link>
       </Navbar.Collapse>
       <Dropdown
         label={<Avatar rounded />}
@@ -21,12 +40,15 @@ const Navigation = () => {
         inline
       >
         <Dropdown.Header>
-          <span className="block text-sm">Bonnie Green</span>
-          <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+          <Link to={`/profile/find/${username}`}>
+          <span className="block text-sm">{user.name}</span>
+          <span className="block truncate text-sm font-medium">{user.email}</span>
+          </Link>
         </Dropdown.Header> 
         <Dropdown.Divider />
-        {/* <Dropdown.Item href="/admin/"> Dashboard Admin</Dropdown.Item> */}
-        <Dropdown.Item> Sign out</Dropdown.Item>
+        <Dropdown.Item>
+          <Link to={`/login`}>Sign out</Link>
+        </Dropdown.Item>
       </Dropdown>
     </Navbar>
   );

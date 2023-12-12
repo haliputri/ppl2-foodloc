@@ -54,19 +54,22 @@ router.get('/', async(request, response) => {
 });
 
 // Route for Get All Restaurants from database by id
-router.get('/:resto_id', async(request, response) => {
-    try{
-        const { resto_id } = request.params;
-        
-        const restaurants = await Restaurant.findOne({ resto_id });
-        
+router.get('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+
+        const restaurant = await Restaurant.findOne({ _id: id });
+
+        if (!restaurant) {
+            return response.status(404).json({ message: 'Restaurant not found' });
+        }
+
         return response.status(200).json({
-            count: restaurants.length,
-            data: restaurants
+            data: restaurant
         });
-    } catch (error){
+    } catch (error) {
         console.log(error.message);
-        response.status(500).send({message: error.message});
+        response.status(500).send({ message: error.message });
     }
 });
 
@@ -103,12 +106,12 @@ router.get('/:resto_id', async(request, response) => {
 // });
 
 
-router.put('/:resto_id', async(request, response) => {
-    const { resto_id } = request.params;
+router.put('/:id', async(request, response) => {
+    const { id } = request.params;
   
     try {
       // Find the restaurant by ID
-      const restaurant = await Restaurant.findOne({ resto_id });
+      const restaurant = await Restaurant.findOne({ id });
   
       // If the restaurant is not found, return a 404 response
       if (!restaurant) {
@@ -136,21 +139,52 @@ router.put('/:resto_id', async(request, response) => {
   });
 
 // Route for Delete Restaurants
-router.delete( '/:resto_id', async(request, response) => {
-    try{
-        const { resto_id } = request.params;
-
-        const result = await Restaurant.findOneAndDelete({ resto_id });
-
-        if(!result){
-            return response.status(404).json({message: 'Restaurant not found'});
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await Restaurant.findByIdAndDelete(id);
+    
+        if (!result) {
+          return res.status(404).json({ message: 'User not found' });
         }
-
-        return response.status(200).send({message: 'Restaurants deteleted successfully'});
-    } catch (error){
-        console.log(error.message);
-        response.status(500).send({message: error.message});
-    }
+    
+        return res.status(200).json({ message: 'User deleted successfully' });
+      } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+      }
 });
 
+router.get('/filter', async (request, response) => {
+    try {
+      // Extract the filter parameters from the query string
+      const { type, minPrice, maxPrice, rating } = request.query;
+  
+      // Construct a query object based on the provided filters
+      const filterQuery = {};
+  
+      if (type) {
+        filterQuery.category = type;
+      }
+  
+      if (minPrice && maxPrice) {
+        filterQuery.price = { $gte: minPrice, $lte: maxPrice };
+      }
+  
+      if (rating) {
+        filterQuery.rating = rating;
+      }
+  
+      // Fetch restaurants based on the constructed query
+      const restaurants = await Restaurant.find(filterQuery);
+  
+      return response.status(200).json({
+        count: restaurants.length,
+        data: restaurants,
+      });
+    } catch (error) {
+      console.log(error.message);
+      response.status(500).send({ message: error.message });
+    }
+  });
 export default router;
