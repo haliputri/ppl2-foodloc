@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Dropdown } from "flowbite-react";
+import { Card } from "flowbite-react";
 import Navigation from "../components/Navigation";
 import HeroLanding from "../components/HeroLanding";
 import FooterResto from "../components/FooterResto";
@@ -8,7 +8,6 @@ import CardResto from "../components/CardResto";
 import { Button } from "flowbite-react";
 import food1 from "../assets/food-1.png";
 import { Link } from "react-router-dom";
-import star from "../assets/star.svg";
 
 const RestaurantPage = () => {
   const [restaurants, setResto] = useState([]);
@@ -98,18 +97,18 @@ const RestaurantPage = () => {
   const handleMinInputChange = (event) => {
     const min = event.target.value;
     setMinValue(min);
-  
+
     // Deselect price buttons when input is manually changed
     setButton1Clicked(false);
     setButton2Clicked(false);
     setButton3Clicked(false);
     setButton4Clicked(false);
   };
-  
+
   const handleMaxInputChange = (event) => {
     const max = event.target.value;
     setMaxValue(max);
-  
+
     // Deselect price buttons when input is manually changed
     setButton1Clicked(false);
     setButton2Clicked(false);
