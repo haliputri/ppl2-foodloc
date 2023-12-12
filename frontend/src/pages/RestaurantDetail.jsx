@@ -8,13 +8,11 @@ import starabu from '../assets/starabu.svg';
 import money from '../assets/money.svg';
 import grab from '../assets/grab.png';
 import gojek from '../assets/gojek.png';
-import pencil from '../assets/pencil.svg';
-import ava1 from '../assets/ava-1.svg';
 import ava2 from '../assets/ava2.svg';
 import FooterResto from '../components/FooterResto';
 import menu from '../assets/menu.png';
 import { FaStar } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const RestaurantDetail = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -22,6 +20,11 @@ const RestaurantDetail = () => {
   const [rating, setRating] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isShown, setIsShown] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [openHour, setOpenHour] = useState('');
+  const [closeHour, setCloseHour] = useState('');
+  const [arrowPath, setArrowPath] = useState("M6 9l6 6 6-6");
   const imagesPerPage = 1;
   const imageList = [menu, menu, menu];
 
@@ -63,16 +66,8 @@ const RestaurantDetail = () => {
       content: "ini 11 nov",
       date: "2023-11-11"
     },
-    {
-      avatar: ava2,
-      id: 16,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini 3 des",
-      date: "2023-12-03"
-    }
   ];
-    
+
   const sortedReviews = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
   const [currentPageReview, setCurrentPageReview] = useState(1);
   const reviewsPerPage = 3;
@@ -98,6 +93,59 @@ const RestaurantDetail = () => {
     if (currentPageImage > 1) {
       setcurrentPageImage(currentPageImage - 1);
     }
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+    setArrowPath(arrowPath === "M6 9l6 6 6-6" ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6");
+  };
+
+  const days = [
+    { day: 'Monday', open: '11:00', close: '22:00' },
+    { day: 'Saturday', open: '11:00', close: '22:00' },
+    { day: 'Tuesday', open: '11:00', close: '22:00' },
+  ];
+
+  useEffect(() => {
+    const now = new Date();
+    const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' });
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    const today = days.find((item) => item.day === currentDay);
+
+    if (today) {
+      const openTime = parseInt(today.open.split(':')[0]);
+      const closeTime = parseInt(today.close.split(':')[0]);
+
+      setOpenHour(today.open);
+      setCloseHour(today.close);
+
+      if (currentHour > openTime && currentHour < closeTime) {
+        setIsOpen(true);
+      } else if (currentHour === openTime && currentMinute >= 0) {
+        setIsOpen(true);
+      } else {
+        setIsOpen(false);
+      }
+    } else {
+      const sortedDays = days.sort((a, b) => {
+        const aIndex = days.findIndex((item) => item.day === a.day);
+        const bIndex = days.findIndex((item) => item.day === b.day);
+        const currentDayIndex = days.findIndex((item) => item.day === currentDay);
+
+        return Math.abs(currentDayIndex - aIndex) - Math.abs(currentDayIndex - bIndex);
+      });
+
+      const nearestDay = sortedDays[0]; 
+      setOpenHour(nearestDay.open);
+      setCloseHour(nearestDay.close);
+      setIsOpen(false); 
+    }
+  }, [days]);
+
+  const contentStyle = {
+    display: expanded ? 'block' : 'none',
   };
 
 
@@ -161,7 +209,7 @@ const RestaurantDetail = () => {
             />
           </div>
           <div className="w1/3 flex-col">
-            <h4 className="text-orange-FFA90A md:text-2xl lg:text-4xl dark:text-white ml-4 font-bold font-['Lato']">
+            <h4 className="text-orange-FFA90A md:text-xl lg:text-3xl dark:text-white ml-4 font-bold font-['Lato']">
               KFC
             </h4>
             <div className="flex items-center mt-4 ml-4">
@@ -170,14 +218,51 @@ const RestaurantDetail = () => {
                 alt="Star"
                 className="w-6 h-6"
               />
-              <span className="ml-2 text-2xl">4.5</span>
+              <span className="ml-2 text-xl">4.5</span>
             </div>
             <div className="flex items-center mt-4 ml-4">
               <img
                 src={money}
                 className="w-6 h-6"
               />
-              <span className="ml-2 text-2xl">Rp50.000-Rp100.000</span>
+              <span className="ml-2 text-xl">Rp50.000-Rp100.000</span>
+            </div>
+            <div className="flex items-center mt-4 ml-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFA90A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <button onClick={handleExpandClick} className="flex items-center">
+                <span className="ml-2 text-xl font-bold text-orange-FFA90A font-Lato">
+                  {isOpen ? 'Open' : 'Closed'}            </span>
+                <span className='ml-2 text-xl font-Lato'> - {isOpen ? `Closes at ${closeHour}` : `Opens at ${openHour}`} </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FFA90A"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="ml-1"
+                >
+                  <path d={arrowPath} />
+                </svg>
+              </button>
+            </div>
+            <div className="flex items-center ml-12 mt-2" style={contentStyle}>
+              <table className="text-xl font-Lato">
+                <tbody>
+                  {days.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.day}</td>
+                      <td className='pl-1'>{item.open} - {item.close}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
             <div className="flex items-center mt-4 ml-4">
               <Button
@@ -271,12 +356,12 @@ const RestaurantDetail = () => {
         </div>
       </div>
       <div>
-      <div className="flex items-center justify-between mb-8 mt-20 mx-20">
+        <div className="flex items-center justify-between mb-8 mt-20 mx-20">
           <h2 className="text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']"> Reviews </h2>
-            <div className=''>
+          <div className=''>
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFA90A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" onClick={handleClick}>
               <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              </div>
+          </div>
         </div>
         {isShown && (
           <div className="mx-16 relative">
@@ -320,47 +405,47 @@ const RestaurantDetail = () => {
         </div>
         <div className="flex items-center justify-center mt-4">
           <svg xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke= {currentPageReview > 1 ? "#FFA90A" : "#D9D9D9"}
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="cursor-pointer"
-            onClick={() => paginate(currentPageReview > 1 ? currentPageReview - 1 : 1)}><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
-            <div className="gap-3 inline-flex mx-2">
-    {Array.from({ length: Math.min(3, Math.ceil(reviews.length / reviewsPerPage)) }).map((_, i) => (
-          <svg
-            key={i}
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 16 16"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
             fill="none"
-            className={`rounded-full ${currentPageReview > 3 ? (i === 0 ? 'text-orange-FFA90A' : 'text-gray-D9D9D9') : (i === currentPageReview - 1 ? 'text-orange-FFA90A' : 'text-gray-D9D9D9')}`}
+            stroke={currentPageReview > 1 ? "#FFA90A" : "#D9D9D9"}
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="cursor-pointer"
+            onClick={() => paginate(currentPageReview > 1 ? currentPageReview - 1 : 1)}><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
+          <div className="gap-3 inline-flex mx-2">
+            {Array.from({ length: Math.min(3, Math.ceil(reviews.length / reviewsPerPage)) }).map((_, i) => (
+              <svg
+                key={i}
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 16 16"
+                fill="none"
+                className={`rounded-full ${currentPageReview > 3 ? (i === 0 ? 'text-orange-FFA90A' : 'text-gray-D9D9D9') : (i === currentPageReview - 1 ? 'text-orange-FFA90A' : 'text-gray-D9D9D9')}`}
+              >
+                <circle cx="8" cy="8" r="8" fill="currentColor" />
+              </svg>
+            ))}
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={currentPageReview < Math.ceil(reviews.length / reviewsPerPage) ? "#FFA90A" : "#D9D9D9"}
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="cursor-pointer"
+            onClick={() => paginate(currentPageReview < Math.ceil(reviews.length / reviewsPerPage) ? currentPageReview + 1 : currentPageReview)}
           >
-            <circle cx="8" cy="8" r="8" fill="currentColor" />
+            <path d="M5 12h13M12 5l7 7-7 7" />
           </svg>
-        ))}
-            </div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={currentPageReview < Math.ceil(reviews.length / reviewsPerPage) ? "#FFA90A" : "#D9D9D9"}
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="cursor-pointer"
-              onClick={() => paginate(currentPageReview < Math.ceil(reviews.length / reviewsPerPage) ? currentPageReview + 1 : currentPageReview)}
-            >
-              <path d="M5 12h13M12 5l7 7-7 7" />
-            </svg>
-            </div>
+        </div>
       </div>
       <div className='mt-16 mx-20'>
         <h2 className="pb-8 text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']"> Locations </h2>
