@@ -8,10 +8,7 @@ const Sidenav = () => {
   return (
     <Sidebar aria-label="Default sidebar example">
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Sidebar.Item href="/">
-            <img src={ Foodloc } alt="" />
-          </Sidebar.Item>
+        <Sidebar.ItemGroup> 
           <Sidebar.Item href="/admin" icon={HiViewBoards} >
             Restaurants
           </Sidebar.Item>
@@ -19,12 +16,7 @@ const Sidenav = () => {
             Users
           </Sidebar.Item> 
         </Sidebar.ItemGroup>
-      </Sidebar.Items>
-      <Sidebar.ItemGroup> 
-          <Sidebar.Item href="/login" icon={HiArrowSmLeft}> 
-            Sign Out
-          </Sidebar.Item>  
-        </Sidebar.ItemGroup>
+      </Sidebar.Items> 
     </Sidebar>
   );
 }
