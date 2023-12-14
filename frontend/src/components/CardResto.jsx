@@ -29,12 +29,12 @@ const CardResto = () => {
       {firstThreeRestaurants.map((restaurant) => (
         <Link to={`/restaurant/${restaurant._id}`} key={restaurant._id}>
           <Card
-            key={restaurant.resto_id} // Pastikan key unik untuk setiap elemen dalam array
+            key={restaurant._id} // Pastikan key unik untuk setiap elemen dalam array
             className="mr-24"
             style={{ width: "250px" }}
             href="#"
             imgAlt=""
-            imgSrc={food1}
+            imgSrc={restaurant.logo || food1}
           >
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {restaurant.name}

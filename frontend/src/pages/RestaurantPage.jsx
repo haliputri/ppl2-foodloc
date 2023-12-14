@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 const RestaurantPage = () => {
   const [restaurants, setResto] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedRating, setSelectedRating] = useState(null);
   const [button1Clicked, setButton1Clicked] = useState(false);
   const [button2Clicked, setButton2Clicked] = useState(false);
   const [button3Clicked, setButton3Clicked] = useState(false);
@@ -24,51 +25,8 @@ const RestaurantPage = () => {
   const [button8Clicked, setButton8Clicked] = useState(false);
   const [button9Clicked, setButton9Clicked] = useState(false);
 
-  const handleFilter = () => {
-    // Assuming selectedItems represent the selected restaurant types
-    const typeFilter = selectedItems.join(",");
-
-    // Assuming minValue and maxValue represent the selected price range
-    const priceFilter = `${minValue},${maxValue}`;
-
-    // Assuming button5Clicked to button9Clicked represent the selected rating
-    let ratingFilter = "";
-    if (button5Clicked) ratingFilter = "5";
-    else if (button6Clicked) ratingFilter = "4";
-    else if (button7Clicked) ratingFilter = "3";
-    else if (button8Clicked) ratingFilter = "2";
-    else if (button9Clicked) ratingFilter = "1";
-
-    // Make an axios request with the filters
-    axios
-      .get(
-        `http://localhost:8080/restaurants/filter?type=${typeFilter}&minPrice=${priceFilter}&rating=${ratingFilter}`
-      )
-      .then((response) => {
-        setResto(response.data.data);
-
-        // Reload the page to show the filtered results
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  // Call handleFilter whenever filters change
-  useEffect(() => {
-    handleFilter();
-  }, [
-    selectedItems,
-    minValue,
-    maxValue,
-    button5Clicked,
-    button6Clicked,
-    button7Clicked,
-    button8Clicked,
-    button9Clicked,
-  ]);
-  const handleClickRating = (buttonNumber) => {
+  const handleClickRating = (buttonNumber, ratingValue) => {
+    setSelectedRating(ratingValue);
     setButton5Clicked(false);
     setButton6Clicked(false);
     setButton7Clicked(false);
@@ -77,22 +35,25 @@ const RestaurantPage = () => {
 
     switch (buttonNumber) {
       case 1:
-        setButton5Clicked(true);
+        setButton5Clicked((prevState) => !prevState);
         break;
       case 2:
-        setButton6Clicked(true);
+        setButton6Clicked((prevState) => !prevState);
         break;
       case 3:
-        setButton7Clicked(true);
+        setButton7Clicked((prevState) => !prevState);
         break;
       case 4:
-        setButton8Clicked(true);
+        setButton8Clicked((prevState) => !prevState);
         break;
       case 5:
-        setButton9Clicked(true);
+        setButton9Clicked((prevState) => !prevState);
+        break;
+      default:
         break;
     }
   };
+  
 
   const handleMinInputChange = (event) => {
     const min = event.target.value;
@@ -117,38 +78,68 @@ const RestaurantPage = () => {
   };
 
   const handleClickPrice = (buttonNumber) => {
-    // Reset the state of all buttons
-    setButton1Clicked(false);
-    setButton2Clicked(false);
-    setButton3Clicked(false);
-    setButton4Clicked(false);
-
-    // Set the state of the clicked button
+    // Check the currently clicked button to toggle its state
     switch (buttonNumber) {
       case 1:
-        setButton1Clicked(true);
-        setMinValue("0");
-        setMaxValue("30000");
+        if (button1Clicked) {
+          setButton1Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(true);
+          setButton2Clicked(false);
+          setButton3Clicked(false);
+          setButton4Clicked(false);
+          setMinValue("0");
+          setMaxValue("30000");
+        }
         break;
       case 2:
-        setButton2Clicked(true);
-        setMinValue("30000");
-        setMaxValue("70000");
+        if (button2Clicked) {
+          setButton2Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(true);
+          setButton3Clicked(false);
+          setButton4Clicked(false);
+          setMinValue("30000");
+          setMaxValue("70000");
+        }
         break;
       case 3:
-        setButton3Clicked(true);
-        setMinValue("70000");
-        setMaxValue("150000");
+        if (button3Clicked) {
+          setButton3Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(false);
+          setButton3Clicked(true);
+          setButton4Clicked(false);
+          setMinValue("70000");
+          setMaxValue("150000");
+        }
         break;
       case 4:
-        setButton4Clicked(true);
-        setMinValue("150000");
-        setMaxValue("");
+        if (button4Clicked) {
+          setButton4Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(false);
+          setButton3Clicked(false);
+          setButton4Clicked(true);
+          setMinValue("150000");
+          setMaxValue("");
+        }
         break;
       default:
         break;
     }
-  };
+  };  
 
   useEffect(() => {
     axios
@@ -186,11 +177,47 @@ const RestaurantPage = () => {
     if (index === -1) {
       updatedSelection.push(item);
     } else {
+      // Item already in the list, remove it
       updatedSelection.splice(index, 1);
     }
-
     setSelectedItems(updatedSelection);
   };
+
+  const [searchResult, setSearchResult] = useState([]);
+  const [key, setKey] = useState("");
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      // Check if at least one filter is active
+      if (
+        !key.trim() &&
+        selectedItems.length === 0 &&
+        !minValue &&
+        !maxValue &&
+        !selectedRating
+      ) {
+        setSearchResult([]);
+        return;
+      }
+
+      const res = await axios.get("http://localhost:8080/restaurants/search", {
+        params: {
+          name: key,
+          category: selectedItems,
+          min_price: minValue,
+          max_price: maxValue,
+          rating: selectedRating, // Include selected rating in the API call
+        },
+      });
+      setSearchResult(res.data.data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const searchResultChunks = chunkArray(searchResult, 3);
 
   return (
     <div>
@@ -204,10 +231,14 @@ const RestaurantPage = () => {
             >
               Restaurants
             </h4>
-            <form className="flex">
+            <form className="flex" onClick={handleSearch}>
               <div className="relative inline-block text-left">
                 <Button
                   onClick={toggleDropdown}
+                  style={{
+                    borderTopRightRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                  }}
                   className="items-center py-2.5 px-2.5 font-medium text-center border border-yellow-300 rounded-s-lg hover:bg-gray-200"
                 >
                   <svg
@@ -237,8 +268,8 @@ const RestaurantPage = () => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes("Item 1")}
-                          onChange={() => handleCheckboxChange("Item 1")}
+                          checked={selectedItems.includes("restaurants")}
+                          onChange={() => handleCheckboxChange("restaurants")}
                           className="mx-4"
                         />
                         Restoran
@@ -246,8 +277,8 @@ const RestaurantPage = () => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes("Item 2")}
-                          onChange={() => handleCheckboxChange("Item 2")}
+                          checked={selectedItems.includes("cafes")}
+                          onChange={() => handleCheckboxChange("cafes")}
                           className="mx-4"
                         />
                         Cafe
@@ -255,11 +286,11 @@ const RestaurantPage = () => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes("Streetfood")}
-                          onChange={() => handleCheckboxChange("Streetfood")}
+                          checked={selectedItems.includes("jajanan")}
+                          onChange={() => handleCheckboxChange("jajanan")}
                           className="mx-4"
                         />
-                        Streetfood
+                        Jajanan UMKM
                       </label>
                       <h6 class="mt-4 mx-4 mb-2 text-sm font-medium text-yellow-400">
                         Harga
@@ -368,7 +399,7 @@ const RestaurantPage = () => {
                       <div className="mx-4">
                         <div className="flex my-2 justify-between">
                           <Button
-                            onClick={() => handleClickRating(1)}
+                            onClick={() => handleClickRating(1, 1)}
                             style={{
                               backgroundColor: button5Clicked
                                 ? "#FFA90A"
@@ -394,7 +425,7 @@ const RestaurantPage = () => {
                             </svg>
                           </Button>
                           <Button
-                            onClick={() => handleClickRating(2)}
+                            onClick={() => handleClickRating(2, 2)}
                             style={{
                               backgroundColor: button6Clicked
                                 ? "#FFA90A"
@@ -422,7 +453,7 @@ const RestaurantPage = () => {
                         </div>
                         <div className="flex my-2 justify-between">
                           <Button
-                            onClick={() => handleClickRating(3)}
+                            onClick={() => handleClickRating(3, 3)}
                             style={{
                               backgroundColor: button7Clicked
                                 ? "#FFA90A"
@@ -448,7 +479,7 @@ const RestaurantPage = () => {
                             </svg>
                           </Button>
                           <Button
-                            onClick={() => handleClickRating(4)}
+                            onClick={() => handleClickRating(4, 4)}
                             style={{
                               backgroundColor: button8Clicked
                                 ? "#FFA90A"
@@ -476,7 +507,7 @@ const RestaurantPage = () => {
                         </div>
                         <div className="flex my-2 justify-between">
                           <Button
-                            onClick={() => handleClickRating(5)}
+                            onClick={() => handleClickRating(5, 5)}
                             style={{
                               backgroundColor: button9Clicked
                                 ? "#FFA90A"
@@ -514,6 +545,9 @@ const RestaurantPage = () => {
                   id="search-dropdown"
                   class=" text-sm border border-yellow-300"
                   placeholder="Search Restaurants..."
+                  required
+                  value={key}
+                  onChange={(e) => setKey(e.target.value)}
                 />
                 <button
                   type="submit"
@@ -538,19 +572,23 @@ const RestaurantPage = () => {
               </div>
             </form>
           </div>
-          {restaurantChunks.map((chunk, index) => (
-            <div key={index} className="flex mb-16 ml-8">
-              {chunk.map((restaurant) => {
-                console.log(restaurant)
-                return (
+          {!key.trim() &&
+          selectedItems.length === 0 &&
+          !minValue &&
+          !maxValue &&
+          !selectedRating ? (
+            // Jika tidak ada pencarian, tampilkan data dari database
+            restaurantChunks.map((chunk, index) => (
+              <div key={index} className="flex mb-16 ml-8">
+                {chunk.map((restaurant) => (
                   <Link to={`${restaurant._id}`} key={restaurant._id}>
                     <Card
                       key={restaurant._id}
                       className="mr-24"
                       style={{ width: "250px" }}
-                      href={restaurant._id}
+                      href="#"
                       imgAlt=""
-                      imgSrc={food1}
+                      imgSrc={restaurant.logo || food1}
                     >
                       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {restaurant.name}
@@ -563,10 +601,41 @@ const RestaurantPage = () => {
                       </h5>
                     </Card>
                   </Link>
-                )
-              })}
-            </div>
-          ))}
+                ))}
+              </div>
+            ))
+          ) : searchResult && searchResult.length > 0 ? (
+            // Jika hasil pencarian lebih dari 0, tampilkan hasil pencarian
+            searchResultChunks.map((chunk, index) => (
+              <div key={index} className="flex mb-16 ml-8">
+                {chunk.map((restaurant) => (
+                  <Link to={`${restaurant._id}`} key={restaurant._id}>
+                    <Card
+                      key={restaurant._id}
+                      className="mr-24"
+                      style={{ width: "250px" }}
+                      href="#"
+                      imgAlt=""
+                      imgSrc={restaurant.logo || food1}
+                    >
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.name}
+                      </h5>
+                      <p className="font-normal text-gray-700 dark:text-gray-400">
+                        {restaurant.address}
+                      </p>
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.rating}
+                      </h5>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            ))
+          ) : (
+            // Jika hasil pencarian tidak ada, tampilkan pesan
+            <p>Hasil pencaharian tidak ditemukan.</p>
+          )}
           <div className="flex flex-col items-center"></div>
         </div>
         <FooterResto />

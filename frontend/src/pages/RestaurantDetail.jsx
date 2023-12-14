@@ -1,23 +1,19 @@
-import React from 'react';
-import { Button, Modal } from 'flowbite-react';
-import { Link } from "react-router-dom";
-import Navigation from '../components/Navigation';
-import Navigation2 from "../components/Navigation2";
-import logo from '../assets/kfc.png';
-import star from '../assets/star.svg';
-import starabu from '../assets/starabu.svg';
-import money from '../assets/money.svg';
-import grab from '../assets/grab.png';
-import gojek from '../assets/gojek.png';
-import pencil from '../assets/pencil.svg';
-import ava1 from '../assets/ava-1.svg';
-import ava2 from '../assets/ava2.svg';
-import FooterResto from '../components/FooterResto';
-import menu from '../assets/menu.png';
-import axios from 'axios';
-import { FaStar } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from "react";
+import { Button, Modal } from "flowbite-react";
+import { Link, useParams } from "react-router-dom";
+import Navigation from "../components/Navigation";
+import logo from "../../src/assets/kfc.png"
+import star from "../assets/star.svg";
+import starabu from "../assets/starabu.svg";
+import money from "../assets/money.svg";
+import grab from "../assets/grab.png";
+import gojek from "../assets/gojek.png";
+import ava2 from "../assets/ava2.svg";
+import FooterResto from "../components/FooterResto";
+import menu from "../assets/menu.png";
+import { FaStar } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const RestaurantDetail = () => {
   const [restaurant, setRestaurant] = useState({});

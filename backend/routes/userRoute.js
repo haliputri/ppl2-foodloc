@@ -181,7 +181,6 @@ router.get('/login/find/:username', async (req, res) => {
       }
 });
 
-
 router.get('/login/find/:id', async (req, res) => {
     try {
       const { id } = req.params;

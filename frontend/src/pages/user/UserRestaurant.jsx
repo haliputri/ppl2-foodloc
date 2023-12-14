@@ -3,6 +3,7 @@ import axios from "axios";
 import { Dropdown } from "flowbite-react";
 import FooterResto from "../../components/FooterResto";
 import food1 from "../../assets/food-1.png";
+import logo from "../../assets/kfc.png"
 import { Link } from "react-router-dom";
 import { Button, Card } from "flowbite-react";
 import Navigation2 from "../../components/Navigation2";
@@ -37,10 +38,8 @@ const UserRestaurant = () => {
   }, []);
 
   const [restaurants, setResto] = useState([]);
-  const [count, setCount] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedRating, setSelectedRating] = useState(null);
-  const [selectedCategory, setSelactedCategory] = useState(null);
 
   useEffect(() => {
     axios
@@ -113,39 +112,68 @@ const UserRestaurant = () => {
   };
 
   const handleClickPrice = (buttonNumber) => {
-    // Reset the state of all buttons
-
-    setButton1Clicked(false);
-    setButton2Clicked(false);
-    setButton3Clicked(false);
-    setButton4Clicked(false);
-
-    // Set the state of the clicked button
+    // Check the currently clicked button to toggle its state
     switch (buttonNumber) {
       case 1:
-        setButton1Clicked(true);
-        setMinValue("0");
-        setMaxValue("30000");
+        if (button1Clicked) {
+          setButton1Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(true);
+          setButton2Clicked(false);
+          setButton3Clicked(false);
+          setButton4Clicked(false);
+          setMinValue("0");
+          setMaxValue("30000");
+        }
         break;
       case 2:
-        setButton2Clicked(true);
-        setMinValue("30000");
-        setMaxValue("70000");
+        if (button2Clicked) {
+          setButton2Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(true);
+          setButton3Clicked(false);
+          setButton4Clicked(false);
+          setMinValue("30000");
+          setMaxValue("70000");
+        }
         break;
       case 3:
-        setButton3Clicked(true);
-        setMinValue("70000");
-        setMaxValue("150000");
+        if (button3Clicked) {
+          setButton3Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(false);
+          setButton3Clicked(true);
+          setButton4Clicked(false);
+          setMinValue("70000");
+          setMaxValue("150000");
+        }
         break;
       case 4:
-        setButton4Clicked(true);
-        setMinValue("150000");
-        setMaxValue("");
+        if (button4Clicked) {
+          setButton4Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(false);
+          setButton3Clicked(false);
+          setButton4Clicked(true);
+          setMinValue("150000");
+          setMaxValue("");
+        }
         break;
       default:
         break;
     }
-  };
+  };  
 
   const handleClickRating = (buttonNumber, ratingValue) => {
     setSelectedRating(ratingValue);
@@ -157,19 +185,19 @@ const UserRestaurant = () => {
   
     switch (buttonNumber) {
       case 1:
-        setButton5Clicked(true);
+        setButton5Clicked((prevState) => !prevState);
         break;
       case 2:
-        setButton6Clicked(true);
+        setButton6Clicked((prevState) => !prevState);
         break;
       case 3:
-        setButton7Clicked(true);
+        setButton7Clicked((prevState) => !prevState);
         break;
       case 4:
-        setButton8Clicked(true);
+        setButton8Clicked((prevState) => !prevState);
         break;
       case 5:
-        setButton9Clicked(true);
+        setButton9Clicked((prevState) => !prevState);
         break;
     }
   };
@@ -207,50 +235,6 @@ const UserRestaurant = () => {
   };
   
   const searchResultChunks = chunkArray(searchResult, 3);
-  // const handleFilter = () => {
-  //   // Assuming selectedItems represent the selected restaurant types
-  //   const typeFilter = selectedItems.join(",");
-
-  //   // Assuming minValue and maxValue represent the selected price range
-  //   const priceFilter = `${minValue},${maxValue}`;
-
-  //   // Assuming button5Clicked to button9Clicked represent the selected rating
-  //   let ratingFilter = "";
-  //   if (button5Clicked) ratingFilter = "5";
-  //   else if (button6Clicked) ratingFilter = "4";
-  //   else if (button7Clicked) ratingFilter = "3";
-  //   else if (button8Clicked) ratingFilter = "2";
-  //   else if (button9Clicked) ratingFilter = "1";
-
-  //   // Make an axios request with the filters
-  //   axios
-  //     .get(
-  //       `http://localhost:8080/restaurants/filter?type=${typeFilter}&minPrice=${priceFilter}&rating=${ratingFilter}`
-  //     )
-  //     .then((response) => {
-  //       setResto(response.data.data);
-
-  //       // Reload the page to show the filtered results
-  //       window.location.reload();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // Call handleFilter whenever filters change
-  // useEffect(() => {
-  //   handleFilter();
-  // }, [
-  //   selectedItems,
-  //   minValue,
-  //   maxValue,
-  //   button5Clicked,
-  //   button6Clicked,
-  //   button7Clicked,
-  //   button8Clicked,
-  //   button9Clicked,
-  // ]);
 
   return (
     <div>
@@ -618,7 +602,7 @@ const UserRestaurant = () => {
                       style={{ width: "250px" }}
                       href="#"
                       imgAlt=""
-                      imgSrc={food1}
+                      imgSrc={restaurant.logo || food1}
                     >
                       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {restaurant.name}
@@ -646,7 +630,7 @@ const UserRestaurant = () => {
                       style={{ width: "250px" }}
                       href="#"
                       imgAlt=""
-                      imgSrc={food1}
+                      imgSrc={restaurant.logo || logo}
                     >
                       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {restaurant.name}
