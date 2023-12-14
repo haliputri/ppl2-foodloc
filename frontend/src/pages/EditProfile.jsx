@@ -121,7 +121,7 @@ const EditProfile = () => {
                 onClick={handleFileSelect}
               />
               <div
-                      className="  group-hover:flex absolute inset-0 items-center justify-center bg-black bg-opacity-50 text-white"
+                      className="  group-hover:flex absolute pt-16 inset-0 items-center justify-center bg-black bg-opacity-50 text-white"
                       onClick={handleFileSelect}
                       style={{
                         width: "150px",
