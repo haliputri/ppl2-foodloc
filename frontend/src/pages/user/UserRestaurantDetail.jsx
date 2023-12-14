@@ -19,6 +19,7 @@ const UserRestaurantDetail = () => {
     const [restaurant, setRestaurant] = useState({});
     const [user, setUser] = useState({});
     const { username } = useParams();
+    const [avgRating, setAvgRating] = useState(0)
     const [loading, setLoading] = useState(false);
     const {id} = useParams();
   
@@ -27,15 +28,17 @@ const UserRestaurantDetail = () => {
     
       Promise.all([
         axios.get(`http://localhost:8080/restaurants/${id}`),
-        axios.get(`http://localhost:8080/users/login/find/${username}`)
+        axios.get(`http://localhost:8080/users/login/find/${username}`),
+        axios.get(`http://localhost:8080/reviews/average-rating/${id}`)
       ])
-        .then(([restaurantResponse, userResponse]) => {
+        .then(([restaurantResponse, userResponse, avgRatingResponse]) => {
           const restaurantData = restaurantResponse.data.data;
           const userData = userResponse.data.data;
     
           setRestaurant(restaurantData);
           console.log(restaurant)
           setUser(userData);
+          setAvgRating(avgRatingResponse.data.averageRating)
           setLoading(false);
         })
         .catch((error) => {
@@ -57,56 +60,74 @@ const UserRestaurantDetail = () => {
   const currentImages = imageList.slice(indexOfFirstImage, indexOfLastImage);
 
   const totalPages = Math.ceil(imageList.length / imagesPerPage);
-  const reviews = [
-    {
-      avatar: ava2,
-      id: 8,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini 4 des",
-      date: "2023-12-04"
-    },
-    {
-      avatar: ava2,
-      id: 9,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini 2 des",
-      date: "2023-12-02"
-    },
-    {
-      avatar: ava2,
-      id: 10,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini 1 des",
-      date: "2023-12-01"
-    },
-    {
-      avatar: ava2,
-      id: 2,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini 11 nov",
-      date: "2023-11-11"
-    },
-    {
-      avatar: ava2,
-      id: 16,
-      author: "Gerry Lezatos",
-      rating: 5,
-      content: "ini 3 des",
-      date: "2023-12-03"
-    }
-  ];
+  // const reviews = [
+  //   {
+  //     avatar: ava2,
+  //     id: 8,
+  //     author: "Gerry Lezatos",
+  //     rating: 5,
+  //     content: "ini 4 des",
+  //     date: "2023-12-04"
+  //   },
+  //   {
+  //     avatar: ava2,
+  //     id: 9,
+  //     author: "Gerry Lezatos",
+  //     rating: 5,
+  //     content: "ini 2 des",
+  //     date: "2023-12-02"
+  //   },
+  //   {
+  //     avatar: ava2,
+  //     id: 10,
+  //     author: "Gerry Lezatos",
+  //     rating: 5,
+  //     content: "ini 1 des",
+  //     date: "2023-12-01"
+  //   },
+  //   {
+  //     avatar: ava2,
+  //     id: 2,
+  //     author: "Gerry Lezatos",
+  //     rating: 5,
+  //     content: "ini 11 nov",
+  //     date: "2023-11-11"
+  //   },
+  //   {
+  //     avatar: ava2,
+  //     id: 16,
+  //     author: "Gerry Lezatos",
+  //     rating: 5,
+  //     content: "ini 3 des",
+  //     date: "2023-12-03"
+  //   }
+  // ];
     
-  const sortedReviews = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+  // const sortedReviews = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
   const [currentPageReview, setCurrentPageReview] = useState(1);
   const [review, setReview] = useState("")
   const reviewsPerPage = 3;
   const indexOfLastReview = currentPageReview * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = sortedReviews.slice(indexOfFirstReview, indexOfLastReview);
+  // const currentReviews = sortedReviews.slice(indexOfFirstReview, indexOfLastReview);
+  const [newReviews, setNewReviews] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+  
+    Promise.all([
+      axios.get(`http://localhost:8080/reviews/restaurant/${id}`),
+    ])
+      .then(([reviewResponse]) => {
+        setNewReviews(reviewResponse.data.data)
+        console.log(reviewResponse)
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, [username, id]);
 
   const submitReview = async () => {
     await axios.post("http://localhost:8080/reviews", {
@@ -119,7 +140,10 @@ const UserRestaurantDetail = () => {
       "authorId": user._id
     })
     .then(e => {
-      window.location.reload()
+      const newReview = e.data.data;
+      setNewReviews([newReview, ...newReviews]);
+      setReview("");
+      setRating(0);
     })
   }
 
@@ -213,7 +237,7 @@ const UserRestaurantDetail = () => {
                 alt="Star"
                 className="w-6 h-6"
               />
-              <span className="ml-2 text-2xl">{restaurant.rating}</span>
+              <span className="ml-2 text-2xl">{avgRating}</span>
             </div>
             <div className="flex items-center mt-4 ml-4">
               <img
@@ -298,18 +322,22 @@ const UserRestaurantDetail = () => {
             </Modal.Footer>
           </Modal>
           <div className="w1/3 px-20 absolute right-0 top-0 flex flex-col items-center">
-            <img
-              src={grab}
-              className="rounded-full mt-4"
-            />
-            <img
-              src={gojek}
-              className="mt-8"
-              style={{
-                width: "56px",
-                height: "45px",
-              }}
-            />
+            <a href={restaurant.grab_link}>
+              <img
+                src={grab}
+                className="rounded-full mt-4"
+              />
+            </a>
+            <a href={restaurant.gojek_link}>
+              <img
+                src={gojek}
+                className="mt-8"
+                style={{
+                  width: "56px",
+                  height: "45px",
+                }}
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -344,27 +372,27 @@ const UserRestaurantDetail = () => {
           </div>
         )}
         <div className="mx-20 mb-4">
-          {currentReviews.map((review, index) => (
+          {[...newReviews].map((review, index) => (
             <div key={index} className="my-3">
               <div className='inline-flex justify-start items-start'>
-                {review.avatar && (
-                  <img src={review.avatar} className="rounded-full" alt={`Avatar of ${review.author}`} />
-                )}
+                <img src={`https://ui-avatars.com/api/?name=${review.author_name}`} className="rounded-full" alt={`Avatar of ${review.author_name}`} />
                 <div className='flex-col justify-start items-start ml-2' style={{ width: 'calc(100% - 8px)' }}>
-                  <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">{review.author}</h5>
+                  <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">{review.author_name}</h5>
                   <div className="flex items-center ml-1.5">
                     <img src={starabu} className="w-6 h-6" alt="Star Icon" />
-                    <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">{review.rating}</h5>
+                    <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">{review.review_rating}</h5>
                   </div>
-                  <p className="ml-3 mb-2 text-black text-xl font-['Lato']">{review.content}</p>
+                  <p className="ml-3 mb-2 text-black text-xl font-['Lato']">{review.review_text}</p>
                 </div>
               </div>
               <div className="border border-zinc-300" style={{ width: '100%' }}></div>
             </div>
           ))}
         </div>
+
+
         <div className="flex items-center justify-center mt-4">
-          <svg xmlns="http://www.w3.org/2000/svg"
+          {/* <svg xmlns="http://www.w3.org/2000/svg"
               width="28"
               height="28"
               viewBox="0 0 24 24"
@@ -374,9 +402,9 @@ const UserRestaurantDetail = () => {
               strokeLinecap="round"
               strokeLinejoin="round"
               className="cursor-pointer"
-            onClick={() => paginate(currentPageReview > 1 ? currentPageReview - 1 : 1)}><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
+            onClick={() => paginate(currentPageReview > 1 ? currentPageReview - 1 : 1)}><path d="M19 12H6M12 5l-7 7 7 7" /></svg> */}
             <div className="gap-3 inline-flex mx-2">
-    {Array.from({ length: Math.min(3, Math.ceil(reviews.length / reviewsPerPage)) }).map((_, i) => (
+    {/* {Array.from({ length: Math.min(3, Math.ceil(reviews.length / reviewsPerPage)) }).map((_, i) => (
           <svg
             key={i}
             xmlns="http://www.w3.org/2000/svg"
@@ -388,9 +416,9 @@ const UserRestaurantDetail = () => {
           >
             <circle cx="8" cy="8" r="8" fill="currentColor" />
           </svg>
-        ))}
+        ))} */}
             </div>
-            <svg
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
               height="28"
@@ -404,7 +432,7 @@ const UserRestaurantDetail = () => {
               onClick={() => paginate(currentPageReview < Math.ceil(reviews.length / reviewsPerPage) ? currentPageReview + 1 : currentPageReview)}
             >
               <path d="M5 12h13M12 5l7 7-7 7" />
-            </svg>
+            </svg> */}
             </div>
       </div>
       <div className='mt-16 mx-20'>

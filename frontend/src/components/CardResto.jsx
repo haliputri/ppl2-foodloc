@@ -27,7 +27,7 @@ const CardResto = () => {
   return (
     <div className="flex mb-16 ml-8 ">
       {firstThreeRestaurants.map((restaurant) => (
-        <Link to={`/restaurant/${restaurant.resto_id}`} key={restaurant.resto_id}>
+        <Link to={`/restaurant/${restaurant._id}`} key={restaurant._id}>
           <Card
             key={restaurant.resto_id} // Pastikan key unik untuk setiap elemen dalam array
             className="mr-24"
