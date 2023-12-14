@@ -3,6 +3,7 @@ import axios from "axios";
 import { Dropdown } from "flowbite-react";
 import FooterResto from "../../components/FooterResto";
 import food1 from "../../assets/food-1.png";
+import logo from "../../assets/kfc.png"
 import { Link } from "react-router-dom";
 import { Button, Card } from "flowbite-react";
 import Navigation2 from "../../components/Navigation2";
@@ -37,10 +38,8 @@ const UserRestaurant = () => {
   }, []);
 
   const [restaurants, setResto] = useState([]);
-  const [count, setCount] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedRating, setSelectedRating] = useState(null);
-  const [selectedCategory, setSelactedCategory] = useState(null);
 
   useEffect(() => {
     axios
@@ -207,50 +206,6 @@ const UserRestaurant = () => {
   };
   
   const searchResultChunks = chunkArray(searchResult, 3);
-  // const handleFilter = () => {
-  //   // Assuming selectedItems represent the selected restaurant types
-  //   const typeFilter = selectedItems.join(",");
-
-  //   // Assuming minValue and maxValue represent the selected price range
-  //   const priceFilter = `${minValue},${maxValue}`;
-
-  //   // Assuming button5Clicked to button9Clicked represent the selected rating
-  //   let ratingFilter = "";
-  //   if (button5Clicked) ratingFilter = "5";
-  //   else if (button6Clicked) ratingFilter = "4";
-  //   else if (button7Clicked) ratingFilter = "3";
-  //   else if (button8Clicked) ratingFilter = "2";
-  //   else if (button9Clicked) ratingFilter = "1";
-
-  //   // Make an axios request with the filters
-  //   axios
-  //     .get(
-  //       `http://localhost:8080/restaurants/filter?type=${typeFilter}&minPrice=${priceFilter}&rating=${ratingFilter}`
-  //     )
-  //     .then((response) => {
-  //       setResto(response.data.data);
-
-  //       // Reload the page to show the filtered results
-  //       window.location.reload();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // Call handleFilter whenever filters change
-  // useEffect(() => {
-  //   handleFilter();
-  // }, [
-  //   selectedItems,
-  //   minValue,
-  //   maxValue,
-  //   button5Clicked,
-  //   button6Clicked,
-  //   button7Clicked,
-  //   button8Clicked,
-  //   button9Clicked,
-  // ]);
 
   return (
     <div>
@@ -618,7 +573,7 @@ const UserRestaurant = () => {
                       style={{ width: "250px" }}
                       href="#"
                       imgAlt=""
-                      imgSrc={food1}
+                      imgSrc={restaurant.logo || food1}
                     >
                       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {restaurant.name}
@@ -646,7 +601,7 @@ const UserRestaurant = () => {
                       style={{ width: "250px" }}
                       href="#"
                       imgAlt=""
-                      imgSrc={food1}
+                      imgSrc={restaurant.logo || logo}
                     >
                       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {restaurant.name}
