@@ -116,14 +116,6 @@ router.post('/login/find', async (req, res) => {
     }
   });
 
-  router.get('/login/find/:username', (req, res) => {
-    if (req.user.role === 'admin') {
-      res.redirect('/admin-dashboard');
-    } else {
-      res.redirect('/user-dashboard');
-    }
-  });
-
 const ObjectId = mongoose.Types.ObjectId;
 router.get('/login/:id', async (request, response) => {
     try {
@@ -170,7 +162,6 @@ router.get('/login/find/:username', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
       }
 });
-
 
 router.get('/login/find/:id', async (req, res) => {
     try {

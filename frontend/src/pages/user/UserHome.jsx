@@ -5,9 +5,12 @@ import HeroLanding from "../../components/HeroLanding";
 import FooterResto from "../../components/FooterResto";
 import CardResto from "../../components/CardResto";
 import { Button } from "flowbite-react";
+import { useParams } from "react-router-dom";
 
 const UserHome = () => {
   const [restaurants, setResto] = useState([]);
+  const [user, setUser] = useState({});
+  const { username } = useParams();
 
   useEffect(() => {
     axios
@@ -19,6 +22,19 @@ const UserHome = () => {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/users/login/find/${username}`)
+      .then((response) => {
+        const userData = response.data.data;
+        setUser(userData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
 
   const firstThreeRestaurants = restaurants.slice(0, 3);
 
@@ -48,7 +64,7 @@ const UserHome = () => {
         </div> */}
         <div className="flex flex-col items-center">
         <Button
-          href="restaurant"
+          href={`/${user.username}/restaurant`}
           className="mr-12 text-2xl font-semibold font-Lato"
           style={{
             backgroundColor: "white",
