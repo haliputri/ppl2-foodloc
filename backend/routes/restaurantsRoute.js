@@ -6,27 +6,31 @@ const router = express.Router();
 router.post('/', async(request, response) => {
     try {
         if (
-            !request.body.resto_id ||
+            // !request.body.resto_id ||
             !request.body.name || 
             !request.body.address ||
-            !request.body.city ||
-            !request.body.phone_number ||
-            !request.body.social_media ||
-            !request.body.rating
+            !request.body.city
         ) {
             return response.status(400).send({
-                message : 'Send all required fields: resto_id, name, address, city, phone_number, social media, rating',
+                message : 'Send all required fields: name, address, city',
             });
         } 
 
         const newResto = {
-            resto_id:request.body.resto_id,
+            // resto_id:request.body.resto_id,
             name: request.body.name,
             address: request.body.address,
             city: request.body.city,
             phone_number: request.body.phone_number,
             social_media: request.body.social_media,
             rating: request.body.rating,
+            latitude: request.body.latitude,
+            longitude: request.body.longitude,
+            min_price: request.body.min_price,
+            max_price:request.body.max_price,
+            category: request.body.category,
+            logo: request.body.logo,
+            menu: request.body.menu,
         };
 
         const restaurant = await Restaurant.create(newResto);

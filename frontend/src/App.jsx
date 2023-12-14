@@ -41,7 +41,8 @@ const App = () => {
       <Route path='/restaurant' element={<RestaurantPage/>} />
       <Route path='/profile/find/:username' element={<Profile/>} />
       <Route path='/profile/find/edit/:username' element={<EditProfile/>} />
-      
+
+      <Route path='/admin' element={<ListResto/>} />
       <Route path='profile/admin/:username' element={<ListResto/>} />
       <Route path='/admin/:id' element={<ShowResto/>} />
       <Route path='/admin/edit/:id' element={<EditResto/>} />
