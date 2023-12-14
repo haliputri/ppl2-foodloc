@@ -69,30 +69,28 @@ const RestaurantPage = () => {
     button9Clicked,
   ]);
   const handleClickRating = (buttonNumber) => {
-    setButton5Clicked(false);
-    setButton6Clicked(false);
-    setButton7Clicked(false);
-    setButton8Clicked(false);
-    setButton9Clicked(false);
-
+    // Toggle the button states if clicked again
     switch (buttonNumber) {
       case 1:
-        setButton5Clicked(true);
+        setButton5Clicked((prevState) => !prevState);
         break;
       case 2:
-        setButton6Clicked(true);
+        setButton6Clicked((prevState) => !prevState);
         break;
       case 3:
-        setButton7Clicked(true);
+        setButton7Clicked((prevState) => !prevState);
         break;
       case 4:
-        setButton8Clicked(true);
+        setButton8Clicked((prevState) => !prevState);
         break;
       case 5:
-        setButton9Clicked(true);
+        setButton9Clicked((prevState) => !prevState);
+        break;
+      default:
         break;
     }
   };
+  
 
   const handleMinInputChange = (event) => {
     const min = event.target.value;
@@ -117,38 +115,68 @@ const RestaurantPage = () => {
   };
 
   const handleClickPrice = (buttonNumber) => {
-    // Reset the state of all buttons
-    setButton1Clicked(false);
-    setButton2Clicked(false);
-    setButton3Clicked(false);
-    setButton4Clicked(false);
-
-    // Set the state of the clicked button
+    // Check the currently clicked button to toggle its state
     switch (buttonNumber) {
       case 1:
-        setButton1Clicked(true);
-        setMinValue("0");
-        setMaxValue("30000");
+        if (button1Clicked) {
+          setButton1Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(true);
+          setButton2Clicked(false);
+          setButton3Clicked(false);
+          setButton4Clicked(false);
+          setMinValue("0");
+          setMaxValue("30000");
+        }
         break;
       case 2:
-        setButton2Clicked(true);
-        setMinValue("30000");
-        setMaxValue("70000");
+        if (button2Clicked) {
+          setButton2Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(true);
+          setButton3Clicked(false);
+          setButton4Clicked(false);
+          setMinValue("30000");
+          setMaxValue("70000");
+        }
         break;
       case 3:
-        setButton3Clicked(true);
-        setMinValue("70000");
-        setMaxValue("150000");
+        if (button3Clicked) {
+          setButton3Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(false);
+          setButton3Clicked(true);
+          setButton4Clicked(false);
+          setMinValue("70000");
+          setMaxValue("150000");
+        }
         break;
       case 4:
-        setButton4Clicked(true);
-        setMinValue("150000");
-        setMaxValue("");
+        if (button4Clicked) {
+          setButton4Clicked(false);
+          setMinValue("");
+          setMaxValue("");
+        } else {
+          setButton1Clicked(false);
+          setButton2Clicked(false);
+          setButton3Clicked(false);
+          setButton4Clicked(true);
+          setMinValue("150000");
+          setMaxValue("");
+        }
         break;
       default:
         break;
     }
-  };
+  };  
 
   useEffect(() => {
     axios
