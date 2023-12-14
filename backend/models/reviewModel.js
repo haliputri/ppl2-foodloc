@@ -15,6 +15,9 @@ const reviewSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    ranting: {
+      type: Number,
+    },
     author_name: {
       type: String,
       required: true,

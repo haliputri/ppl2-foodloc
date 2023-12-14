@@ -24,27 +24,80 @@ const RestaurantDetail = () => {
   const [avgRating, setAvgRating] = useState(0)
   const [loading, setLoading] = useState(false);
   const {id} = useParams();
+  const [expanded, setExpanded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [openHour, setOpenHour] = useState('');
+  const [closeHour, setCloseHour] = useState('');
+  const [arrowPath, setArrowPath] = useState("M6 9l6 6 6-6");
+
+  const days = [
+    { day: 'Monday', open: '11:00', close: '22:00' },
+    { day: 'Saturday', open: '11:00', close: '22:00' },
+    { day: 'Tuesday', open: '11:00', close: '22:00' },
+  ];
 
   useEffect(() => {
-    setLoading(true);
+    const now = new Date();
+    const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' });
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
   
-    Promise.all([
-      axios.get(`http://localhost:8080/restaurants/${id}`),
-      axios.get(`http://localhost:8080/reviews/average-rating/${id}`)
-    ])
-      .then(([restaurantResponse, avgRatingResponse]) => {
-        const restaurantData = restaurantResponse.data.data;
+    const today = days.find((item) => item.day === currentDay);
   
-        setRestaurant(restaurantData);
-        console.log(restaurant)
-        setAvgRating(avgRatingResponse.data.averageRating)
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
+    if (today) {
+      const openTime = parseInt(today.open.split(':')[0]);
+      const closeTime = parseInt(today.close.split(':')[0]);
+  
+      setOpenHour(today.open);
+      setCloseHour(today.close);
+  
+      if (currentHour > openTime && currentHour < closeTime) {
+        setIsOpen(true);
+      } else if (currentHour === openTime && currentMinute >= 0) {
+        setIsOpen(true);
+      } else {
+        setIsOpen(false);
+      }
+    } else {
+      const sortedDays = days.sort((a, b) => {
+        const aIndex = days.findIndex((item) => item.day === a.day);
+        const bIndex = days.findIndex((item) => item.day === b.day);
+        const currentDayIndex = days.findIndex((item) => item.day === currentDay);
+  
+        return Math.abs(currentDayIndex - aIndex) - Math.abs(currentDayIndex - bIndex);
       });
+  
+      const nearestDay = sortedDays[0]; 
+      setOpenHour(nearestDay.open);
+      setCloseHour(nearestDay.close);
+      setIsOpen(false); 
+    }
+  
+    setLoading(true);
+    axios.get(`http://localhost:8080/restaurants/${id}`)
+    .then(restaurantResponse => {
+      const restaurantData = restaurantResponse.data.data;
+  
+      setRestaurant(restaurantData);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoading(false);
+    });
+    axios.get(`http://localhost:8080/reviews/average-rating/${id}`)
+    .then(avgRatingResponse => {
+      setAvgRating(avgRatingResponse.data.averageRating)
+
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoading(false);
+    });
+  
   }, [id]);
+  
+
 
 const [openModal, setOpenModal] = useState(false);
 const [currentPageImage, setcurrentPageImage] = useState(1);
@@ -128,6 +181,7 @@ useEffect(() => {
     });
 }, [id]);
 
+
 const paginate = (pageNumber) => {
   setCurrentPageReview(pageNumber);
 };
@@ -184,12 +238,23 @@ const renderStars = () => {
   );
 };
 
+const contentStyle = {
+  display: expanded ? 'block' : 'none',
+};
+
+const handleExpandClick = () => {
+  setExpanded(!expanded);
+  setArrowPath(arrowPath === "M6 9l6 6 6-6" ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6");
+};
+
+
+
 return (
   <div>
     <Navigation2 />
     <div>
       <div className='m-20 flex items-center'>
-        <Link to={`/`} className="flex items-center">
+        <Link to={`/restaurant`} className="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
             fill="none" stroke="#D9D9D9" strokeWidth="4" strokeLinecap="round"
             strokeLinejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg></Link>
@@ -201,7 +266,7 @@ return (
         <div className="w-1/3 left-0 pl-20">
           <img
             src={restaurant.logo || logo}
-            alt="KFC Logo"
+            alt="Logo"
             style={{
               width: '80%',
               height: 'auto',
@@ -209,7 +274,7 @@ return (
           />
         </div>
         <div className="w1/3 flex-col">
-          <h4 className="text-orange-FFA90A md:text-2xl lg:text-4xl dark:text-white ml-4 font-bold font-['Lato']">
+          <h4 className="text-orange-FFA90A md:text-xl lg:text-3xl dark:text-white ml-4 font-bold font-['Lato']">
             {restaurant.name}
           </h4>
           <div className="flex items-center mt-4 ml-4">
@@ -218,14 +283,51 @@ return (
               alt="Star"
               className="w-6 h-6"
             />
-            <span className="ml-2 text-2xl">{avgRating}</span>
+            <span className="ml-2 text-2xl">{avgRating || restaurant.rating}</span>
           </div>
           <div className="flex items-center mt-4 ml-4">
             <img
               src={money}
               className="w-6 h-6"
             />
-            <span className="ml-2 text-2xl">Rp50.000-Rp100.000</span>
+            <span className="ml-2 text-xl">Rp50.000-Rp100.000</span>
+          </div>
+          <div className="flex items-center mt-4 ml-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFA90A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <button onClick={handleExpandClick} className="flex items-center">
+              <span className="ml-2 text-xl font-bold text-orange-FFA90A font-Lato">
+                {isOpen ? 'Open' : 'Closed'}            </span>
+              <span className='ml-2 text-xl font-Lato'> - {isOpen ? `Closes at ${closeHour}` : `Opens at ${openHour}`} </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#FFA90A"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="ml-1"
+              >
+                <path d={arrowPath} />
+              </svg>
+            </button>
+          </div>
+          <div className="flex items-center ml-12 mt-2" style={contentStyle}>
+            <table className="text-xl font-Lato">
+              <tbody>
+                {days.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.day}</td>
+                    <td className='pl-1'>{item.open} - {item.close}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
           <div className="flex items-center mt-4 ml-4">
             <Button
@@ -325,7 +427,7 @@ return (
     <div>
     <div className="flex items-center justify-between mb-8 mt-20 mx-20">
         <h2 className="text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']"> Reviews </h2>
-      </div>
+    </div>
       <div className="mx-20 mb-4">
         {[...newReviews].map((review, index) => (
           <div key={index} className="my-3">

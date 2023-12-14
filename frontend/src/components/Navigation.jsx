@@ -28,7 +28,7 @@ const Navigation = () => {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link href="#">Restaurants</Navbar.Link>
+        <Navbar.Link href="/restaurant">Restaurants</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );

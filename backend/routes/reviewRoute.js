@@ -102,4 +102,69 @@ reviewRouter.get('/user/:userId', async (req, res) => {
   }
 });
 
+// Route untuk mendapatkan review berdasarkan ID restoran
+reviewRouter.get('/restaurant/:restaurantId', async (req, res) => {
+  try {
+    const { restaurantId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
+      return res.status(400).json({ message: 'Invalid ObjectId format' });
+    }
+
+    const reviews = await reviewModel.find({ restaurant_id: restaurantId }).sort({ createdAt: 'desc' });
+
+    if (!reviews.length) {
+      return res.status(404).json({ message: 'No reviews found for the restaurant' });
+    }
+
+    res.status(200).json({
+      count: reviews.length,
+      data: reviews,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+// Route untuk mendapatkan rata-rata review_rating berdasarkan ID restoran
+reviewRouter.get('/average-rating/:restaurantId', async (req, res) => {
+  try {
+    const { restaurantId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
+      return res.status(400).json({ message: 'Invalid ObjectId format' });
+    }
+
+    const averageRating = await reviewModel.aggregate([
+      {
+        $match: { restaurant_id: new mongoose.Types.ObjectId(restaurantId) }
+      },
+      {
+        $group: {
+          _id: null,
+          averageRating: { $avg: '$review_rating' }
+        }
+      },
+      {
+        $project: {
+          averageRating: { $round: ['$averageRating', 2] }
+        }
+      }
+    ]);
+
+    if (!averageRating.length) {
+      return res.status(404).json({ message: 'No reviews found for the restaurant' });
+    }
+
+    res.status(200).json({
+      averageRating: averageRating[0].averageRating,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
 export default reviewRouter;

@@ -116,6 +116,23 @@ router.post('/login/find', async (req, res) => {
     }
   });
 
+  router.get('/login/find/:username', async (req, res) => {
+    try {
+        const { username } = req.params;
+    
+        // Find user by username
+        const user = await userModel.findOne({ username });
+    
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+    
+        res.status(200).json({ data: user });
+      } catch (error) {
+        console.error('Error finding user by username:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+});
 
 const ObjectId = mongoose.Types.ObjectId;
 router.get('/login/:id', async (request, response) => {
@@ -163,6 +180,7 @@ router.get('/login/find/:username', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
       }
 });
+
 
 router.get('/login/find/:id', async (req, res) => {
     try {
