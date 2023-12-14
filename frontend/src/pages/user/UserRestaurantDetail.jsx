@@ -394,7 +394,7 @@ const UserRestaurantDetail = () => {
             </Modal.Footer>
           </Modal>
           <div className="w1/3 px-20 absolute right-0 top-0 flex flex-col items-center">
-            <img
+            {/* <img
               src={grab}
               className="rounded-full mt-4"
             />
@@ -405,14 +405,14 @@ const UserRestaurantDetail = () => {
                 width: "56px",
                 height: "45px",
               }}
-            />
+            /> */}
           </div>
         </div>
       </div>
       <div>
       <div className="flex items-center justify-between mb-8 mt-20 mx-20">
           <h2 className="text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']"> Reviews </h2>
-            <div className=''>
+            <div style={{ cursor:"pointer" }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFA90A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" onClick={handleClick}>
               <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
               </div>

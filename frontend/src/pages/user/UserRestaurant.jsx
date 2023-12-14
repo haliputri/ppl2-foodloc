@@ -24,7 +24,6 @@ const UserRestaurant = () => {
   const [button8Clicked, setButton8Clicked] = useState(false);
   const [button9Clicked, setButton9Clicked] = useState(false);
 
-
   useEffect(() => {
     axios
       .get(`http://localhost:8080/users/login/find/${username}`)
@@ -38,7 +37,10 @@ const UserRestaurant = () => {
   }, []);
 
   const [restaurants, setResto] = useState([]);
+  const [count, setCount] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedRating, setSelectedRating] = useState(null);
+  const [selectedCategory, setSelactedCategory] = useState(null);
 
   useEffect(() => {
     axios
@@ -68,12 +70,12 @@ const UserRestaurant = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleItemClick = (item) => {
-    // Do something when an item is clicked
-    console.log(`Item clicked: ${item}`);
-    // Optionally, close the dropdown
-    setDropdownVisible(false);
-  };
+  // const handleItemClick = (item) => {
+  //   // Do something when an item is clicked
+  //   console.log(`Item clicked: ${item}`);
+  //   // Optionally, close the dropdown
+  //   setDropdownVisible(false);
+  // };
 
   const handleCheckboxChange = (item) => {
     const updatedSelection = [...selectedItems];
@@ -85,78 +87,7 @@ const UserRestaurant = () => {
       // Item already in the list, remove it
       updatedSelection.splice(index, 1);
     }
-
     setSelectedItems(updatedSelection);
-  };
-
-  const handleFilter = () => {
-    // Assuming selectedItems represent the selected restaurant types
-    const typeFilter = selectedItems.join(",");
-
-    // Assuming minValue and maxValue represent the selected price range
-    const priceFilter = `${minValue},${maxValue}`;
-
-    // Assuming button5Clicked to button9Clicked represent the selected rating
-    let ratingFilter = "";
-    if (button5Clicked) ratingFilter = "5";
-    else if (button6Clicked) ratingFilter = "4";
-    else if (button7Clicked) ratingFilter = "3";
-    else if (button8Clicked) ratingFilter = "2";
-    else if (button9Clicked) ratingFilter = "1";
-
-    // Make an axios request with the filters
-    axios
-      .get(
-        `http://localhost:8080/restaurants/filter?type=${typeFilter}&minPrice=${priceFilter}&rating=${ratingFilter}`
-      )
-      .then((response) => {
-        setResto(response.data.data);
-
-        // Reload the page to show the filtered results
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  // Call handleFilter whenever filters change
-  useEffect(() => {
-    handleFilter();
-  }, [
-    selectedItems,
-    minValue,
-    maxValue,
-    button5Clicked,
-    button6Clicked,
-    button7Clicked,
-    button8Clicked,
-    button9Clicked,
-  ]);
-  const handleClickRating = (buttonNumber) => {
-    setButton5Clicked(false);
-    setButton6Clicked(false);
-    setButton7Clicked(false);
-    setButton8Clicked(false);
-    setButton9Clicked(false);
-
-    switch (buttonNumber) {
-      case 1:
-        setButton5Clicked(true);
-        break;
-      case 2:
-        setButton6Clicked(true);
-        break;
-      case 3:
-        setButton7Clicked(true);
-        break;
-      case 4:
-        setButton8Clicked(true);
-        break;
-      case 5:
-        setButton9Clicked(true);
-        break;
-    }
   };
 
   const handleMinInputChange = (event) => {
@@ -183,6 +114,7 @@ const UserRestaurant = () => {
 
   const handleClickPrice = (buttonNumber) => {
     // Reset the state of all buttons
+
     setButton1Clicked(false);
     setButton2Clicked(false);
     setButton3Clicked(false);
@@ -215,6 +147,110 @@ const UserRestaurant = () => {
     }
   };
 
+  const handleClickRating = (buttonNumber, ratingValue) => {
+    setSelectedRating(ratingValue);
+    setButton5Clicked(false);
+    setButton6Clicked(false);
+    setButton7Clicked(false);
+    setButton8Clicked(false);
+    setButton9Clicked(false);
+  
+    switch (buttonNumber) {
+      case 1:
+        setButton5Clicked(true);
+        break;
+      case 2:
+        setButton6Clicked(true);
+        break;
+      case 3:
+        setButton7Clicked(true);
+        break;
+      case 4:
+        setButton8Clicked(true);
+        break;
+      case 5:
+        setButton9Clicked(true);
+        break;
+    }
+  };
+
+  // const filteredRestaurants = restaurants.filter(
+  //   (restaurant) => restaurant.rating >= selectedRating
+  // );
+
+  const [searchResult, setSearchResult] = useState([]);
+  const [key, setKey] = useState("");
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      // Check if at least one filter is active
+      if (!key.trim() && selectedItems.length === 0 && !minValue && !maxValue && !selectedRating) {
+        setSearchResult([]);
+        return;
+      }
+  
+      const res = await axios.get("http://localhost:8080/restaurants/search", {
+        params: {
+          name: key,
+          category: selectedItems,
+          min_price: minValue,
+          max_price: maxValue,
+          rating: selectedRating, // Include selected rating in the API call
+        },
+      });
+      setSearchResult(res.data.data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  const searchResultChunks = chunkArray(searchResult, 3);
+  // const handleFilter = () => {
+  //   // Assuming selectedItems represent the selected restaurant types
+  //   const typeFilter = selectedItems.join(",");
+
+  //   // Assuming minValue and maxValue represent the selected price range
+  //   const priceFilter = `${minValue},${maxValue}`;
+
+  //   // Assuming button5Clicked to button9Clicked represent the selected rating
+  //   let ratingFilter = "";
+  //   if (button5Clicked) ratingFilter = "5";
+  //   else if (button6Clicked) ratingFilter = "4";
+  //   else if (button7Clicked) ratingFilter = "3";
+  //   else if (button8Clicked) ratingFilter = "2";
+  //   else if (button9Clicked) ratingFilter = "1";
+
+  //   // Make an axios request with the filters
+  //   axios
+  //     .get(
+  //       `http://localhost:8080/restaurants/filter?type=${typeFilter}&minPrice=${priceFilter}&rating=${ratingFilter}`
+  //     )
+  //     .then((response) => {
+  //       setResto(response.data.data);
+
+  //       // Reload the page to show the filtered results
+  //       window.location.reload();
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // Call handleFilter whenever filters change
+  // useEffect(() => {
+  //   handleFilter();
+  // }, [
+  //   selectedItems,
+  //   minValue,
+  //   maxValue,
+  //   button5Clicked,
+  //   button6Clicked,
+  //   button7Clicked,
+  //   button8Clicked,
+  //   button9Clicked,
+  // ]);
 
   return (
     <div>
@@ -228,11 +264,29 @@ const UserRestaurant = () => {
             >
               Restaurants
             </h4>
-            <form className="flex">
+            <form className="flex" onClick={handleSearch}>
               <div className="relative inline-block text-left">
-                <Button onClick={toggleDropdown} className="items-center py-2.5 px-2.5 font-medium text-center border border-yellow-300 rounded-s-lg hover:bg-gray-200">
-                  <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="orange">
-                    <path stroke="orange" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 4 4 4-4" />
+                <Button
+                  onClick={toggleDropdown}
+                  style={{
+                    borderTopRightRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                  }}
+                  className="items-center py-2.5 px-2.5 font-medium text-center border border-yellow-300 rounded-s-lg hover:bg-gray-200"
+                >
+                  <svg
+                    class="w-2.5 h-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="orange"
+                  >
+                    <path
+                      stroke="orange"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="m1 1 4 4 4-4"
+                    />
                   </svg>
                 </Button>
                 {dropdownVisible && (
@@ -242,13 +296,13 @@ const UserRestaurant = () => {
                   >
                     <div className="py-1">
                       <h6 class="mx-4 text-sm font-medium text-yellow-400">
-                        Tipe
+                        Kategori
                       </h6>
                       <label className="flex items-center">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes("Item 1")}
-                          onChange={() => handleCheckboxChange("Item 1")}
+                          checked={selectedItems.includes("restaurants")}
+                          onChange={() => handleCheckboxChange("restaurants")}
                           className="mx-4"
                         />
                         Restoran
@@ -256,8 +310,8 @@ const UserRestaurant = () => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes("Item 2")}
-                          onChange={() => handleCheckboxChange("Item 2")}
+                          checked={selectedItems.includes("cafes")}
+                          onChange={() => handleCheckboxChange("cafes")}
                           className="mx-4"
                         />
                         Cafe
@@ -265,11 +319,11 @@ const UserRestaurant = () => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
-                          checked={selectedItems.includes("Streetfood")}
-                          onChange={() => handleCheckboxChange("Streetfood")}
+                          checked={selectedItems.includes("jajanan")}
+                          onChange={() => handleCheckboxChange("jajanan")}
                           className="mx-4"
                         />
-                        Streetfood
+                        Jajanan UMKM
                       </label>
                       <h6 class="mt-4 mx-4 mb-2 text-sm font-medium text-yellow-400">
                         Harga
@@ -378,7 +432,7 @@ const UserRestaurant = () => {
                       <div className="mx-4">
                         <div className="flex my-2 justify-between">
                           <Button
-                            onClick={() => handleClickRating(1)}
+                            onClick={() => handleClickRating(1,1)}
                             style={{
                               backgroundColor: button5Clicked
                                 ? "#FFA90A"
@@ -404,7 +458,7 @@ const UserRestaurant = () => {
                             </svg>
                           </Button>
                           <Button
-                            onClick={() => handleClickRating(2)}
+                            onClick={() => handleClickRating(2,2)}
                             style={{
                               backgroundColor: button6Clicked
                                 ? "#FFA90A"
@@ -432,7 +486,7 @@ const UserRestaurant = () => {
                         </div>
                         <div className="flex my-2 justify-between">
                           <Button
-                            onClick={() => handleClickRating(3)}
+                            onClick={() => handleClickRating(3,3)}
                             style={{
                               backgroundColor: button7Clicked
                                 ? "#FFA90A"
@@ -458,7 +512,7 @@ const UserRestaurant = () => {
                             </svg>
                           </Button>
                           <Button
-                            onClick={() => handleClickRating(4)}
+                            onClick={() => handleClickRating(4,4)}
                             style={{
                               backgroundColor: button8Clicked
                                 ? "#FFA90A"
@@ -486,7 +540,7 @@ const UserRestaurant = () => {
                         </div>
                         <div className="flex my-2 justify-between">
                           <Button
-                            onClick={() => handleClickRating(5)}
+                            onClick={() => handleClickRating(5,5)}
                             style={{
                               backgroundColor: button9Clicked
                                 ? "#FFA90A"
@@ -518,48 +572,107 @@ const UserRestaurant = () => {
                 )}
               </div>
               <div className="relative w-full">
-                <input type="search" style={{ height: "48px" }} id="search-dropdown" class=" text-sm border border-yellow-300" placeholder="Search Restaurants..." required />
-                <button type="submit" class="absolute top-0 p-2 text-sm font-medium h-full text-white bg-orange-400 rounded-e-lg">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                <input
+                  type="search"
+                  style={{ height: "48px" }}
+                  id="search-dropdown"
+                  className="text-sm border border-yellow-300"
+                  placeholder="Search Restaurants..."
+                  required
+                  value={key}
+                  onChange={(e) => setKey(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  className="absolute top-0 p-2 text-sm font-medium h-full text-white bg-orange-400 rounded-e-lg"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
                   </svg>
-                  <span class="sr-only">Search</span>
+                  <span className="sr-only">Search</span>
                 </button>
               </div>
             </form>
           </div>
-          {restaurantChunks.map((chunk, index) => (
-            <div key={index} className="flex mb-16 ml-8">
-              {chunk.map((restaurant) => (
-                <Link to={`${restaurant._id}`} key={restaurant._id}>
-                  <Card
-                    key={restaurant._id}
-                    className="mr-24"
-                    style={{ width: "250px" }}
-                    href="#"
-                    imgAlt=""
-                    imgSrc={food1}
-                  >
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      {restaurant.name}
-                    </h5>
-                    <p className="font-normal text-gray-700 dark:text-gray-400">
-                      {restaurant.address}
-                    </p>
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      {restaurant.rating}
-                    </h5>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          ))}
+          {!key.trim() && selectedItems.length === 0 && !minValue && !maxValue && !selectedRating  ? (
+            // Jika tidak ada pencarian, tampilkan data dari database
+            restaurantChunks.map((chunk, index) => (
+              <div key={index} className="flex mb-16 ml-8">
+                {chunk.map((restaurant) => (
+                  <Link to={`${restaurant._id}`} key={restaurant._id}>
+                    <Card
+                      key={restaurant._id}
+                      className="mr-24"
+                      style={{ width: "250px" }}
+                      href="#"
+                      imgAlt=""
+                      imgSrc={food1}
+                    >
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.name}
+                      </h5>
+                      <p className="font-normal text-gray-700 dark:text-gray-400">
+                        {restaurant.address}
+                      </p>
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.rating}
+                      </h5>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            ))
+          ) : searchResult && searchResult.length > 0 ? (
+            // Jika hasil pencarian lebih dari 0, tampilkan hasil pencarian
+            searchResultChunks.map((chunk, index) => (
+              <div key={index} className="flex mb-16 ml-8">
+                {chunk.map((restaurant) => (
+                  <Link to={`${restaurant._id}`} key={restaurant._id}>
+                    <Card
+                      key={restaurant._id}
+                      className="mr-24"
+                      style={{ width: "250px" }}
+                      href="#"
+                      imgAlt=""
+                      imgSrc={food1}
+                    >
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.name}
+                      </h5>
+                      <p className="font-normal text-gray-700 dark:text-gray-400">
+                        {restaurant.address}
+                      </p>
+                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {restaurant.rating}
+                      </h5>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            ))
+          ) : (
+            // Jika hasil pencarian tidak ada, tampilkan pesan
+            <p>Hasil pencaharian tidak ditemukan.</p>
+          )}
+
           <div className="flex flex-col items-center"></div>
         </div>
         <FooterResto />
       </body>
     </div>
-  )
-}
+  );
+};
 
-export default UserRestaurant
+export default UserRestaurant;
