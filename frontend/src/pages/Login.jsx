@@ -25,7 +25,13 @@ const Login = () => {
     .then(result => {
       console.log(result)
       if(result.data.message === "Success"){
-        navigate(`/profile/find/${result.data.data.username}`)
+        const username = result.data.data.username;
+        const role = result.data.data.role;
+        if (role === 'admin') {
+          navigate(`/profile/admin/${username}`);
+        } else {
+          navigate(`/profile/find/${username}`);
+        }
       }
     })
     .catch( error => console.log (error))

@@ -28,7 +28,7 @@ const HomePage = () => {
       <HeroLanding />
       <div className="m-24 ">
         <h4
-          class="text-2xl font-bold dark:text-white mb-8 ml-8"
+          className="text-2xl font-bold dark:text-white mb-8 ml-8"
           style={{ color: "#FFA90A" }}
         >
           Restaurants

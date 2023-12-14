@@ -53,6 +53,38 @@ router.get('/', async(request, response) => {
     }
 });
 
+router.get('/search', async (req, res) => {
+  try {
+    const { name, category, min_price, max_price, rating } = req.query;
+
+    // Build a filter object based on provided parameters
+    const filter = {};
+
+    if (name) {
+      filter.name = { $regex: new RegExp(name, 'i') };
+    }
+
+    if (category) {
+      filter.category = category;
+    }
+
+    if (min_price && max_price) {
+      filter.min_price = { $gte: parseInt(min_price), $lte: parseInt(max_price) };
+    }
+
+    if (rating) {
+      filter.rating = rating;
+    }
+
+    const restaurants = await Restaurant.find(filter);
+
+    res.json({ count: restaurants.length, data: restaurants });
+  } catch (error) {
+    console.error('Error handling search:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Route for Get All Restaurants from database by id
 router.get('/:id', async (request, response) => {
     try {
@@ -187,4 +219,16 @@ router.get('/filter', async (request, response) => {
       response.status(500).send({ message: error.message });
     }
   });
+
+  // router.get('/search', async (req, res) => {
+  //   try {
+  //     const { name } = req.query;
+  //     const regex = new RegExp(name, 'i');
+  //     const restaurants = await Restaurant.find({ name: regex });
+  //     res.json({ data: restaurants });
+  //   } catch (error) {
+  //     console.error('Error handling search:', error);
+  //     res.status(500).json({ error: 'Internal Server Error' });
+  //   }
+  // });
 export default router;

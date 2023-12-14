@@ -45,7 +45,7 @@ const restaurantSchema = mongoose.Schema(
         },
         category: {
             type: String,
-            enum: ["Restaurant", "Cafe", "UMKM"]
+            enum: ["restaurants", "cafes", "jajanan"]
         },
         review: {
             type: String

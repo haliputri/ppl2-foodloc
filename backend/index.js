@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import userRoute from "./routes/userRoute.js";
 import restaurantsRoute from "./routes/restaurantsRoute.js";
 import cors from "cors";
+import reviewRouter from "./routes/reviewRoute.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.listen(PORT, () => {
 
 app.use('/restaurants', restaurantsRoute);
 app.use('/users', userRoute);
+app.use('/reviews', reviewRouter)
 
 mongoose
     .connect(mongoDBURL)

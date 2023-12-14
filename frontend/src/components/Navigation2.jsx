@@ -32,7 +32,7 @@ const Navigation = () => {
       
  
       <Navbar.Collapse>
-        <Link to={`/${user.username}/restaurant`}>Restaurants</Link>
+        <Link to={`/${user.username}/restaurant`} style={{  color:"#374151" }}>Restaurants</Link>
       </Navbar.Collapse>
       <Dropdown
         label={<Avatar rounded />}
