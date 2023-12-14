@@ -18,14 +18,12 @@ const HeroLanding = () => {
         style={{ width: "550px", float: "left", marginTop: "220px" }}
       >
         <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          MISAL INI JUDUL <br />
-          JUDUL LANJUTAN
+          FOODLOC
         </h1>
         <p className="mb-3">
-          Lorem ipsum dolor sit amet consectetur. Faucibus nulla in facilisi
-          placerat eget morbi. Purus pharetra ornare massa non molestie. Feugiat
-          sapien a lectus morbi consequat in at. Nunc tincidunt facilisis
-          aliquet sollicitudin et et tristique et.
+        Tingkatkan Pengalaman Kuliner Anda dengan Ulasan 
+        Autentik dan Rekomendasi Terpercaya! Temukan Kelezatan Sejati dari 
+        Tempat Makan Favorit hingga Kuliner Tersembunyi dengan Foodloc.
         </p>
         <Button
           className="mr-12"
