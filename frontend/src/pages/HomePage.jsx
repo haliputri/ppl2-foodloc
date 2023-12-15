@@ -9,16 +9,16 @@ import { Button } from "flowbite-react";
 const HomePage = () => {
   const [restaurants, setResto] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_BASE_URL}/restaurants`)
-  //     .then((response) => {
-  //       setResto(response.data.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/restaurants`)
+      .then((response) => {
+        setResto(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const firstThreeRestaurants = restaurants.slice(0, 3);
 
