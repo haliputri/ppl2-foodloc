@@ -1,0 +1,307 @@
+{
+	"info": {
+		"_postman_id": "cc679ec7-5019-4ec7-a874-719600adce89",
+		"name": "Backend Documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18489444",
+		"_collection_link": "https://restless-space-986839.postman.co/workspace/Foodloc~188e9837-f4f4-4dc7-89fd-1235b8d4e21d/collection/18489444-cc679ec7-5019-4ec7-a874-719600adce89?action=share&source=collection_link&creator=18489444"
+	},
+	"item": [
+		{
+			"name": "userRoute",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Singa\",\r\n    \"email\": \"singa@gmail.com\",\r\n    \"password\": \"buntutsinga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"singa@gmail.com\",\r\n    \"password\": \"buntutsinga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/login/find",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login",
+								"find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find User By Username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/login/find/Singa",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login",
+								"find",
+								"Singa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Name",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get All User From DB",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Find User By ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reviewRoute",
+			"item": [
+				{
+					"name": "Add Review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"restaurantName\": \"Miss Bee Providore\",\r\n    \"restaurantId\": \"6575a8fd2b33eff2e9e8db55\",\r\n    \"rating\": \"4.6\",\r\n    \"authorName\": \"Singa\",\r\n    \"content\": \"\" ,\r\n    \"image\": \"\",\r\n    \"authorId\": \"657b1c6f6209564d6b6928da\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/reviews",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Review",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Review By Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Review By User ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Review By Restaurant ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Avg Review By Restaurant ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "restaurantsRoute",
+			"item": [
+				{
+					"name": "Get All Restaurants From database",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/restaurants",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save New Resto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ayam Pedas\",\r\n        \"address\": \"Jalan Sesama\",\r\n        \"city\": \"Bandung\",\r\n        \"phone_number\": \"083423424\",\r\n        \"social_media\": \"pedas123\",\r\n        \"rating\": \"5\",\r\n        \"latitude\": \"\",\r\n        \"longitude\": \"\",\r\n        \"min_price\": \"\",\r\n        \"max_price\": \"\",\r\n        \"category\": \"restaurants\",\r\n        \"logo\": \"\",\r\n        \"menu\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/restaurants",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Resto",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Restaurants from database by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update Resto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"restaurant.name\": \"Miss Bee Providore\",\r\n    \"restaurant.address\": \"Jl. Rancabentang No.11A, Ciumbuleuit, Kec. Cidadap, Kota Bandung, Jawa Barat 40142\",\r\n    \"restaurant.city\": \"Bandung\",\r\n    \"restaurant.phone_number\": \"+62 22 2033613\",\r\n    \"restaurant.social_media\": \"\",\r\n    \"restaurant.rating\": \"4.6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/restaurants/6575a8fd2b33eff2e9e8db55",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurants",
+								"6575a8fd2b33eff2e9e8db55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Resto By ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Filter",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
