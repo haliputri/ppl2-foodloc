@@ -181,27 +181,27 @@ router.get('/login/find/:username', async (req, res) => {
       }
 });
 
-router.get('/login/find/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
+// router.get('/login/find/:id', async (req, res) => {
+//     try {
+//       const { id } = req.params;
   
-      if (!ObjectId.isValid(id)) {
-        return res.status(400).json({ message: 'Invalid ObjectId format' });
-      }
+//       if (!ObjectId.isValid(id)) {
+//         return res.status(400).json({ message: 'Invalid ObjectId format' });
+//       }
   
-      // Find user by ID
-      const user = await userModel.findById(id);
+//       // Find user by ID
+//       const user = await userModel.findById(id);
   
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
+//       if (!user) {
+//         return res.status(404).json({ message: 'User not found' });
+//       }
   
-      res.status(200).json({ data: user });
-    } catch (error) {
-      console.error('Error finding user by ID:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
+//       res.status(200).json({ data: user });
+//     } catch (error) {
+//       console.error('Error finding user by ID:', error);
+//       res.status(500).json({ message: 'Internal server error' });
+//     }
+//   });
 
   router.put('/edit/:username', async (request, response) => {
     const { username } = request.params;
@@ -239,37 +239,37 @@ router.get('/login/find/:id', async (req, res) => {
     }
   });
 
-router.put('/edit/:id', async (request, response) => {
-    const { id } = request.params;
+// router.put('/edit/:id', async (request, response) => {
+//     const { id } = request.params;
 
-    try {
-      // Find the user by username
-      const result = await userModel.findByIdAndUpdate(id, request.body);
+//     try {
+//       // Find the user by username
+//       const result = await userModel.findByIdAndUpdate(id, request.body);
   
-      if (!user) {
-        return response.status(404).json({ message: 'User not found' });
-      }
+//       if (!user) {
+//         return response.status(404).json({ message: 'User not found' });
+//       }
   
-      // Update user properties based on the request body
-      user.username = request.body.username || user.username;
-      user.email = request.body.email || user.email;
-      user.password = request.body.password || user.password;
-      user.name = request.body.name || user.name;
-      user.address = request.body.address || user.address;
-      user.gender = request.body.gender || user.gender;
-      user.birthdate = request.body.birthdate || user.birthdate;
-      user.profileImage = request.body.profileImage || user.profileImage;
+//       // Update user properties based on the request body
+//       user.username = request.body.username || user.username;
+//       user.email = request.body.email || user.email;
+//       user.password = request.body.password || user.password;
+//       user.name = request.body.name || user.name;
+//       user.address = request.body.address || user.address;
+//       user.gender = request.body.gender || user.gender;
+//       user.birthdate = request.body.birthdate || user.birthdate;
+//       user.profileImage = request.body.profileImage || user.profileImage;
   
-      // Save the updated user to the database
-      const updatedUser = await user.save();
+//       // Save the updated user to the database
+//       const updatedUser = await user.save();
   
-      // Return the updated user as the response
-      response.status(200).json(updatedUser);
-    } catch (error) {
-      console.error(error.message);
-      response.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+//       // Return the updated user as the response
+//       response.status(200).json(updatedUser);
+//     } catch (error) {
+//       console.error(error.message);
+//       response.status(500).json({ message: 'Internal Server Error' });
+//     }
+// });
 
 // router.get('/login/:id', async(request, response) => {
 //     try {
@@ -364,32 +364,32 @@ router.post('/regist/google', async (request, response) => {
   }
 });
 
-router.post('/regist/facebook', async (request, response) => {
-  try {
-      if (
-          // !request.body.user_id||
-          !request.body.username ||
-          !request.body.email
-      ) {
-          return response.status(400).send({
-              message: 'Send all required fields: username, email',
-          });
-      }
+// router.post('/regist/facebook', async (request, response) => {
+//   try {
+//       if (
+//           // !request.body.user_id||
+//           !request.body.username ||
+//           !request.body.email
+//       ) {
+//           return response.status(400).send({
+//               message: 'Send all required fields: username, email',
+//           });
+//       }
 
-      const newUser = {
-          // user_id: request.body.user_id,
-          username: request.body.username,
-          email: request.body.email,
-          name: request.body.username,
-      };
+//       const newUser = {
+//           // user_id: request.body.user_id,
+//           username: request.body.username,
+//           email: request.body.email,
+//           name: request.body.username,
+//       };
 
-      const user = await userModel.create(newUser);
-      return response.status(201).send(user);
-  } catch (error) {
-      console.log(error.message);
-      response.status(500).send({ message: error.message });
-  }
-});
+//       const user = await userModel.create(newUser);
+//       return response.status(201).send(user);
+//   } catch (error) {
+//       console.log(error.message);
+//       response.status(500).send({ message: error.message });
+//   }
+// });
 
 // Route for Update a User
 // router.put('/:id', async(request, response) => {

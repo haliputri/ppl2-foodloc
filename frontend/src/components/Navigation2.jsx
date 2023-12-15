@@ -14,7 +14,7 @@ const Navigation = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/users/login/find/${username}`)
+      .get(`${API_BASE_URL}/users/login/find/${username}`)
       .then((response) => {
         const userData = response.data.data;
         setUser(userData);
