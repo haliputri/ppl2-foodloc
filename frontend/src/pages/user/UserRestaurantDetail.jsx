@@ -150,24 +150,23 @@ const UserRestaurantDetail = () => {
   const submitReview = async () => {
     try {
       await axios
-        .post(`${API_BASE_URL}/reviews`, {
-          restaurantName: restaurant.name,
-          restaurantId: restaurant._id,
-          rating: rating,
-          authorName: user.username,
-          content: review,
-          image: "",
-          authorId: user._id,
-        })
-        .then((e) => {
-          const newReview = e.data.data;
-          setNewReviews([newReview, ...newReviews]);
-          setReview("");
-          setRating(0);
-
-          setIsShown(false);
-          window.location.reload();
-        });
+      .post(`${API_BASE_URL}/reviews`, {
+        restaurantName: restaurant.name,
+        restaurantId: restaurant._id,
+        rating: rating,
+        authorName: user.username,
+        content: review,
+        image: "",
+        authorId: user._id,
+      })
+      .then((e) => {
+        const newReview = e.data.data;
+        setNewReviews([newReview, ...newReviews]);
+        setReview("");
+        setRating(0);
+        // window.location.reload();
+      });
+      setIsShown(false);
     } catch (error) {
       console.error("Error submitting review:", error);
     }
