@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_BASE_URL } from "../../../backend/config";
 import axios from "axios";
 import Navigation from "../components/Navigation";
 import HeroLanding from "../components/HeroLanding";
@@ -11,7 +12,7 @@ const HomePage = () => {
 
   useEffect(() => {
     axios
-      .get(`/${API_BASE_URL}/restaurants`)
+      .get(`${API_BASE_URL}/restaurants`)
       .then((response) => {
         setResto(response.data.data);
       })
