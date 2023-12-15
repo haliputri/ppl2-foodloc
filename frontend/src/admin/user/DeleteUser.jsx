@@ -12,7 +12,7 @@ const DeleteUser = () => {
 
   const handleDeleteUser = () => {
     setLoading(true);
-    axios.delete(`http://localhost:8080/users/${id}`)
+    axios.delete(`${API_BASE_URL}/users/${id}`)
     .then(() => {
       setLoading(false);
       navigate('/user')

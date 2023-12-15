@@ -38,7 +38,7 @@ const ListUser = () => {
   const handleDeleteUser = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8080/users/${userIdToDelete}`)
+      .delete(`${API_BASE_URL}/users/${userIdToDelete}`)
       .then(() => {
         setLoading(false);
         navigate("/user");

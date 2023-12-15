@@ -143,7 +143,7 @@ const RestaurantPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/restaurants")
+      .get(`${API_BASE_URL}/restaurants`)
       .then((response) => {
         setResto(response.data.data);
       })
@@ -201,7 +201,7 @@ const RestaurantPage = () => {
         return;
       }
 
-      const res = await axios.get("http://localhost:8080/restaurants/search", {
+      const res = await axios.get(`${API_BASE_URL}/restaurants/search`, {
         params: {
           name: key,
           category: selectedItems,

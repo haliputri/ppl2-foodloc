@@ -21,7 +21,7 @@ const Login = () => {
       email,
       password,
     };
-    axios.post('http://localhost:8080/users/login/find', data)
+    axios.post(`${API_BASE_URL}/users/login/find`, data)
     .then(result => {
       console.log(result)
       if(result.data.message === "Success"){
@@ -104,10 +104,10 @@ const Login = () => {
                       email: decoded.email,
                       username: decoded.name,
                     }
-                    axios.post('http://localhost:8080/users/regist/google', data)
+                    axios.post(`${API_BASE_URL}/users/regist/google`, data)
                     .then(e => {
                       if(e.data.message == "User already created"){
-                        axios.post('http://localhost:8080/users/login/find', data)
+                        axios.post(`${API_BASE_URL}/users/login/find`, data)
                         .then(result => {
                           console.log(result)
                           if(result.data.message === "Success"){

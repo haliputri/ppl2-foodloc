@@ -21,7 +21,7 @@ const Register = () => {
       password,
       username,
     }
-    axios.post('http://localhost:8080/users/regist', data)
+    axios.post(`${API_BASE_URL}/users/regist`, data)
     .then(() => {
       navigate('/login');
     })

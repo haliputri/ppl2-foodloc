@@ -1,5 +1,5 @@
 import express, { request, response } from "express";
-import { PORT, mongoDBURL } from "./config.js";
+import { PORT, mongoDBURL} from "./config.js";
 import mongoose from "mongoose";
 // import { Restaurant } from "./models/restaurantModel.js";
 import userRoute from "./routes/userRoute.js";
@@ -27,12 +27,10 @@ app.use('/users', userRoute);
 app.use('/reviews', reviewRouter)
 
 mongoose
-    .connect(mongoDBURL)
+    .connect(mongoDBURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(()=>{
         console.log('App Connected');
     })
     .catch((error)=>{
         console.log(error);
     })
-
-export default app
