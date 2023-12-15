@@ -86,7 +86,7 @@ reviewRouter.get('/user/:userId', async (req, res) => {
       return res.status(400).json({ message: 'Invalid ObjectId format' });
     }
 
-    const reviews = await reviewModel.find({ userId });
+    const reviews = await reviewModel.find({ author_id: new mongoose.Types.ObjectId(userId) });
 
     if (!reviews.length) {
       return res.status(404).json({ message: 'No reviews found for the user' });
