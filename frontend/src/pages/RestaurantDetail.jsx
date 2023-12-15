@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal } from "flowbite-react";
 import { Link, useParams } from "react-router-dom";
 import Navigation from "../components/Navigation";
+import Navigation2 from "../components/Navigation2";
 import logo from "../../src/assets/kfc.png"
 import star from "../assets/star.svg";
 import starabu from "../assets/starabu.svg";
