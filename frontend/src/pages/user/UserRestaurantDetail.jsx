@@ -211,10 +211,9 @@ const UserRestaurantDetail = () => {
         setNewReviews([newReview, ...newReviews]);
         setReview("");
         setRating(0);
-
-        setIsShown(false);
-        window.location.reload();
+        // window.location.reload();
       });
+      setIsShown(false);
     } catch (error) {
       console.error('Error submitting review:', error);
     }
