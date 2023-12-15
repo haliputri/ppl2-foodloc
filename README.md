@@ -9,4 +9,6 @@ Foodloc merupakan aplikasi rekomendasi makanan yang berada di daerah Jatinangor 
 - Indah Sutriyati 140810200040
 - Zahran Hanif F  140810200062
 
-
+## Url Aplikasi
+be : ppl2-foodloc-be-diff-fe-test-hali.vercel.app
+fe : ppl2-foodloc-fe-diff.vercel.app
