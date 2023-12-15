@@ -5,6 +5,8 @@ import HeroLanding from "../components/HeroLanding";
 import FooterResto from "../components/FooterResto";
 import CardResto from "../components/CardResto";
 import { Button } from "flowbite-react";
+import { API_BASE_URL } from "../config.js";
+
 
 const HomePage = () => {
   const [restaurants, setResto] = useState([]);
