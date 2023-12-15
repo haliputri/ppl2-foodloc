@@ -1,31 +1,32 @@
 # Sprint 14
 
-|Date|7 Desember 2023|
+|Date|12 Desember 2023|
 | :- | :- |
 |Created by|Hali Putri Aisyah|
 |Participant|Hali Putri Aisyah, Nawang Ilmi Adzani, Zahran Hanif F, Indah Sutriyati|
 ## Sprint Planning
 ### Goals:
-- Membuat Logic Untuk searchbar dan filter untuk halaman restaurant
-- Eksplorasi API Facebook Auntetikasi
-- Membuat Modal untuk delete Restaurant
-- Menambahkan fitur upload gallery menu
-- Koneksi register google dengan database
+- Menambahkan alert pada Restaurant Detail
+- Memperbaiki Button Filter 
+- Koneksi frontend dan backend untuk review 
+- Memperbaiki Logic Filter dan Search bar
+- Memperbaiki Halaman Admin
+- Memperbaiki Git Log
 ### Breakdown Task:
 #### Commitment: 6 SP
-- Hali Putri Aisyah: 1 SP
-  - [1] Memperbaiki Logic Edit Restoran
+- Hali Putri Aisyah: 3 SP
+  - [1] Memperbaiki Logic Filter dan Search bar
+  - [2] Memperbaiki Git Log
+  - [3] Menambahkan alert pada Restaurant Detail
 - Nawang Ilmi Adzani: 1 SP
-  - [1] Membuat Searchbar dan Filter pada halaman restaurant
-- Zahran Hanif F : 2 SP
-  - [1] Eksplorasi API Facebook Auntetikasi
-  - [2] Koneksi register google dengan database
-- Indah Sutriyati: 2 SP
-  - [1] Membuat Modal untuk delete Restaurant
-  - [2] Menambahkan fitur upload gallery menu
+  - [1] Memperbaiki Button Filter 
+- Zahran Hanif F : 1 SP
+  - [1] Koneksi frontend dan backend untuk review 
+- Indah Sutriyati: 1 SP
+  - [1] Memperbaiki Halaman Admin
 #### Delivered:	 6 SP
 ### During Sprint
-2023-12-01:
+2023-12-12:
 
 1. Blocker : -
 
