@@ -97,7 +97,7 @@ const CreateResto = () => {
     };
     setLoading(true);
     axios
-      .post("http://localhost:8080/restaurants", data)
+      .post(`${API_BASE_URL}/restaurants`, data)
       .then(() => {
         setLoading(false);
         navigate("/admin");

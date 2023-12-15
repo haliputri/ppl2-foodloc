@@ -18,7 +18,7 @@ const ShowResto = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8080/restaurants/${id}`)
+      .get(`${API_BASE_URL}/restaurants/${id}`)
       .then((response) => {
         setResto(response.data.data);
         setLoading(false);

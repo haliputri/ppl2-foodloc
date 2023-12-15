@@ -76,7 +76,7 @@ const RestaurantDetail = () => {
 
     setLoading(true);
     axios
-      .get(`http://localhost:8080/restaurants/${id}`)
+      .get(`${API_BASE_URL}/restaurants/${id}`)
       .then((restaurantResponse) => {
         const restaurantData = restaurantResponse.data.data;
 
@@ -88,7 +88,7 @@ const RestaurantDetail = () => {
         setLoading(false);
       });
     axios
-      .get(`http://localhost:8080/reviews/average-rating/${id}`)
+      .get(`${API_BASE_URL}/reviews/average-rating/${id}`)
       .then((avgRatingResponse) => {
         setAvgRating(avgRatingResponse.data.averageRating);
       })
@@ -166,7 +166,7 @@ const RestaurantDetail = () => {
   useEffect(() => {
     setLoading(true);
 
-    Promise.all([axios.get(`http://localhost:8080/reviews/restaurant/${id}`)])
+    Promise.all([axios.get(`${API_BASE_URL}/reviews/restaurant/${id}`)])
       .then(([reviewResponse]) => {
         setNewReviews(reviewResponse.data.data);
         console.log(reviewResponse);

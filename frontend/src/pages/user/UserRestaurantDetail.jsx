@@ -79,7 +79,7 @@ const UserRestaurantDetail = () => {
     setLoading(true);
 
     axios
-      .get(`http://localhost:8080/restaurants/${id}`)
+      .get(`${API_BASE_URL}/restaurants/${id}`)
       .then((restaurantResponse) => {
         const restaurantData = restaurantResponse.data.data;
 
@@ -92,7 +92,7 @@ const UserRestaurantDetail = () => {
       });
 
     axios
-      .get(`http://localhost:8080/users/login/find/${username}`)
+      .get(`${API_BASE_URL}/users/login/find/${username}`)
       .then((userResponse) => {
         const userData = userResponse.data.data;
 
@@ -104,7 +104,7 @@ const UserRestaurantDetail = () => {
       });
 
     axios
-      .get(`http://localhost:8080/reviews/average-rating/${id}`)
+      .get(`${API_BASE_URL}/reviews/average-rating/${id}`)
       .then((avgRatingResponse) => {
         setAvgRating(avgRatingResponse.data.averageRating);
       })
@@ -182,7 +182,7 @@ const UserRestaurantDetail = () => {
   useEffect(() => {
     setLoading(true);
 
-    Promise.all([axios.get(`http://localhost:8080/reviews/restaurant/${id}`)])
+    Promise.all([axios.get(`${API_BASE_URL}/reviews/restaurant/${id}`)])
       .then(([reviewResponse]) => {
         setNewReviews(reviewResponse.data.data);
         console.log(reviewResponse);
@@ -197,7 +197,7 @@ const UserRestaurantDetail = () => {
   const submitReview = async () => {
     try{
       await axios
-      .post("http://localhost:8080/reviews", {
+      .post(`${API_BASE_URL}/reviews`, {
         restaurantName: restaurant.name,
         restaurantId: restaurant._id,
         rating: rating,
