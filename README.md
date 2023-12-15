@@ -11,4 +11,4 @@ Foodloc merupakan aplikasi rekomendasi makanan yang berada di daerah Jatinangor 
 
 ## Url Aplikasi
 be : ppl2-foodloc-be-diff-fe-test-hali.vercel.app
-fe : ppl2-foodloc-fe-diff.vercel.app
+fe : https://ppl2-foodloc-fe-diff-i3ak5mbat-fe-test-hali.vercel.app/
