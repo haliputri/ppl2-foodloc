@@ -110,7 +110,6 @@ const RestaurantDetail = () => {
   const indexOfFirstImage = indexOfLastImage - imagesPerPage;
   const currentImages = imageList.slice(indexOfFirstImage, indexOfLastImage);
 
-  const totalPages = Math.ceil(imageList.length / imagesPerPage);
   // const reviews = [
   //   {
   //     avatar: ava2,
@@ -154,14 +153,18 @@ const RestaurantDetail = () => {
   //   }
   // ];
 
+  const totalPages = Math.ceil(imageList.length / imagesPerPage);
   // const sortedReviews = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
   const [currentPageReview, setCurrentPageReview] = useState(1);
   const [review, setReview] = useState("");
   const reviewsPerPage = 3;
   const indexOfLastReview = currentPageReview * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  // const currentReviews = sortedReviews.slice(indexOfFirstReview, indexOfLastReview);
   const [newReviews, setNewReviews] = useState([]);
+  const currentReviews = newReviews.slice(
+    indexOfFirstReview,
+    indexOfLastReview
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -183,7 +186,7 @@ const RestaurantDetail = () => {
   };
 
   const handleClick = () => {
-    alert('You should log in to add a review.');
+    alert("You should log in to add a review.");
   };
 
   const handleNextPageImage = () => {
@@ -453,102 +456,121 @@ const RestaurantDetail = () => {
             {" "}
             Reviews{" "}
           </h2>
-          <div style={{ cursor: "pointer" }}>
+        </div>
+        <div className="mx-20 mb-4">
+          {newReviews.length === 0 ? (
+            <p className="text-lg text-center">Tidak ada reviews</p>
+          ) : (
+            currentReviews.map((review, index) => (
+              <div key={index} className="my-3">
+                <div className="inline-flex justify-start items-start">
+                  <img
+                    src={`https://ui-avatars.com/api/?name=${review.author_name}`}
+                    className="rounded-full"
+                    alt={`Avatar of ${review.author_name}`}
+                  />
+                  <div
+                    className="flex-col justify-start items-start ml-2"
+                    style={{ width: "calc(100% - 8px)" }}
+                  >
+                    <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">
+                      {review.author_name}
+                    </h5>
+                    <div className="flex items-center ml-1.5">
+                      <img src={starabu} className="w-6 h-6" alt="Star Icon" />
+                      <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">
+                        {review.review_rating}
+                      </h5>
+                    </div>
+                    <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
+                      {review.review_text}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="border border-zinc-300"
+                  style={{ width: "100%" }}
+                ></div>
+              </div>
+            ))
+          )}
+        </div>
+        {newReviews.length > 0 && (
+          <div className="flex items-center justify-center mt-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
               height="28"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#FFA90A"
+              stroke={currentPageReview > 1 ? "#FFA90A" : "#D9D9D9"}
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
-              onClick={handleClick}
+              className="cursor-pointer"
+              onClick={() =>
+                paginate(currentPageReview > 1 ? currentPageReview - 1 : 1)
+              }
             >
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <path d="M19 12H6M12 5l-7 7 7 7" />
+            </svg>
+            <div className="gap-3 inline-flex mx-2">
+              {Array.from({
+                length: Math.min(
+                  3,
+                  Math.ceil(newReviews.length / reviewsPerPage)
+                ),
+              }).map((_, i) => (
+                <svg
+                  key={i}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className={`rounded-full ${
+                    currentPageReview > 3
+                      ? i === 0
+                        ? "text-orange-FFA90A"
+                        : "text-gray-D9D9D9"
+                      : i === currentPageReview - 1
+                      ? "text-orange-FFA90A"
+                      : "text-gray-D9D9D9"
+                  }`}
+                >
+                  <circle cx="8" cy="8" r="8" fill="currentColor" />
+                </svg>
+              ))}
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={
+                currentPageReview <
+                Math.ceil(newReviews.length / reviewsPerPage)
+                  ? "#FFA90A"
+                  : "#D9D9D9"
+              }
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="cursor-pointer"
+              onClick={() =>
+                paginate(
+                  currentPageReview <
+                    Math.ceil(newReviews.length / reviewsPerPage)
+                    ? currentPageReview + 1
+                    : currentPageReview
+                )
+              }
+            >
+              <path d="M5 12h13M12 5l7 7-7 7" />
             </svg>
           </div>
-        </div>
-        <div className="mx-20 mb-4">
-          {[...newReviews].map((review, index) => (
-            <div key={index} className="my-3">
-              <div className="inline-flex justify-start items-start">
-                <img
-                  src={`https://ui-avatars.com/api/?name=${review.author_name}`}
-                  className="rounded-full"
-                  alt={`Avatar of ${review.author_name}`}
-                />
-                <div
-                  className="flex-col justify-start items-start ml-2"
-                  style={{ width: "calc(100% - 8px)" }}
-                >
-                  <h5 className="text-black text-xl font-semibold font-['Lato'] m-0.5 ml-2">
-                    {review.author_name}
-                  </h5>
-                  <div className="flex items-center ml-1.5">
-                    <img src={starabu} className="w-6 h-6" alt="Star Icon" />
-                    <h5 className="text-zinc-300 text-xl font-medium font-['Lato'] ml-2">
-                      {review.review_rating}
-                    </h5>
-                  </div>
-                  <p className="ml-3 mb-2 text-black text-xl font-['Lato']">
-                    {review.review_text}
-                  </p>
-                </div>
-              </div>
-              <div
-                className="border border-zinc-300"
-                style={{ width: "100%" }}
-              ></div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-center mt-4">
-          {/* <svg xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke= {currentPageReview > 1 ? "#FFA90A" : "#D9D9D9"}
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="cursor-pointer"
-          onClick={() => paginate(currentPageReview > 1 ? currentPageReview - 1 : 1)}><path d="M19 12H6M12 5l-7 7 7 7" /></svg> */}
-          <div className="gap-3 inline-flex mx-2">
-            {/* {Array.from({ length: Math.min(3, Math.ceil(reviews.length / reviewsPerPage)) }).map((_, i) => (
-        <svg
-          key={i}
-          xmlns="http://www.w3.org/2000/svg"
-          width="12"
-          height="12"
-          viewBox="0 0 16 16"
-          fill="none"
-          className={`rounded-full ${currentPageReview > 3 ? (i === 0 ? 'text-orange-FFA90A' : 'text-gray-D9D9D9') : (i === currentPageReview - 1 ? 'text-orange-FFA90A' : 'text-gray-D9D9D9')}`}
-        >
-          <circle cx="8" cy="8" r="8" fill="currentColor" />
-        </svg>
-      ))} */}
-          </div>
-          {/* <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke={currentPageReview < Math.ceil(reviews.length / reviewsPerPage) ? "#FFA90A" : "#D9D9D9"}
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="cursor-pointer"
-            onClick={() => paginate(currentPageReview < Math.ceil(reviews.length / reviewsPerPage) ? currentPageReview + 1 : currentPageReview)}
-          >
-            <path d="M5 12h13M12 5l7 7-7 7" />
-          </svg> */}
-        </div>
+        )}
       </div>
       <div className="mt-16 mx-20">
         <h2 className="pb-8 text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']">
