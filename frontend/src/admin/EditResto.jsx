@@ -78,7 +78,7 @@ const EditResto = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/restaurants/${id}`)
+    axios.get(`${API_BASE_URL}/restaurants/${id}`)
     .then((response) => {
       setName(response.data.data.name);
       setAddress(response.data.data.address)
@@ -123,7 +123,7 @@ const EditResto = () => {
     };
     setLoading(true);
     axios
-     .put(`http://localhost:8080/restaurants/${resto_id}`, data)
+     .put(`${API_BASE_URL}/restaurants/${resto_id}`, data)
      .then(() => {
       setLoading(false);
       navigate('/admin');

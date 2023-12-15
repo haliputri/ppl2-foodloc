@@ -1,29 +1,32 @@
-import React from 'react';
-import { Button, Modal } from 'flowbite-react';
+import React from "react";
+import { Button, Modal } from "flowbite-react";
 import { Link, useParams } from "react-router-dom";
 import Navigation2 from "../../components/Navigation2";
-import logo from '../../assets/kfc.png';
-import star from '../../assets/star.svg';
-import starabu from '../../assets/starabu.svg';
-import money from '../../assets/money.svg';
-import grab from '../../assets/grab.png';
-import gojek from '../../assets/gojek.png';
-import ava2 from '../../assets/ava2.svg';
-import FooterResto from '../../components/FooterResto';
-import menu from '../../assets/menu.png';
-import { FaStar } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import logo from "../../assets/kfc.png";
+import star from "../../assets/star.svg";
+import starabu from "../../assets/starabu.svg";
+import money from "../../assets/money.svg";
+import grab from "../../assets/grab.png";
+import gojek from "../../assets/gojek.png";
+import ava2 from "../../assets/ava2.svg";
+import FooterResto from "../../components/FooterResto";
+import menu from "../../assets/menu.png";
+import { FaStar } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const UserRestaurantDetail = () => {
   const [restaurant, setRestaurant] = useState({});
   const [user, setUser] = useState({});
   const { username } = useParams();
+
   const [avgRating, setAvgRating] = useState(0)
+
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const [expanded, setExpanded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
   const [openHour, setOpenHour] = useState('');
   const [closeHour, setCloseHour] = useState('');
   const [arrowPath, setArrowPath] = useState("M6 9l6 6 6-6");
@@ -43,9 +46,9 @@ const UserRestaurantDetail = () => {
     const today = days.find((item) => item.day === currentDay);
 
     if (today) {
+
       const openTime = parseInt(today.open.split(':')[0]);
       const closeTime = parseInt(today.close.split(':')[0]);
-
       setOpenHour(today.open);
       setCloseHour(today.close);
 
@@ -60,9 +63,15 @@ const UserRestaurantDetail = () => {
       const sortedDays = days.sort((a, b) => {
         const aIndex = days.findIndex((item) => item.day === a.day);
         const bIndex = days.findIndex((item) => item.day === b.day);
-        const currentDayIndex = days.findIndex((item) => item.day === currentDay);
 
-        return Math.abs(currentDayIndex - aIndex) - Math.abs(currentDayIndex - bIndex);
+        const currentDayIndex = days.findIndex(
+          (item) => item.day === currentDay
+        );
+
+        return (
+          Math.abs(currentDayIndex - aIndex) -
+          Math.abs(currentDayIndex - bIndex)
+        );
       });
 
       const nearestDay = sortedDays[0];
@@ -73,8 +82,10 @@ const UserRestaurantDetail = () => {
 
     setLoading(true);
 
-    axios.get(`http://localhost:8080/restaurants/${id}`)
-      .then(restaurantResponse => {
+
+    axios
+      .get(`${API_BASE_URL}/restaurants/${id}`)
+      .then((restaurantResponse) => {
         const restaurantData = restaurantResponse.data.data;
 
         setRestaurant(restaurantData);
@@ -85,8 +96,10 @@ const UserRestaurantDetail = () => {
         setLoading(false);
       });
 
-    axios.get(`http://localhost:8080/users/login/find/${username}`)
-      .then(userResponse => {
+
+    axios
+      .get(`${API_BASE_URL}/users/login/find/${username}`)
+      .then((userResponse) => {
         const userData = userResponse.data.data;
 
         setUser(userData);
@@ -96,17 +109,17 @@ const UserRestaurantDetail = () => {
         setLoading(false);
       });
 
-    axios.get(`http://localhost:8080/reviews/average-rating/${id}`)
-      .then(avgRatingResponse => {
-        setAvgRating(avgRatingResponse.data.averageRating)
+
+    axios
+      .get(`${API_BASE_URL}/reviews/average-rating/${id}`)
+      .then((avgRatingResponse) => {
+        setAvgRating(avgRatingResponse.data.averageRating);
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
       });
   }, [id, username]);
-
-
 
   const [openModal, setOpenModal] = useState(false);
   const [currentPageImage, setcurrentPageImage] = useState(1);
@@ -121,18 +134,16 @@ const UserRestaurantDetail = () => {
   const currentImages = imageList.slice(indexOfFirstImage, indexOfLastImage);
 
   const totalPages = Math.ceil(imageList.length / imagesPerPage);
-
   const [newReviews, setNewReviews] = useState([]);
 
   useEffect(() => {
     setLoading(true);
 
-    Promise.all([
-      axios.get(`http://localhost:8080/reviews/restaurant/${id}`),
-    ])
+
+    Promise.all([axios.get(`${API_BASE_URL}/reviews/restaurant/${id}`)])
       .then(([reviewResponse]) => {
-        setNewReviews(reviewResponse.data.data)
-        console.log(reviewResponse)
+        setNewReviews(reviewResponse.data.data);
+        console.log(reviewResponse);
         setLoading(false);
       })
       .catch((error) => {
@@ -142,22 +153,31 @@ const UserRestaurantDetail = () => {
   }, [username, id]);
 
   const submitReview = async () => {
-    await axios.post("http://localhost:8080/reviews", {
-      "restaurantName": restaurant.name,
-      "restaurantId": restaurant._id,
-      "rating": rating,
-      "authorName": user.username,
-      "content": review,
-      "image": "",
-      "authorId": user._id
-    })
-      .then(e => {
+    try{
+      await axios
+      .post(`${API_BASE_URL}/reviews`, {
+        restaurantName: restaurant.name,
+        restaurantId: restaurant._id,
+        rating: rating,
+        authorName: user.username,
+        content: review,
+        image: "",
+        authorId: user._id,
+      })
+      .then((e) => {
+
         const newReview = e.data.data;
         setNewReviews([newReview, ...newReviews]);
         setReview("");
         setRating(0);
-      })
-  }
+
+        setIsShown(false);
+        window.location.reload();
+      });
+    } catch (error) {
+      console.error('Error submitting review:', error);
+    }
+  };
 
 
   const [currentPageReview, setCurrentPageReview] = useState(1);
@@ -187,7 +207,6 @@ const UserRestaurantDetail = () => {
     }
   };
 
-
   const handleStarHover = (index) => {
     if (!isHovered) {
       setRating(index + 1);
@@ -206,8 +225,9 @@ const UserRestaurantDetail = () => {
       stars.push(
         <FaStar
           key={i}
-          className={`cursor-pointer text-2xl ml-2 ${isHovered ? (i < rating ? "text-yellow-300" : "text-gray-300") : ""
-            }`}
+          className={`cursor-pointer text-2xl ml-2 ${
+            isHovered ? (i < rating ? "text-yellow-300" : "text-gray-300") : ""
+          }`}
           onMouseEnter={() => handleStarHover(i)}
           onClick={() => handleStarClick(i)}
         />
@@ -217,34 +237,48 @@ const UserRestaurantDetail = () => {
     return (
       <div className="flex items-center">
         <span className="mr-2 text-xl font='[Lato]'">Rating:</span>
-        <span className="mr-2 text-xl  font-['Lato'] text-yellow-300">{rating}</span>
+        <span className="mr-2 text-xl  font-['Lato'] text-yellow-300">
+          {rating}
+        </span>
         {stars}
       </div>
     );
   };
 
   const contentStyle = {
-    display: expanded ? 'block' : 'none',
+    display: expanded ? "block" : "none",
   };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    setArrowPath(arrowPath === "M6 9l6 6 6-6" ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6");
+    setArrowPath(
+      arrowPath === "M6 9l6 6 6-6" ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6"
+    );
   };
-
-
 
 
   return (
     <div>
       <Navigation2 />
       <div>
-        <div className='m-20 flex items-center'>
+        <div className="m-20 flex items-center">
           <Link to={`/${username}/restaurant`} className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
-              fill="none" stroke="#D9D9D9" strokeWidth="4" strokeLinecap="round"
-              strokeLinejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg></Link>
-          <span className="ml-2 text-gray-D9D9D9 md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']">Restaurants /
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#D9D9D9"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 12H6M12 5l-7 7 7 7" />
+            </svg>
+          </Link>
+          <span className="ml-2 text-gray-D9D9D9 md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']">
+            Restaurants /
             <span className="text-orange-FFA90A"> {restaurant.name} </span>
           </span>
         </div>
@@ -254,8 +288,8 @@ const UserRestaurantDetail = () => {
               src={restaurant.logo || logo}
               alt="Logo"
               style={{
-                width: '80%',
-                height: 'auto',
+                width: "80%",
+                height: "auto",
               }}
             />
           </div>
@@ -264,29 +298,40 @@ const UserRestaurantDetail = () => {
               {restaurant.name}
             </h4>
             <div className="flex items-center mt-4 ml-4">
-              <img
-                src={star}
-                alt="Star"
-                className="w-6 h-6"
-              />
-              <span className="ml-2 text-2xl">{avgRating || restaurant.rating}</span>
+              <img src={star} alt="Star" className="w-6 h-6" />
+              <span className="ml-2 text-2xl">
+                {avgRating || restaurant.rating}
+              </span>
             </div>
             <div className="flex items-center mt-4 ml-4">
-              <img
-                src={money}
-                className="w-6 h-6"
-              />
+              <img src={money} className="w-6 h-6" />
               <span className="ml-2 text-xl">Rp50.000-Rp100.000</span>
             </div>
             <div className="flex items-center mt-4 ml-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFA90A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#FFA90A"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
               <button onClick={handleExpandClick} className="flex items-center">
                 <span className="ml-2 text-xl font-bold text-orange-FFA90A font-Lato">
-                  {isOpen ? 'Open' : 'Closed'}            </span>
-                <span className='ml-2 text-xl font-Lato'> - {isOpen ? `Closes at ${closeHour}` : `Opens at ${openHour}`} </span>
+                  {isOpen ? "Open" : "Closed"}{" "}
+                </span>
+                <span className="ml-2 text-xl font-Lato">
+                  {" "}
+                  - {isOpen
+                    ? `Closes at ${closeHour}`
+                    : `Opens at ${openHour}`}{" "}
+                </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -309,7 +354,9 @@ const UserRestaurantDetail = () => {
                   {days.map((item, index) => (
                     <tr key={index}>
                       <td>{item.day}</td>
-                      <td className='pl-1'>{item.open} - {item.close}</td>
+                      <td className="pl-1">
+                        {item.open} - {item.close}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -336,19 +383,22 @@ const UserRestaurantDetail = () => {
             <Modal.Body>
               <div className="flex flex-col items-center">
                 {currentImages.map((image, index) => (
-                  <img key={index} src={image} style={{ margin: 'auto' }} />
+                  <img key={index} src={image} style={{ margin: "auto" }} />
                 ))}
                 <span>{`${currentPageImage} of ${totalPages}`}</span>
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <div className="flex items-center justify-center" style={{ width: '100%' }}>
+              <div
+                className="flex items-center justify-center"
+                style={{ width: "100%" }}
+              >
                 <Button
                   onClick={handlePrevPageImage}
                   disabled={currentPageImage === 1}
                   style={{
                     borderColor: "#FFA90A",
-                    borderRadius: "8px"
+                    borderRadius: "8px",
                   }}
                 >
                   <svg
@@ -370,7 +420,7 @@ const UserRestaurantDetail = () => {
                   disabled={currentPageImage === totalPages}
                   style={{
                     borderColor: "#FFA90A",
-                    borderRadius: "8px"
+                    borderRadius: "8px",
                   }}
                 >
                   <svg
@@ -392,10 +442,7 @@ const UserRestaurantDetail = () => {
           </Modal>
           <div className="w1/3 px-20 absolute right-0 top-0 flex flex-col items-center">
             <a href={restaurant.grab_link}>
-              <img
-                src={grab}
-                className="rounded-full mt-4"
-              />
+              <img src={grab} className="rounded-full mt-4" />
             </a>
             <a href={restaurant.gojek_link}>
               <img
@@ -416,32 +463,53 @@ const UserRestaurantDetail = () => {
           <div style={{ cursor: "pointer" }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFA90A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" onClick={handleClick}>
               <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <h2 className="text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']">
+            {" "}
+            Reviews{" "}
+          </h2>
+          <div style={{ cursor: "pointer" }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#FFA90A"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              onClick={handleClick}
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
           </div>
         </div>
         {isShown && (
           <div className="mx-16 relative">
             <textarea
-              className="inset-0 w-full mb-4 text-gray-900 bg-white border border-yellow-300 font-['Lato'] rounded-lg" rows={7}
-              onChange={e => setReview(e.target.value)}
-            >
-            </textarea>
-            <div className="flex space-x-2 absolute mb-6 bottom-4 left-4">{renderStars()}</div>
+              className="inset-0 w-full mb-4 text-gray-900 bg-white border border-yellow-300 font-['Lato'] rounded-lg"
+              rows={7}
+              onChange={(e) => setReview(e.target.value)}
+            ></textarea>
+            <div className="flex space-x-2 absolute mb-6 bottom-4 left-4">
+              {renderStars()}
+            </div>
             <Button
               className="absolute mb-6 bottom-4 right-6 rounded-md"
               style={{
                 backgroundColor: "#FFA90A",
-                borderRadius: "50px"
+                borderRadius: "50px",
               }}
               onClick={submitReview}
             >
               Submit Review
             </Button>
-            <div className="flex items-center">
-            </div>
+            <div className="flex items-center"></div>
           </div>
         )}
         <div className="mx-20 mb-4">
-          {newReviews.length === 0 ? (
+           {newReviews.length === 0 ? (
             <p className="text-lg text-center">Tidak ada reviews</p>
           ) : (
             currentReviews.map((review, index) => (

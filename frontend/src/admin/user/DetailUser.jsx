@@ -11,7 +11,7 @@ const DetailUser = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:8080/users/${id}`)
+    axios.get(`${API_BASE_URL}/users/${id}`)
     .then((response) => {
       setUser(response.data.data);
       setLoading(false);

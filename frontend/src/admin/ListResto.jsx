@@ -27,7 +27,7 @@ const ListResto = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/restaurants")
+      .get(`${API_BASE_URL}/restaurants`)
       .then((response) => {
         setResto(response.data.data);
         setLoading(false);
@@ -41,7 +41,7 @@ const ListResto = () => {
   const handleDeleteResto = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8080/restaurants/${restoIdDelete}`)
+      .delete(`${API_BASE_URL}/restaurants/${restoIdDelete}`)
       .then(() => {
         setLoading(false);
         navigate("/admin");

@@ -23,7 +23,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/users/login/find/${user}`)
+      .get(`${API_BASE_URL}/users/login/find/${user}`)
       .then((response) => {
         const userData = response.data.data;
         setUsername(userData.username);
@@ -74,7 +74,7 @@ const EditProfile = () => {
     };
     setLoading(true);
     axios
-      .put(`http://localhost:8080/users/edit/${username}`, data)
+      .put(`${API_BASE_URL}/users/edit/${username}`, data)
       .then((result) => {
         console.log(result);
         navigate(`/profile/find/${result.data.username}`);

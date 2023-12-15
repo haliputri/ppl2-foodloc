@@ -22,7 +22,7 @@ const EditUser = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/users/${id}`)
+    axios.get(`${API_BASE_URL}/users/${id}`)
     .then((response) => {
       const userData = response.data.data;
       setUsername(userData.username);

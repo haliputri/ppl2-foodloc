@@ -12,7 +12,7 @@ const DeleteResto = () => {
   
   const handleDeleteResto = () => {
     setLoading(true);
-    axios.delete(`http://localhost:8080/restaurants/${resto_id}`)
+    axios.delete(`${API_BASE_URL}/restaurants/${resto_id}`)
     .then(() => {
       setLoading(false);
       navigate('/admin')

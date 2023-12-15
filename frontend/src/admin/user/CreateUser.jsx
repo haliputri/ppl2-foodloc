@@ -46,7 +46,7 @@ const CreateUser = () => {
       profileImage,
     }; 
     setLoading(true);
-    axios.post('http://localhost:8080/users', data)
+    axios.post(`${API_BASE_URL}/users`, data)
     .then(() => {
       setLoading(false);
       navigate('/user');

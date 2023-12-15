@@ -50,8 +50,18 @@ const restaurantSchema = mongoose.Schema(
         review: {
             type: String
         },
-        working_hours: {
-            type: String
+        day: {
+            type: String,
+            required: true,
+            enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        },
+        openHour: {
+            type: String,
+            required: true,
+        },
+        closeHour: {
+            type: String,
+            required: true,
         },
         logo: {
             type: String, // Assuming you store the URL or path to the logo image

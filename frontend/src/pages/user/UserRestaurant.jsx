@@ -27,7 +27,7 @@ const UserRestaurant = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/users/login/find/${username}`)
+      .get(`${API_BASE_URL}/users/login/find/${username}`)
       .then((response) => {
         const userData = response.data.data;
         setUser(userData);
@@ -43,7 +43,7 @@ const UserRestaurant = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/restaurants")
+      .get(`${API_BASE_URL}/restaurants`)
       .then((response) => {
         setResto(response.data.data);
       })
@@ -218,7 +218,7 @@ const UserRestaurant = () => {
         return;
       }
   
-      const res = await axios.get("http://localhost:8080/restaurants/search", {
+      const res = await axios.get(`${API_BASE_URL}/restaurants/search`, {
         params: {
           name: key,
           category: selectedItems,
