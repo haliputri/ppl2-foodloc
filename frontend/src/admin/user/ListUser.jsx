@@ -23,7 +23,7 @@ const ListUser = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${API_BASE_URL}:8080/users`)
+    axios.get(`${API_BASE_URL}/users`)
       // .get("http://localhost:8080/users")
       .then((response) => {
         setUser(response.data.data);
