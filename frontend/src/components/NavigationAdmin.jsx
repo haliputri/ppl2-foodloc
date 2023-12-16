@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const NavigationAdmin = () => {
   const [user, setUser] = useState({});
