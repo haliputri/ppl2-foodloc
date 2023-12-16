@@ -3,6 +3,8 @@ import { Navbar } from "flowbite-react";
 import Logo from "../assets/Logo.svg";
 import ProfileImage from "../assets/profpic.png"; 
 import { Avatar, Dropdown } from 'flowbite-react';
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const NavigationAdmin = () => {
   const [user, setUser] = useState({});
