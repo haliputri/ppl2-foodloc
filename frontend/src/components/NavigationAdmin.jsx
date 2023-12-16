@@ -4,7 +4,31 @@ import Logo from "../assets/Logo.svg";
 import ProfileImage from "../assets/profpic.png"; 
 import { Avatar, Dropdown } from 'flowbite-react';
 
-const Navigation = () => {
+const NavigationAdmin = () => {
+  const [user, setUser] = useState({});
+  const { username } = useParams();
+
+  useEffect(() => {
+    // axios
+    //   .get(`http://localhost:8080/users/login/find/${username}`)
+    //   .then((response) => {
+    //     const userData = response.data.data;
+    //     setUser(userData);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+      // });
+    axios
+      .get(`${API_BASE_URL}/users/login/find/${username}`)
+      .then((response) => {
+        const userData = response.data.data;
+        setUser(userData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <Navbar fluid style={{ backgroundColor: '#FFA90A' }}>
       <Navbar.Brand href="https://flowbite-react.com">
@@ -13,7 +37,7 @@ const Navigation = () => {
       
  
       <Navbar.Collapse>
-        <Navbar.Link href="restaurant">Restaurants</Navbar.Link>
+        <Navbar.Link href="#">Restaurants</Navbar.Link>
       </Navbar.Collapse>
       <Dropdown
         label={<Avatar rounded />}
@@ -21,15 +45,15 @@ const Navigation = () => {
         inline
       >
         <Dropdown.Header>
-          <span className="block text-sm">Bonnie Green</span>
-          <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+          <span className="block text-sm">{user.name}</span>
+          <span className="block truncate text-sm font-medium">{user.email}</span>
         </Dropdown.Header> 
         <Dropdown.Divider />
-        <Dropdown.Item href="admin"> Dashboard Admin</Dropdown.Item>
-        <Dropdown.Item> Sign out</Dropdown.Item>
+        {/* <Dropdown.Item href="admin"> Dashboard Admin</Dropdown.Item> */}
+        <Link to="/login"><Dropdown.Item> Sign out</Dropdown.Item></Link>
       </Dropdown>
     </Navbar>
   );
 };
 
-export default Navigation;
+export default NavigationAdmin;
