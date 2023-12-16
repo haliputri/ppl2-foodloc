@@ -10,6 +10,11 @@ Foodloc merupakan aplikasi rekomendasi makanan yang berada di daerah Jatinangor 
 - Zahran Hanif F  140810200062
 
 ## Url Aplikasi
-be : https://ppl2-foodloc-be-diff.vercel.app
-fe : https://ppl2-foodloc-fe-diff.vercel.app
+- Link website :
+ppl2-foodloc-fe-diff.vercel.app
+
+- be : https://ppl2-foodloc-be-diff.vercel.app
+
+- fe : https://ppl2-foodloc-fe-diff.vercel.app
+
 
