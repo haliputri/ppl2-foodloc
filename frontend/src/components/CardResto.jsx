@@ -12,7 +12,7 @@ const CardResto = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/restaurants/`)
+      .get(`localhost:8080/restaurants`)
       // axios.get(`http://localhost:8080/restaurants/${resto_id}`)
       .then((response) => {
         setResto(response.data.data);
