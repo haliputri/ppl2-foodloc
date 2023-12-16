@@ -6,6 +6,7 @@ import { Avatar, Dropdown } from 'flowbite-react';
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const NavigationAdmin = () => {
   const [user, setUser] = useState({});
