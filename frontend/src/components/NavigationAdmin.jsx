@@ -5,6 +5,7 @@ import ProfileImage from "../assets/profpic.png";
 import { Avatar, Dropdown } from 'flowbite-react';
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const NavigationAdmin = () => {
   const [user, setUser] = useState({});
