@@ -124,7 +124,7 @@ const EditResto = () => {
     };
     setLoading(true);
     axios
-     .put(`${API_BASE_URL}/restaurants/${resto_id}`, data)
+     .put(`${API_BASE_URL}/restaurants/${id}`, data)
      .then(() => {
       setLoading(false);
       navigate('/admin');
