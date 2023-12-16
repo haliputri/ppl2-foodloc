@@ -6,6 +6,7 @@ import FooterResto from "../../components/FooterResto";
 import CardResto from "../../components/CardResto";
 import { Button } from "flowbite-react";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../../../backend/config";
 
 const UserHome = () => {
   const [restaurants, setResto] = useState([]);

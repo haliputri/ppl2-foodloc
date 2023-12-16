@@ -12,6 +12,7 @@ import Sidenav from "../components/Sidenav";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import NavigationAdmin from "../components/NavigationAdmin";
+import { API_BASE_URL } from "../../../backend/config";
 
 const ListResto = () => {
   const [restaurants, setResto] = useState([]);
@@ -37,16 +38,16 @@ const ListResto = () => {
         setLoading(false);
       });
 
-    // axios
-    //   .get(`${API_BASE_URL}/restaurants`)
-    //   .then((response) => {
-    //     setResto(response.data.data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     setLoading(false);
-    //   });
+    axios
+      .get(`${API_BASE_URL}/restaurants`)
+      .then((response) => {
+        setResto(response.data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const handleDeleteResto = () => {

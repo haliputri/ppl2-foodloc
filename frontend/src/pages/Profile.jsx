@@ -7,6 +7,7 @@ import Navigation2 from "../components/Navigation2";
 import FooterResto from "../components/FooterResto";
 import profilePicture from "../assets/profpic.png";
 import { format } from "date-fns";
+import { API_BASE_URL } from "../../../backend/config";
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -27,19 +28,19 @@ const Profile = () => {
       .catch((error) => {
         console.log(error);
       });
-    // axios
-    //   .get(`${API_BASE_URL}/users/login/find/${username}`)
-    //   .then((response) => {
-    //     const userData = response.data.data;
-    //     setUser(userData);
+    axios
+      .get(`${API_BASE_URL}/users/login/find/${username}`)
+      .then((response) => {
+        const userData = response.data.data;
+        setUser(userData);
 
-    //     const originalDate = userData.birthdate;
-    //     const formattedDate = new Date(originalDate).toLocaleDateString();
-    //     setBirthDate(formattedDate);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+        const originalDate = userData.birthdate;
+        const formattedDate = new Date(originalDate).toLocaleDateString();
+        setBirthDate(formattedDate);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
 import Navigation from "../components/Navigation";
 import FooterResto from "../components/FooterResto";
+import { API_BASE_URL } from '../../../backend/config';
 
 
 const Register = () => {
@@ -15,22 +16,6 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  // const handleSubmit = () => {
-  //   const data = {
-  //     email,
-  //     password,
-  //     username,
-  //   }
-  //   axios.post(`${API_BASE_URL}/users/regist`, data)
-  //   .then(() => {
-  //     navigate('/login');
-  //   })
-  //   .catch((error) => {
-  //     alert('An error happened. Please check console');
-  //     console.log(error);
-  //    })
-  // }
-
   const handleSubmit = () => {
     const data = {
       email,
@@ -38,6 +23,14 @@ const Register = () => {
       username,
     }
     axios.post(`http://localhost:8080/users/regist`, data)
+    .then(() => {
+      navigate('/login');
+    })
+    .catch((error) => {
+      alert('An error happened. Please check console');
+      console.log(error);
+     })
+    axios.post(`${API_BASE_URL}/users/regist`, data)
     .then(() => {
       navigate('/login');
     })

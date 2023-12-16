@@ -10,6 +10,7 @@ import FooterResto from "../components/FooterResto";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { API_BASE_URL } from "../../../backend/config";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -37,20 +38,20 @@ const Login = () => {
       })
       .catch(error => console.log(error));
     
-      // axios.post(`${API_BASE_URL}/users/login/find`, data)
-      // .then(result => {
-      //   console.log(result);
-      //   if (result.data.message === "Success") {
-      //     const username = result.data.data.username; // Update with the actual property name
-      //     const role = result.data.data.role; // Update with the actual property name
-      //     if (role === 'admin') {
-      //       navigate(`/profile/admin/${username}`);
-      //     } else {
-      //       navigate(`/profile/find/${username}`);
-      //     }
-      //   }
-      // })
-      // .catch(error => console.log(error));
+      axios.post(`${API_BASE_URL}/users/login/find`, data)
+      .then(result => {
+        console.log(result);
+        if (result.data.message === "Success") {
+          const username = result.data.data.username; // Update with the actual property name
+          const role = result.data.data.role; // Update with the actual property name
+          if (role === 'admin') {
+            navigate(`/profile/admin/${username}`);
+          } else {
+            navigate(`/profile/find/${username}`);
+          }
+        }
+      })
+      .catch(error => console.log(error));
   };
   
 
