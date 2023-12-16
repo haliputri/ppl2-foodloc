@@ -165,7 +165,7 @@ const UserRestaurantDetail = () => {
         setNewReviews([newReview, ...newReviews]);
         setReview("");
         setRating(0);
-        // window.location.reload();
+        window.location.reload();
       });
       setIsShown(false);
     } catch (error) {
