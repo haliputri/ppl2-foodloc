@@ -10,9 +10,20 @@ import { API_BASE_URL } from "../../../backend/config";
 const HomePage = () => {
   const [restaurants, setResto] = useState([]);
 
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:8080/restaurants`)
+  //     .then((response) => {
+  //       setResto(response.data.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
   useEffect(() => {
     axios
-      .get(`localhost:8080/restaurants`)
+      .get(`${API_BASE_URL}/restaurants`)
       .then((response) => {
         setResto(response.data.data);
       })
