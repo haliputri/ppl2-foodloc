@@ -474,8 +474,7 @@ const UserRestaurantDetail = () => {
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-          </div>
-          {isShown && (
+            {isShown && (
             <div className="mx-16 relative">
               <textarea
                 className="inset-0 w-full mb-4 text-gray-900 bg-white border border-yellow-300 font-['Lato'] rounded-lg"
@@ -498,6 +497,7 @@ const UserRestaurantDetail = () => {
               <div className="flex items-center"></div>
             </div>
           )}
+          </div>
           <div className="mx-20 mb-4">
             {newReviews.length === 0 ? (
               <p className="text-lg text-center">Tidak ada reviews</p>

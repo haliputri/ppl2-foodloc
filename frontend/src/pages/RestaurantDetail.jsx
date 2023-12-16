@@ -453,7 +453,7 @@ const RestaurantDetail = () => {
       </div>
       <div>
         <div className="flex items-center justify-between mb-8 mt-20 mx-20">
-        <h2 className="text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']">
+            <h2 className="text-orange-FFA90A md:text-3xl lg:text-3xl dark:text-white font-bold font-['Lato']">
               {" "}
               Reviews{" "}
             </h2>
@@ -474,7 +474,6 @@ const RestaurantDetail = () => {
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
             </div>
-
         </div>
         <div className="mx-20 mb-4">
           {newReviews.length === 0 ? (
