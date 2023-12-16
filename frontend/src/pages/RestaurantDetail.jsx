@@ -76,7 +76,7 @@ const RestaurantDetail = () => {
 
     setLoading(true);
     axios
-      .get(`${API_BASE_URL}/restaurants/${id}`)
+      .get(`https://ppl2-foodloc-be-diff.vercel.app/restaurants/${id}`)
       .then((restaurantResponse) => {
         const restaurantData = restaurantResponse.data.data;
 
@@ -88,7 +88,7 @@ const RestaurantDetail = () => {
         setLoading(false);
       });
     axios
-      .get(`${API_BASE_URL}/reviews/average-rating/${id}`)
+      .get(`https://ppl2-foodloc-be-diff.vercel.app/reviews/average-rating/${id}`)
       .then((avgRatingResponse) => {
         setAvgRating(avgRatingResponse.data.averageRating);
       })
@@ -169,7 +169,7 @@ const RestaurantDetail = () => {
   useEffect(() => {
     setLoading(true);
 
-    Promise.all([axios.get(`${API_BASE_URL}/reviews/restaurant/${id}`)])
+    Promise.all([axios.get(`https://ppl2-foodloc-be-diff.vercel.app/reviews/restaurant/${id}`)])
       .then(([reviewResponse]) => {
         setNewReviews(reviewResponse.data.data);
         console.log(reviewResponse);

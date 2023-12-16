@@ -8,6 +8,7 @@ import CardResto from "../components/CardResto";
 import { Button } from "flowbite-react";
 import food1 from "../assets/food-1.png";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../../backend/config";
 
 const RestaurantPage = () => {
   const [restaurants, setResto] = useState([]);
@@ -160,7 +161,18 @@ const RestaurantPage = () => {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      axios
+      .get(`${API_BASE_URL}/restaurants`)
+      .then((response) => {
+        setResto(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      
+      ;
+      
   }, []);
 
   // Function to split the restaurants into chunks of size 3
