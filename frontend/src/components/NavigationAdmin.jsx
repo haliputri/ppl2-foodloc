@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../../../backend/config";
 
 const NavigationAdmin = () => {
   const [user, setUser] = useState({});
