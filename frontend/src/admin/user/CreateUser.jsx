@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Spinner } from "flowbite-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../../backend/config";
 
 
 const CreateUser = () => {

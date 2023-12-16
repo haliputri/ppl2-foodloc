@@ -7,6 +7,7 @@ import { Spinner } from "flowbite-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { daysInWeek, setDay, setDayOfYear } from "date-fns";
+import { API_BASE_URL } from "../../../backend/config";
 
 const CreateResto = () => {
   const [restoImage, setRestoImage] = useState("");

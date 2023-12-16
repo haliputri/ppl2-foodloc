@@ -14,6 +14,7 @@ import menu from "../assets/menu.png";
 import { FaStar } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../../backend/config";
 
 const RestaurantDetail = () => {
   const [restaurant, setRestaurant] = useState({});

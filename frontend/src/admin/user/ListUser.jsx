@@ -10,6 +10,7 @@ import Sidenav from "../../components/Sidenav";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom'
 import NavigationAdmin from "../../components/NavigationAdmin"; 
+import { API_BASE_URL } from "../../../../backend/config";
 
 const ListUser = () => {
   const [users, setUser] = useState([]);
@@ -22,8 +23,8 @@ const ListUser = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get("http://localhost:8080/users")
+    axios.get(`${API_BASE_URL}:8080/users`)
+      // .get("http://localhost:8080/users")
       .then((response) => {
         setUser(response.data.data);
         setLoading(false);

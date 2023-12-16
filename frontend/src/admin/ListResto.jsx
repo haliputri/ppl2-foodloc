@@ -27,19 +27,8 @@ const ListResto = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:8080/restaurants`)
-      .then((response) => {
-        setResto(response.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-
-    axios
-      .get(`${API_BASE_URL}/restaurants`)
+    axios.get(`${API_BASE_URL}/restaurants`)
+      // .get(`http://localhost:8080/restaurants`)
       .then((response) => {
         setResto(response.data.data);
         setLoading(false);
@@ -53,7 +42,7 @@ const ListResto = () => {
   const handleDeleteResto = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8080/restaurants/${restoIdDelete}`)
+      .delete(`${API_BASE_URL}/restaurants/${restoIdDelete}`)
       .then(() => {
         setLoading(false);
         navigate("/admin");
@@ -64,18 +53,6 @@ const ListResto = () => {
         alert("An error happened. Please check console");
         console.log(error);
       });
-    // axios
-    //   .delete(`${API_BASE_URL}/restaurants/${restoIdDelete}`)
-    //   .then(() => {
-    //     setLoading(false);
-    //     navigate("/admin");
-    //     window.location.reload(); // Reload the page
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     alert("An error happened. Please check console");
-    //     console.log(error);
-    //   });
   };
 
   // // Pagination Logic

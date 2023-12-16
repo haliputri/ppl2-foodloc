@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import BackButton from '../../components/BackButton'
 import Spinner from '../../components/Spinner'
+import { API_BASE_URL } from '../../../../backend/config'
 
 const DetailUser = () => {
   const [user, setUser] = useState([]);

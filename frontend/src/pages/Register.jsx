@@ -22,14 +22,10 @@ const Register = () => {
       password,
       username,
     }
-    axios.post(`http://localhost:8080/users/regist`, data)
-    .then(() => {
-      navigate('/login');
-    })
-    .catch((error) => {
-      alert('An error happened. Please check console');
-      console.log(error);
-     })
+    // axios.post(`http://localhost:8080/users/regist`, data)
+    // .then(() => {
+    //   navigate('/login');
+    // })
     axios.post(`${API_BASE_URL}/users/regist`, data)
     .then(() => {
       navigate('/login');

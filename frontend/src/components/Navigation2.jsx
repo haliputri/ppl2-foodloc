@@ -6,6 +6,7 @@ import { Avatar, Dropdown } from 'flowbite-react';
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../../../backend/config";
 
 
 const Navigation = () => {
@@ -13,8 +14,17 @@ const Navigation = () => {
   const { username } = useParams();
 
   useEffect(() => {
+    // axios
+    //   .get(`http://localhost:8080/users/login/find/${username}`)
+    //   .then((response) => {
+    //     const userData = response.data.data;
+    //     setUser(userData);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+      // });
     axios
-      .get(`http://localhost:8080/users/login/find/${username}`)
+      .get(`${API_BASE_URL}/users/login/find/${username}`)
       .then((response) => {
         const userData = response.data.data;
         setUser(userData);
@@ -22,15 +32,6 @@ const Navigation = () => {
       .catch((error) => {
         console.log(error);
       });
-    // axios
-    //   .get(`${API_BASE_URL}/users/login/find/${username}`)
-    //   .then((response) => {
-    //     const userData = response.data.data;
-    //     setUser(userData);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }, []);
 
   return (

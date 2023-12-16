@@ -9,6 +9,7 @@ import { Button, Card } from "flowbite-react";
 import Navigation2 from "../../components/Navigation2";
 import { format } from "date-fns";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../../../backend/config";
 
 const UserRestaurant = () => {
   const [user, setUser] = useState({});

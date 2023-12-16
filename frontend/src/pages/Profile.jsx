@@ -15,19 +15,19 @@ const Profile = () => {
   const { username } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/users/login/find/${username}`)
-      .then((response) => {
-        const userData = response.data.data;
-        setUser(userData);
+    // axios
+    //   .get(`http://localhost:8080/users/login/find/${username}`)
+    //   .then((response) => {
+    //     const userData = response.data.data;
+    //     setUser(userData);
 
-        const originalDate = userData.birthdate;
-        const formattedDate = new Date(originalDate).toLocaleDateString();
-        setBirthDate(formattedDate);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    //     const originalDate = userData.birthdate;
+    //     const formattedDate = new Date(originalDate).toLocaleDateString();
+    //     setBirthDate(formattedDate);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
     axios
       .get(`${API_BASE_URL}/users/login/find/${username}`)
       .then((response) => {

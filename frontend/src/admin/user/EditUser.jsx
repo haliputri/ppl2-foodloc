@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Spinner } from "flowbite-react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../../../backend/config";
 
 
 const EditUser = () => {
@@ -59,7 +60,8 @@ const EditUser = () => {
       profileImage,
     }; 
     setLoading(true);
-    axios.put(`http://localhost:8080/users/${id}`, data)
+    // axios.put(`http://localhost:8080/users/${id}`, data)
+    axios.put(`${API_BASE_URL}/users/${id}`, data)
     .then(() => {
       setLoading(false);
       navigate('/user');

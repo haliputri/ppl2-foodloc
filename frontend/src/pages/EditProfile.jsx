@@ -6,6 +6,7 @@ import { Label, Button, Card, TextInput } from "flowbite-react";
 import Navigation2 from "../components/Navigation2";
 import FooterResto from "../components/FooterResto";
 import profilePicture from "../assets/profpic.png";
+import { API_BASE_URL } from "../../../backend/config";
 
 const EditProfile = () => {
   const [username, setUsername] = useState("");

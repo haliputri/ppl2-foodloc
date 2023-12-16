@@ -5,14 +5,15 @@ import axios from "axios";
 import { Card } from "flowbite-react";
 import food1 from "../assets/food-1.png";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../../backend/config";
 
 const CardResto = () => {
   const [restaurants, setResto] = useState([]);
   // const { resto_id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/restaurants`)
+    axios.get(`${API_BASE_URL}/restaurants`)
+      // .get(`http://localhost:8080/restaurants`)
       // axios.get(`http://localhost:8080/restaurants/${resto_id}`)
       .then((response) => {
         setResto(response.data.data);
