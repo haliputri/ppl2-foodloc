@@ -21,21 +21,38 @@ const Login = () => {
       email,
       password,
     };
-    axios.post(`${API_BASE_URL}/users/login/find`, data)
-    .then(result => {
-      console.log(result)
-      if(result.data.message === "Success"){
-        const username = result.data.data.username;
-        const role = result.data.data.role;
-        if (role === 'admin') {
-          navigate(`/profile/admin/${username}`);
-        } else {
-          navigate(`/profile/find/${username}`);
+  
+    axios.post(`http://localhost:8080/users/login/find`, data)
+      .then(result => {
+        console.log(result);
+        if (result.data.message === "Success") {
+          const username = result.data.data.username; // Update with the actual property name
+          const role = result.data.data.role; // Update with the actual property name
+          if (role === 'admin') {
+            navigate(`/profile/admin/${username}`);
+          } else {
+            navigate(`/profile/find/${username}`);
+          }
         }
-      }
-    })
-    .catch( error => console.log (error))
-  }
+      })
+      .catch(error => console.log(error));
+    
+      // axios.post(`${API_BASE_URL}/users/login/find`, data)
+      // .then(result => {
+      //   console.log(result);
+      //   if (result.data.message === "Success") {
+      //     const username = result.data.data.username; // Update with the actual property name
+      //     const role = result.data.data.role; // Update with the actual property name
+      //     if (role === 'admin') {
+      //       navigate(`/profile/admin/${username}`);
+      //     } else {
+      //       navigate(`/profile/find/${username}`);
+      //     }
+      //   }
+      // })
+      // .catch(error => console.log(error));
+  };
+  
 
   return (
     <div>

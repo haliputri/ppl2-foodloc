@@ -15,13 +15,29 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  // const handleSubmit = () => {
+  //   const data = {
+  //     email,
+  //     password,
+  //     username,
+  //   }
+  //   axios.post(`${API_BASE_URL}/users/regist`, data)
+  //   .then(() => {
+  //     navigate('/login');
+  //   })
+  //   .catch((error) => {
+  //     alert('An error happened. Please check console');
+  //     console.log(error);
+  //    })
+  // }
+
   const handleSubmit = () => {
     const data = {
       email,
       password,
       username,
     }
-    axios.post(`${API_BASE_URL}/users/regist`, data)
+    axios.post(`http://localhost:8080/users/regist`, data)
     .then(() => {
       navigate('/login');
     })

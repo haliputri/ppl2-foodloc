@@ -14,7 +14,7 @@ const Navigation = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/users/login/find/${username}`)
+      .get(`http://localhost:8080/users/login/find/${username}`)
       .then((response) => {
         const userData = response.data.data;
         setUser(userData);
@@ -22,6 +22,15 @@ const Navigation = () => {
       .catch((error) => {
         console.log(error);
       });
+    // axios
+    //   .get(`${API_BASE_URL}/users/login/find/${username}`)
+    //   .then((response) => {
+    //     const userData = response.data.data;
+    //     setUser(userData);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }, []);
 
   return (
