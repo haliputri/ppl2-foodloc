@@ -12,7 +12,7 @@ const HomePage = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/restaurants`)
+      .get(`localhost:8080/restaurants`)
       .then((response) => {
         setResto(response.data.data);
       })
