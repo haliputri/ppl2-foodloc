@@ -131,7 +131,7 @@ const EditResto = () => {
      })
      .catch((error) => {
       setLoading(false);
-      alert('An error happened. Please check console');n
+      alert('An error happened. Please check console');
       console.log(error);
      })
   }
